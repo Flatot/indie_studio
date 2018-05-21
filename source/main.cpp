@@ -5,7 +5,7 @@
 // main
 //
 
-#include "irrlicht/irrlicht.h"
+#include "irrlicht.h"
 
 int main()
 {
