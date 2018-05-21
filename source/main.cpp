@@ -6,7 +6,6 @@
 //
 
 #include "irrlicht.h"
-#include "Game.hpp"
 
 int main()
 {
