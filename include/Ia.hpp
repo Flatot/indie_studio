@@ -1,0 +1,23 @@
+//
+// EPITECH PROJECT, 2018
+// Ia.hpp
+// File description:
+// ia class
+//
+
+#pragma once
+
+#include "IPlayer.hpp"
+#include "Match.hpp"
+
+namespace bbm {
+	class Ia : public IPlayer {
+	public:
+		Ia(Match &match, float x, float y);
+		virtual void spawn() override;
+		virtual void die() override;
+		virtual void update() override;
+
+	private:
+	};
+}
