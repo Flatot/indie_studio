@@ -7,10 +7,10 @@
 
 #pragma once
 
-#include <vector>
-#include "IEntity.hpp"
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include "IEntity.hpp"
 
 namespace bbm {
 	class Map {
@@ -42,4 +42,5 @@ namespace bbm {
 	};
 
 }
+
 std::ostream& operator<< (std::ostream& stream, bbm::Map const& map);
