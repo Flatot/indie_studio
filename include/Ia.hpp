@@ -15,6 +15,7 @@ namespace bbm {
 	class Ia : public IPlayer {
 	public:
 		Ia(Match &match, float x, float y);
+<<<<<<< HEAD
 		~IA();
 		virtual void spawn() override;
 		virtual void die() override;
@@ -23,5 +24,12 @@ namespace bbm {
 		void	analysMap();
 	private:
 		
+=======
+		virtual void spawn() override;
+		virtual void die() override;
+		virtual void update() override;
+
+	private:
+>>>>>>> Add architecture of the class
 	};
 }
