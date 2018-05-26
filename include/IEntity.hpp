@@ -10,6 +10,18 @@
 #include "Match.hpp"
 
 namespace bbm {
+	enum Entites{
+		BLANK = 0,
+		PLAYER_1 = 1,
+		PLAYER_2 = 2,
+		PLAYER_3 = 4,
+		PLAYER_4 = 8,
+		UNBREAKABLE_BLOCK = 16,
+		BREAKABLE_BLOCK = 32,
+		BOMB = 64,
+		BONUS = 128
+	};
+
 	class IEntity {
 	public:
 		IEntity(Match &match, float x, float y);
