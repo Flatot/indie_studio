@@ -10,7 +10,7 @@
 namespace bbm {
 	class IPlayer {
 	public:
-		IPlayer(Match &match, float x, float y);
+		IPlayer(Match &match, float x, float y, bool isTraversable);
 		virtual void spawn() = 0;
 		virtual void die() = 0;
 		virtual void update() = 0;

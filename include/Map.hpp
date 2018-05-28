@@ -12,10 +12,10 @@
 namespace bbm {
 	class Map {
 	public:
-		Map(int length, int width, std::vector<std::vector<int>> map);
+		Map(int length, int width, std::vector<std::vector<int> > map);
 	private:
-		int length;
-		int width;
-		std::vector<std::vector<int>> map;
+		int _length;
+		int _width;
+		std::vector<std::vector<int> > _map;
 	};
 }

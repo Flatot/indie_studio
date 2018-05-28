@@ -14,10 +14,11 @@ namespace bbm {
 	class Ia : public IPlayer {
 	public:
 		Ia(Match &match, float x, float y);
+		~IA();
 		virtual void spawn() override;
 		virtual void die() override;
 		virtual void update() override;
-
-	private:
+	protected:
+		void	analysMap();
 	};
 }

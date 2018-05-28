@@ -7,6 +7,13 @@
 
 #pragma once
 
+#include <iostream>
+
+#include "IMenu.hpp"
+#include "Match.hpp"
+// #include "Graphic.hpp"
+// #include "PlayerConfig.hpp"
+
 namespace bbm {
 	class Game {
 	public:
@@ -22,12 +29,12 @@ namespace bbm {
 		// Save les playerConfig
 		void saveConfig();
 	private:
-		IMenu *mainMenu;
-		IMenu *inGameMenu;
-		Match match;
+		IMenu *_mainMenu;
+		IMenu *_inGameMenu;
+		Match _match;
 	
-		Graphic graphic;
+		// Graphic _graphic;
 	
-		PlayerConfig playersConfig[4];
+		// PlayerConfig _playersConfig[4];
 	};
 }

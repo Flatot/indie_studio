@@ -20,7 +20,15 @@ include_directories(${INCLUDE_DIR} ${INCLUDE_DIR}/irrlicht)
 
 
 # SOURCES FILES
-set(SRCS 	source/main.cpp)
+set(SRCS 	source/main.cpp
+		source/Game.cpp
+		source/IMenu.cpp
+		source/Match.cpp
+		source/IEntity.cpp
+		source/IBlock.cpp
+		source/IPlayer.cpp
+		source/Map.cpp
+		source/Player.cpp)
 
 # CREATE THE BINARY
 add_executable(${BINARY_NAME} ${SRCS})

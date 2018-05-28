@@ -9,33 +9,35 @@
 
 #include <vector>
 
-#include "IEventReceiver.hpp"
-#include "ISceneNode.hpp"
+#include "IEventReceiver.h"
+#include "ISceneNode.h"
 
-#include "Game.hpp"
 #include "IEntity.hpp"
-#include "IBonus.hpp"
-#include "IBomb.hpp"
 #include "IPlayer.hpp"
+#include "Map.hpp"
+// #include "IBonus.hpp"
+// #include "IBomb.hpp"
 
 namespace bbm {
+	class Game;
+
 	class Match : public irr::IEventReceiver, irr::scene::ISceneNode {
 	public:
 		Match(Game &game);
 		void init();
-		virtual bool OnEvent(irr::SEvent &event) override;	
+		bool OnEvent(irr::SEvent &event);
 		virtual void draw();
-		bool run();
+		virtual bool run();
 		void update();
 
 	private:
-		Game &game;
-		Graphic &graphic;
-		Map map;
-		bool isActive;
-		std::vector<IEntity *> blocks;
-		std::vector<IBonus *> bonus;
-		std::vector<IBomb *> bombs;
-		std::vector<IPlayer *> players;
+		Game &_game;
+		// Graphic &_graphic;
+		Map _map;
+		bool _isActive;
+		std::vector<IEntity *> _blocks;
+		// std::vector<IBonus *> _bonus;
+		// std::vector<IBomb *> _bombs;
+		std::vector<IPlayer *> _players;
 	};
 }

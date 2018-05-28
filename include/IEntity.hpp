@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include "Match.hpp"
-
 namespace bbm {
+	class Match;
+
 	enum Entites{
 		BLANK = 0,
 		PLAYER_1 = 1,
@@ -30,9 +30,9 @@ namespace bbm {
 		virtual void update() = 0;
 
 	protected:
-		Match &match;
-		bool isTraversable;
-		float x;
-		float y;
+		Match &_match;
+		bool _isTraversable;
+		float _x;
+		float _y;
 	};
 }

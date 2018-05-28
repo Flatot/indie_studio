@@ -13,20 +13,21 @@
 #include "IEventReceiver.h"
 #include "IGUIElement.h"
 
-#include "Game.hpp"
-#include "Graphic.hpp"
+// #include "Graphic.hpp"
 
 namespace bbm {
+	class Game;
+
 	class IMenu : public irr::IEventReceiver, irr::gui::IGUIElement {
 	public:
 		IMenu(Game &game);
 		virtual bool OnEvent(irr::SEvent &event) = 0;
 		virtual bool run() = 0;
-		virtual void draw() override;
+		virtual void draw() = 0;
 	protected:
-		Game &game;
-		Graphic &graphic;
-		bool isActive;
-		std::map<std::wstring, IMenu *> menus;
+		Game &_game;
+		// Graphic &_graphic;
+		bool _isActive;
+		std::map<std::wstring, IMenu *> _menus;
 	};
 }
