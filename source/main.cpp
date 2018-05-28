@@ -17,13 +17,10 @@ int main()
 	irr::video::IVideoDriver *driver = device->getVideoDriver();
 	irr::scene::ISceneManager *smgr = device->getSceneManager();
 	irr::gui::IGUIEnvironment *guienv = device->getGUIEnvironment();
-		
+	
 	device->setWindowCaption(L"Hello World! - Irrlicht Engine Demo");
-
 	guienv->addStaticText(L"Hello World! This is the Irrlicht Software renderer!",
 			irr::core::rect<irr::s32>(10,10,260,22), false);
-
-
 	while(device->run()) {
 		driver->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
 		

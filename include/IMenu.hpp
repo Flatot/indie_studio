@@ -17,7 +17,11 @@
 namespace bbm {
 	class Game;
 
+<<<<<<< HEAD
 	class IMenu : public irr::IEventReceiver {
+=======
+	class IMenu : public irr::IEventReceiver, irr::gui::IGUIElement {
+>>>>>>> source and include
 	public:
 		IMenu(Game &game);
 		virtual bool OnEvent(const irr::SEvent &event) = 0;

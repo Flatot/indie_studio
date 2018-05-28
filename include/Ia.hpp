@@ -16,6 +16,7 @@ namespace bbm {
 	public:
 		Ia(Match &match, float x, float y);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		~IA();
 		virtual void spawn() override;
 		virtual void die() override;
@@ -31,5 +32,13 @@ namespace bbm {
 
 	private:
 >>>>>>> Add architecture of the class
+=======
+		~IA();
+		virtual void spawn() override;
+		virtual void die() override;
+		virtual void update() override;
+	protected:
+		void	analysMap();
+>>>>>>> source and include
 	};
 }

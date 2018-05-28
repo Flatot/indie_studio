@@ -13,3 +13,8 @@ bbm::IMenu::IMenu(Game &game) :
 {
 	std::cout << "IMenu constructed" << std::endl;
 }
+
+virtual void	bbm::IMenu::draw()
+{
+	
+}

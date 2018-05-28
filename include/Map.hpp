@@ -12,7 +12,10 @@
 namespace bbm {
 	class Map {
 	public:
+<<<<<<< HEAD
 		Map();
+=======
+>>>>>>> source and include
 		Map(int length, int width, std::vector<std::vector<int> > map);
 	private:
 		int _length;
