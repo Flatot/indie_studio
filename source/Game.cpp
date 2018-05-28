@@ -105,4 +105,3 @@ void bbm::Game::saveConfig()
 {
 
 }
-
