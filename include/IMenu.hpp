@@ -11,17 +11,16 @@
 #include <map>
 
 #include "IEventReceiver.h"
-#include "IGUIElement.h"
 
 // #include "Graphic.hpp"
 
 namespace bbm {
 	class Game;
 
-	class IMenu {// : public irr::IEventReceiver, irr::gui::IGUIElement {
+	class IMenu : public irr::IEventReceiver {
 	public:
 		IMenu(Game &game);
-		virtual bool OnEvent(irr::SEvent &event) = 0;
+		virtual bool OnEvent(const irr::SEvent &event) = 0;
 		virtual bool run() = 0;
 		virtual void draw() = 0;
 	protected:
