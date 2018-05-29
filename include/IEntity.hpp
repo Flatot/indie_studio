@@ -14,12 +14,12 @@ namespace bbm {
 
 	enum Entites{
 		BLANK = 0,
-		PLAYER_1 = 1,
-		PLAYER_2 = 2,
-		PLAYER_3 = 4,
-		PLAYER_4 = 8,
-		UNBREAKABLE_BLOCK = 16,
-		BREAKABLE_BLOCK = 32,
+		UNBREAKABLE_BLOCK = 1,
+		BREAKABLE_BLOCK = 2,
+		PLAYER_1 = 4,
+		PLAYER_2 = 8,
+		PLAYER_3 = 16,
+		PLAYER_4 = 32,
 		BOMB = 64,
 		BONUS = 128
 	};
