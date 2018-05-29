@@ -18,7 +18,7 @@
 namespace bbm {
 	class Game;
 
-	class IMenu : public irr::IEventReceiver, irr::gui::IGUIElement {
+	class IMenu {// : public irr::IEventReceiver, irr::gui::IGUIElement {
 	public:
 		IMenu(Game &game);
 		virtual bool OnEvent(irr::SEvent &event) = 0;

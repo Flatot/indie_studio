@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "IEventReceiver.h"
-#include "ISceneNode.h"
 
 #include "IEntity.hpp"
 #include "IPlayer.hpp"
@@ -21,11 +20,11 @@
 namespace bbm {
 	class Game;
 
-	class Match : public irr::IEventReceiver, irr::scene::ISceneNode {
+	class Match : public irr::IEventReceiver {
 	public:
 		Match(Game &game);
 		void init();
-		bool OnEvent(irr::SEvent &event);
+		virtual bool OnEvent(const irr::SEvent &event);
 		virtual void draw();
 		virtual bool run();
 		void update();

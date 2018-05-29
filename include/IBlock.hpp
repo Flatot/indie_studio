@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "IBlock.hpp"
+#include "IEntity.hpp"
 
 namespace bbm {
 	class IBlock : public IEntity {

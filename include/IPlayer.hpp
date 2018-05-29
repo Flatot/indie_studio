@@ -7,8 +7,12 @@
 
 #pragma once
 
+#include "IEntity.hpp"
+
 namespace bbm {
-	class IPlayer {
+	class Match;
+
+	class IPlayer : public IEntity {
 	public:
 		IPlayer(Match &match, float x, float y, bool isTraversable);
 		virtual void spawn() = 0;

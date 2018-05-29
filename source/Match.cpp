@@ -5,6 +5,7 @@
 ** Match.cpp
 */
 
+#include <iostream>
 #include "Match.hpp"
 
 bbm::Match::Match(Game &game) :
@@ -13,27 +14,27 @@ bbm::Match::Match(Game &game) :
 	std::cout << "Match constructed" << std::endl;
 }
 
-void	bbm::Match::init()
+void bbm::Match::init()
 {
 	
 }
 
-bool	bbm::Match::OnEvent(irr::SEvent &event)
+bool bbm::Match::OnEvent(const irr::SEvent &event)
+{
+	return true;
+}
+
+void bbm::Match::draw()
 {
 
 }
 
-void	bbm::Match::draw()
+bool bbm::Match::run()
 {
-
+	return true;
 }
 
-bool	bbm::Match::run()
-{
-
-}
-
-void	bbm::Match::update()
+void bbm::Match::update()
 {
 
 }

@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <iostream>
+
 namespace bbm {
 	class Match;
 
@@ -24,7 +26,7 @@ namespace bbm {
 
 	class IEntity {
 	public:
-		IEntity(Match &match, float x, float y);
+		IEntity(Match &match, float x, float y, bool isTraversable);
 		virtual void spawn() = 0;
 		virtual void die() = 0;
 		virtual void update() = 0;
