@@ -7,11 +7,8 @@
 
 #pragma once
 
-<<<<<<< HEAD
 #include <iostream>
 
-=======
->>>>>>> source and include
 namespace bbm {
 	class Match;
 
