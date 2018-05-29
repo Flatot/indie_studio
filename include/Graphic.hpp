@@ -35,6 +35,5 @@ namespace bbm {
 		irr::video::IVideoDriver *_driver;
 		irr::scene::ISceneManager *_scene;
 		irr::gui::IGUIEnvironment *_guienv;
-
 	};
 }

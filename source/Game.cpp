@@ -98,7 +98,6 @@ bool bbm::Game::launchMainMenu()
 
 void bbm::Game::save()
 {
-
 }
 
 void bbm::Game::saveConfig()

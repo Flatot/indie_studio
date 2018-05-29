@@ -85,7 +85,7 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 
 void bbm::Match::draw()
 {
-
+	return true;
 }
 
 void bbm::Match::print_skybase()
