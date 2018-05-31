@@ -1,0 +1,6 @@
+Map (bonus, mur, player)
+analyse map
+checker la case non dangereuse la plus proche
+cherche du joueur plus proche
+si blocké -> casse les caisses en se déplacant vers lui
+sinon poser bombe dans intersection

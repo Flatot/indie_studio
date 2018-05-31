@@ -1,0 +1,4 @@
+/home/tristan/Epitech/2nd_Year/CPP/cpp_indie_studio/build/CMakeFiles/rebuild_cache.dir
+/home/tristan/Epitech/2nd_Year/CPP/cpp_indie_studio/build/CMakeFiles/edit_cache.dir
+/home/tristan/Epitech/2nd_Year/CPP/cpp_indie_studio/build/CMakeFiles/build_irrlicht.dir
+/home/tristan/Epitech/2nd_Year/CPP/cpp_indie_studio/build/CMakeFiles/bomberman.dir
