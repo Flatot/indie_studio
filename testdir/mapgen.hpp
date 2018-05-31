@@ -22,6 +22,15 @@ namespace bbm {
         BOMB = 64,
         BONUS = 128
     };
+
+    class PlayerCurse {
+    public:
+        PlayerCurse(int y, int x);
+        ~PlayerCurse();
+        int y;
+        int x;
+    };
+
     class MapGen {
     public:
         static std::vector<std::vector<int>> generateMap(std::string path);

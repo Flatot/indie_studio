@@ -44,6 +44,9 @@ int MyCurses::myAffMapCurse(std::vector<std::vector<int>> mmap)
 int MyCurses::mySetLoop(std::vector<std::vector<int>> mmap)
 {
     int exit = 0;
+    bbm::PlayerCurse Ia(1, 1);
+    mmap[1][1] = bbm::Entites::PLAYER_1;
+
     myAffMapCurse(mmap);
     while (exit == 0)
     {
@@ -51,6 +54,16 @@ int MyCurses::mySetLoop(std::vector<std::vector<int>> mmap)
         gameEventsCurse(mmap);
     }
     return (exit);
+}
+
+bbm::PlayerCurse::PlayerCurse(int y, int x)
+{
+    this->y = y;
+    this->x = x;
+}
+
+bbm::PlayerCurse::~PlayerCurse()
+{
 }
 
 int MyCurses::myGameLaunch(std::vector<std::vector<int>> mmap)

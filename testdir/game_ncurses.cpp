@@ -27,10 +27,12 @@ std::vector<std::vector<int>> MyCurses::moveCursor(
     return (mmap);
 }
 
-std::vector<std::vector<int>> MyCurses::gameEventsCurse(std::vector<std::vector<int>> mmap)
+std::vector<std::vector<int>> MyCurses::gameEventsCurse(
+        std::vector<std::vector<int>> mmap)
 {
     int c = getch();
-    if (c == KEY_UP || c == KEY_DOWN || c == KEY_RIGHT || c == KEY_LEFT || c == 'b')
+    if (c == KEY_UP || c == KEY_DOWN || c == KEY_RIGHT ||
+            c == KEY_LEFT || c == 'b')
         mmap = moveCursor(c, mmap[0].size(), mmap.size(), mmap);
     return (mmap);
 }

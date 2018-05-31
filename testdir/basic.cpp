@@ -40,5 +40,6 @@ std::vector<std::vector<int>> bbm::MapGen::generateMap(std::string path)
     }
     mmap.push_back(mmap[0]);
     fs.close();
-    return(bbm::MapGen::createBreakable(mmap));
+    return (mmap);
+    //return(bbm::MapGen::createBreakable(mmap));
 }
