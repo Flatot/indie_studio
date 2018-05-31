@@ -61,6 +61,16 @@ void	Ia::active_mode()
 
 }
 
+void	Ia::fill_distance_map(int n, int i)
+{
+
+}
+
+void	Ia::active_mode()
+{
+
+}
+
 void    Ia::analysMap()
 {
 
