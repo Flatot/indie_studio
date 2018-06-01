@@ -11,6 +11,8 @@
 #include <vector>
 
 namespace bbm {
+    class Ia;
+
     enum Entites{
         BLANK = 0,
         PLAYER_1 = 1,
@@ -27,8 +29,10 @@ namespace bbm {
     public:
         PlayerCurse(int y, int x);
         ~PlayerCurse();
-        int y;
-        int x;
+        int _y;
+        int _x;
+        std::vector<std::vector<int>> moveAllPlayer(
+                int dir, std::vector<std::vector<int>>);
     };
 
     class MapGen {

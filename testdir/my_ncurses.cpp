@@ -6,6 +6,7 @@
 //
 
 #include <curses.h>
+#include "Ia.hpp"
 #include "mapgen.hpp"
 #include "header_curses.hpp"
 
@@ -41,25 +42,37 @@ int MyCurses::myAffMapCurse(std::vector<std::vector<int>> mmap)
     return (0);
 }
 
-int MyCurses::mySetLoop(std::vector<std::vector<int>> mmap)
+int MyCurses::mySetLoop(std::vector<std::vector<int> > mmap)
 {
     int exit = 0;
-    bbm::PlayerCurse Ia(1, 1);
-    mmap[1][1] = bbm::Entites::PLAYER_1;
-
+    int y;
+    int x;
+    bbm::Ia ia(6, 8);
+    ia.rec.push_back(2);
+    mmap[6][8] = bbm::Entites::PLAYER_1;
+    mmap[4][8] = bbm::Entites::BOMB;
+    mmap[6][7] = bbm::Entites::BOMB;
+    mmap[7][7] = bbm::Entites::BOMB;
+    ia.analyseMap(mmap);
     myAffMapCurse(mmap);
     while (exit == 0)
     {
         wrefresh(stdscr);
-        gameEventsCurse(mmap);
+        mmap = gameEventsCurse(mmap);
+        ia.analyseMap(mmap);
+        mmap = ia.moveAllPlayer(ia.rec[5], mmap);
+        getyx(stdscr, y, x);
+        myAffMapCurse(mmap);
+        wmove(stdscr, y, x);
+
     }
     return (exit);
 }
 
-bbm::PlayerCurse::PlayerCurse(int y, int x)
+bbm::PlayerCurse::PlayerCurse(int y, int x) :
+    _y(y),
+    _x(x)
 {
-    this->y = y;
-    this->x = x;
 }
 
 bbm::PlayerCurse::~PlayerCurse()

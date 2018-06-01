@@ -7,21 +7,41 @@
 
 #pragma once
 
-#include <vector>
-#include "IPlayer.hpp"
-#include "Match.hpp"
+#include <fstream>
+#include "mapgen.hpp"
 
 namespace bbm {
-	class Ia : public IPlayer {
+	class Ia : public PlayerCurse {
 	public:
-		Ia(Match &match, float x, float y);
-		~IA();
-		virtual void spawn() override;
-		virtual void die() override;
-		virtual void update() override;
+		Ia(int y, int x);
+		~Ia();
+		void	analyseMap(std::vector<std::vector<int>>);
+		std::vector<int> rec;
+		bool seeAllMove(int dir);
+		bool seeAllMoveDefensive(int dir, int y, int x);
 	protected:
-		void	analysMap();
+		void fill_dangerosity(int bombLen, int y, int x);
+		void scaleBomb();
+		void active_mode();
+		void defensive_mode();
+		void affDmap();
+		void pathFindingDefensive();
+		bool checkAllDefensive(int dir, std::vector<int> rec);
 	private:
-		
+		std::vector<std::vector<int>>	d_map;
+		std::vector<std::vector<int>>	map;
+		std::vector<int> moveAllDefensive(int dir, std::vector<int> rec);
 	};
 }
+
+
+/*
+ * i
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
