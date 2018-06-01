@@ -10,23 +10,25 @@
 #include <string>
 #include <map>
 
-#include "IEventReceiver.h"
-
-// #include "Graphic.hpp"
+#include "IMyEventReceiver.hpp"
+#include "EventManager.hpp"
+#include "Graphic.hpp"
 
 namespace bbm {
 	class Game;
 
-	class IMenu : public irr::IEventReceiver {
+	class IMenu : public IMyEventReceiver {
 	public:
 		IMenu(Game &game);
 		virtual bool OnEvent(const irr::SEvent &event) = 0;
 		virtual bool run() = 0;
 		virtual void draw() = 0;
+		EventManager *getEventManager();
 	protected:
 		Game &_game;
-		// Graphic &_graphic;
-		bool _isActive;
+		EventManager *_evManager;
+		Graphic &_graphic;
 		std::map<std::wstring, IMenu *> _menus;
+
 	};
 }

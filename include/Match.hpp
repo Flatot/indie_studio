@@ -9,8 +9,10 @@
 
 #include <vector>
 
-#include "IEventReceiver.h"
+#include "IMyEventReceiver.hpp"
+#include "EventManager.hpp"
 
+#include "Graphic.hpp"
 #include "IEntity.hpp"
 #include "IPlayer.hpp"
 #include "Map.hpp"
@@ -20,7 +22,7 @@
 namespace bbm {
 	class Game;
 
-	class Match : public irr::IEventReceiver {
+	class Match : public IMyEventReceiver {
 	public:
 		Match(Game &game);
 		void init();
@@ -28,12 +30,13 @@ namespace bbm {
 		virtual void draw();
 		virtual bool run();
 		void update();
+		EventManager *getEventManager();
 
 	private:
 		Game &_game;
-		// Graphic &_graphic;
+		Graphic &_graphic;
+		EventManager *_evManager;
 		Map _map;
-		bool _isActive;
 		std::vector<IEntity *> _blocks;
 		// std::vector<IBonus *> _bonus;
 		// std::vector<IBomb *> _bombs;

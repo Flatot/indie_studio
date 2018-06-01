@@ -3,6 +3,7 @@ project(Bomberman)
 
 set(BINARY_NAME bomberman)
 
+set(CMAKE_CXX_STANDARD 17)
 
 # CREATE IRRLICHT STATIC LIB FOR LINUX
 set(IRRLICHT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Irrlicht)
@@ -28,7 +29,11 @@ set(SRCS 	source/main.cpp
 		source/IBlock.cpp
 		source/IPlayer.cpp
 		source/Map.cpp
-		source/Player.cpp)
+		source/Player.cpp
+		source/Graphic.cpp
+		source/IMyEventReceiver.cpp
+		source/EventManager.cpp
+		source/Config.cpp)
 
 # CREATE THE BINARY
 add_executable(${BINARY_NAME} ${SRCS})
