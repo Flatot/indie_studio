@@ -7,11 +7,21 @@
 
 #include <iostream>
 #include "IMenu.hpp"
+#include "Game.hpp"
 
 bbm::IMenu::IMenu(Game &game) :
-	_game(game)
+	IMyEventReceiver(),
+	_game(game),
+	_evManager(new EventManager()),
+	_graphic(game.getGraphic()),
+	_menus()
 {
-	std::cout << "IMenu constructed" << std::endl;
+
+}
+
+bbm::EventManager *bbm::IMenu::getEventManager()
+{
+	return _evManager;
 }
 
 virtual void	bbm::IMenu::draw()

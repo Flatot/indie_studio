@@ -9,15 +9,23 @@
 
 #include <iostream>
 
+#include "IMyEventReceiver.hpp"
+#include "EventManager.hpp"
+
+#include "Config.hpp"
+#include "Graphic.hpp"
 #include "IMenu.hpp"
 #include "Match.hpp"
-// #include "Graphic.hpp"
 // #include "PlayerConfig.hpp"
 
 namespace bbm {
-	class Game {
+	class Game : public IMyEventReceiver {
 	public:
-		Game();
+		Game(Config &config);
+
+		Graphic &getGraphic();
+
+		virtual bool OnEvent(const irr::SEvent &event) override;
 		bool run();
 		bool launchMatch();
 	
@@ -28,12 +36,15 @@ namespace bbm {
 		void save();
 		// Save les playerConfig
 		void saveConfig();
+
 	private:
+		Config &_config;	
+		EventManager *_evManager;
+		Graphic _graphic;
 		IMenu *_mainMenu;
 		IMenu *_inGameMenu;
 		Match _match;
-	
-		// Graphic _graphic;
+		bool _matchLaunched;
 	
 		// PlayerConfig _playersConfig[4];
 	};
