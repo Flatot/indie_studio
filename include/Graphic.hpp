@@ -26,7 +26,6 @@ namespace bbm {
 		void setWindowCaption(const wchar_t *str);
 		void setWindowCaption();
 				
-
 	private:
 		int _width;
 		int _height;

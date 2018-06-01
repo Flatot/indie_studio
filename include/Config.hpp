@@ -6,9 +6,9 @@
 //
 
 #pragma once
+
 #include <vector>
 #include "PlayerConfig.hpp"
-
 
 namespace bbm {
 	class Config {
@@ -36,4 +36,3 @@ namespace bbm {
 	};
 }
 std::ostream& operator<< (std::ostream& stream, bbm::Config const& conf);
-

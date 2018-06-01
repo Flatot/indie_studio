@@ -8,7 +8,6 @@
 #include "Config.hpp"
 
 bbm::Config::Config() :
-
 	_fullscreen(false),
 	_screenWidth(1280),
 	_screenHeight(720),

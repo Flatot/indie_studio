@@ -51,7 +51,6 @@ bbm::Match::Match(Game &game) :
 	_camera = _graphic.getScene()->addCameraSceneNode(0,
 			irr::core::vector3df(6.92f, 13.05f, 2.16f),
 			irr::core::vector3df(6.94f, -1.82f, 5.70f));
-
 }
 
 void bbm::Match::init()
@@ -177,4 +176,9 @@ void bbm::Match::removePlayer(IPlayer *player)
 			_players.erase(it--);
 		}
 	}
+}
+
+bbm::EventManager *bbm::Match::getEventManager()
+{
+	return _evManager;
 }
