@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <vector>
 #include "IPlayer.hpp"
 #include "Match.hpp"
 
@@ -20,5 +21,8 @@ namespace bbm {
 		virtual void update() override;
 	protected:
 		void	analysMap();
+	private:
+		std::vector<std::vector<int> >	_direction;
+		
 	};
 }
