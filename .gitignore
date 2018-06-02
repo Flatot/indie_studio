@@ -5,3 +5,5 @@ command
 *.d
 bomberman
 .idea/
+a.out
+cmake-build-debug/
