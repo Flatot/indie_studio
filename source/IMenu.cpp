@@ -16,7 +16,7 @@ bbm::IMenu::IMenu(Game &game) :
 	_graphic(game.getGraphic()),
 	_menus()
 {
-
+	_evManager->addEventReceiver(this);
 }
 
 bbm::EventManager *bbm::IMenu::getEventManager()

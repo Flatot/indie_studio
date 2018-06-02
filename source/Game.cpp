@@ -53,11 +53,11 @@ bool bbm::Game::OnEvent(const irr::SEvent &event)
 bool bbm::Game::run()
 {
 	activate();
-	_graphic.getDevice()->setWindowCaption(L"Game loop");
 	
 	_graphic.getGuienv()->addStaticText(L"Hello Game! This is the Irrlicht Software renderer!",
 			irr::core::rect<irr::s32>(10,10,260,22), false);
 	while(_graphic.getDevice()->run()) {
+		_graphic.setWindowCaption(L"Game loop");
 		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
 		
 		_graphic.getGuienv()->drawAll();
@@ -73,6 +73,7 @@ bool bbm::Game::launchMatch()
 {
 	if (_matchLaunched) {
 		deactivate();
+		_match.init();
 		_match.run();
 		activate();
 	}

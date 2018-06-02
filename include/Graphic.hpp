@@ -20,6 +20,12 @@ namespace bbm {
 		irr::scene::ISceneManager *getScene();
 		irr::gui::IGUIEnvironment *getGuienv();
 		irr::ILogger *getLogger();
+		void setWindowCaption(const irr::core::vector3df &posCam, 
+				const wchar_t *str);
+		void setWindowCaption(const irr::core::vector3df &posCam);
+		void setWindowCaption(const wchar_t *str);
+		void setWindowCaption();
+				
 
 	private:
 		int _width;
@@ -29,5 +35,6 @@ namespace bbm {
 		irr::video::IVideoDriver *_driver;
 		irr::scene::ISceneManager *_scene;
 		irr::gui::IGUIEnvironment *_guienv;
+
 	};
 }
