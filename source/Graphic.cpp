@@ -14,7 +14,9 @@ bbm::Graphic::Graphic(int width, int height, bool fullscreen,
 	_height(height),
 	_fullscreen(fullscreen)
 {
-	_device = irr::createDevice(irr::video::/*EDT_SOFTWARE*/ EDT_OPENGL, irr::core::dimension2d<irr::u32>(_width, _height), 32, _fullscreen, false, false, evReceiver);
+	_device = irr::createDevice(irr::video::EDT_OPENGL,
+			irr::core::dimension2d<irr::u32>(_width, _height), 32,
+			_fullscreen, false, false, evReceiver);
 	_driver = _device->getVideoDriver();
 	_scene = _device->getSceneManager();
 	_guienv = _device->getGUIEnvironment();
