@@ -4,3 +4,4 @@ command
 *.a
 *.d
 bomberman
+.idea/
