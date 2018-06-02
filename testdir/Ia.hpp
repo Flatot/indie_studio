@@ -17,8 +17,13 @@ namespace bbm {
 		~Ia();
 		void	analyseMap(std::vector<std::vector<int>>);
 		std::vector<int> rec;
+		int ym;
+		int xm;
+		int f;
+		int objectif;
+		int ite;
 		bool seeAllMove(int dir);
-		bool seeAllMoveDefensive(int dir, int y, int x);
+		bool seeAllMoveDefensive(int dir);
 	protected:
 		void fill_dangerosity(int bombLen, int y, int x);
 		void scaleBomb();
@@ -26,11 +31,11 @@ namespace bbm {
 		void defensive_mode();
 		void affDmap();
 		void pathFindingDefensive();
-		bool checkAllDefensive(int dir, std::vector<int> rec);
+		bool checkAllDefensive(int dir);
 	private:
 		std::vector<std::vector<int>>	d_map;
 		std::vector<std::vector<int>>	map;
-		std::vector<int> moveAllDefensive(int dir, std::vector<int> rec);
+		std::vector<int> moveAllDefensive(int dir);
 	};
 }
 

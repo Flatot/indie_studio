@@ -48,7 +48,6 @@ int MyCurses::mySetLoop(std::vector<std::vector<int> > mmap)
     int y;
     int x;
     bbm::Ia ia(6, 8);
-    ia.rec.push_back(2);
     mmap[6][8] = bbm::Entites::PLAYER_1;
     mmap[4][8] = bbm::Entites::BOMB;
     mmap[6][7] = bbm::Entites::BOMB;
@@ -60,7 +59,7 @@ int MyCurses::mySetLoop(std::vector<std::vector<int> > mmap)
         wrefresh(stdscr);
         mmap = gameEventsCurse(mmap);
         ia.analyseMap(mmap);
-        mmap = ia.moveAllPlayer(ia.rec[5], mmap);
+        mmap = ia.moveAllPlayer(ia.rec[0], mmap);
         getyx(stdscr, y, x);
         myAffMapCurse(mmap);
         wmove(stdscr, y, x);

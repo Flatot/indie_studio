@@ -53,45 +53,45 @@ void	Ia::fill_distance_map(int n, int i)
 
 
 
-bool bbm::Ia::checkAllDefensive(int dir, std::vector<int> rec) {
+bool bbm::Ia::checkAllDefensive(int dir) {
 	if (dir == 0){
-		if (d_map[rec[0] - 1][rec[1]] == 0)
+		if (d_map[ym - 1][xm] == 0)
 			return (true);
 		return (false);
 	}
 	if (dir == 1){
-		if (d_map[rec[0]][rec[1] + 1] == 0)
+		if (d_map[ym][xm + 1] == 0)
 			return (true);
 		return (false);
 	}
 	if (dir == 2){
-		if (d_map[rec[0] + 1][rec[1]] == 0)
+		if (d_map[ym + 1][xm] == 0)
 			return (true);
 		return (false);
 	}
-	if (d_map[rec[0]][rec[1] - 1] == 0)
+	if (d_map[ym][xm - 1] == 0)
 		return (true);
 	return (false);
 }
 
-bool bbm::Ia::seeAllMoveDefensive(int dir, int y, int x)
+bool bbm::Ia::seeAllMoveDefensive(int dir)
 {
 	if (dir == 0){
-		if (map[y - 1][x] == bbm::Entites::BLANK)
+		if (map[ym - 1][xm] == bbm::Entites::BLANK)
 			return (true);
 		return (false);
 	}
 	if (dir == 1){
-		if (map[y][x + 1] == bbm::Entites::BLANK)
+		if (map[ym][xm + 1] == bbm::Entites::BLANK)
 			return (true);
 		return (false);
 	}
 	if (dir == 2){
-		if (map[y + 1][x] == bbm::Entites::BLANK)
+		if (map[ym + 1][xm] == bbm::Entites::BLANK)
 			return (true);
 		return (false);
 	}
-	if (map[y][x - 1] == bbm::Entites::BLANK)
+	if (map[ym][xm - 1] == bbm::Entites::BLANK)
 		return (true);
 	return (false);
 }
@@ -118,72 +118,71 @@ bool bbm::Ia::seeAllMove(int dir)
 	return (false);
 }
 
-std::vector<int> bbm::Ia::moveAllDefensive(int dir, std::vector<int> rec)
+std::vector<int> bbm::Ia::moveAllDefensive(int dir)
 {
 	if (dir == 0){
-		rec[0]--;
+		ym--;
 		return (rec);
 	}
 	if (dir == 1){
-		rec[1]++;
+		xm++;
 		return (rec);
 	}
 	if (dir == 2){
-		rec[0]++;
+		ym++;
 		return (rec);
 	}
-	rec[1]--;
+	xm--;
 	return (rec);
 }
 
 void bbm::Ia::pathFindingDefensive() {
-	std::cout << "a" << std::endl;
-	if (rec[3] == rec[4]) {
-		std::cout << "b" << std::endl;
-		for (int i = 0; i != 4; i++) {
-			if (checkAllDefensive(i, rec)) {
-				rec[2] = 0;
-				std::cout << "first i ==> " << i << std::endl;
+	if (objectif == ite) {
+		for (int i = 0; i < 4; i++){
+			if (checkAllDefensive(i)) {
+				f = 0;
 				rec.push_back(i);
-				return ;
+				return;
 			}
 		}
-		std::cout << "c" << std::endl;
-		rec[3] = 0;
-		rec[4]++;
-		pathFindingDefensive();
-		//retour ici 1
-	} else {
-		for (int i = 0; i != 4 && rec[2] != 0; i++) {
-			std::cout << "d" << std::endl;
-			if (seeAllMoveDefensive(i, rec[0], rec[1])) {
-				std::cout << "second i ==> " << i << std::endl;
-				rec.push_back(i);
-				rec[3]++;
-				rec = moveAllDefensive(i, rec);
-				if (checkAllDefensive(i, rec)) {
-					rec[2] = 0;
-					return;
-				}
-				pathFindingDefensive();
-			}
-		}
+        return;
 	}
+    else {
+        for (int i = 0; f != 0 && i < 4; i++){
+            if (seeAllMoveDefensive(i)){
+                moveAllDefensive(i);
+                rec.push_back(i);
+                ite++;
+                pathFindingDefensive();
+                ite--;
+                moveAllDefensive((i + 2) % 4);
+                if (f != 0)
+                    rec.pop_back();
+            }
+        }
+    }
+    return;
 }
 
 void	bbm::Ia::defensive_mode()
 {
-	rec.push_back(_y);
-	rec.push_back(_x);
-	rec.push_back(1);
-	rec.push_back(0);
-	rec.push_back(0);
-	pathFindingDefensive();
-	while (rec[2] != 0) {
-			pathFindingDefensive();
-	}
-	for (unsigned i=0; i<rec.size(); i++)
-		std::cout << rec[i] << std::endl;
+	//rec.push_back(_y);
+	//rec.push_back(_x);
+	ym = _y;
+	xm = _x;
+	//rec.push_back(1);
+	f = 1;
+	//rec.push_back(0);
+	//rec.push_back(0);
+	objectif = 0;
+	ite = 0;
+    while (f != 0) {
+        rec.clear();
+        pathFindingDefensive();
+        objectif++;
+    }
+        //for (unsigned i=0; i<rec.size(); i++)
+	//	std::cout << rec[i] << std::endl;
 }
 
 void	bbm::Ia::active_mode()
@@ -242,7 +241,7 @@ void    bbm::Ia::analyseMap(std::vector<std::vector<int>> mmap)
 	map = mmap;
 	std::vector<int> tmp;
 
-	endwin();
+	//endwin();
 	for (int y = 0; y < map.size(); y++) {
 		for (int x = 0; x < map[0].size(); x++) {
 			if (map[y][x] == bbm::Entites::BREAKABLE_BLOCK || map[y][x] == bbm::Entites::UNBREAKABLE_BLOCK)
@@ -259,8 +258,8 @@ void    bbm::Ia::analyseMap(std::vector<std::vector<int>> mmap)
 
 	// d_map a fill a chaque fois qu'une bombe est posée
 	if (d_map[_y][_x] == 2) {
-		defensive_mode();
-		exit(0);
+        defensive_mode();
+      //  exit(0);
 	}
 	else {
 		active_mode();
