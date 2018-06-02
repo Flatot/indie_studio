@@ -1,0 +1,6 @@
+build/
+*.o
+command
+*.a
+*.d
+bomberman
