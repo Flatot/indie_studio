@@ -23,8 +23,3 @@ bbm::EventManager *bbm::IMenu::getEventManager()
 {
 	return _evManager;
 }
-
-virtual void	bbm::IMenu::draw()
-{
-	
-}
