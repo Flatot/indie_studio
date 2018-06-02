@@ -18,8 +18,6 @@ namespace bbm {
 		void removeEventReceiver(IMyEventReceiver *ev);
 		void addEventReceiver(IMyEventReceiver *ev);
 		void setRoot(bool toggle);
-//		void startEventProcess();
-//		void endEventProcess();
 	private:
 		bool _root;
 		std::vector<IMyEventReceiver *> _evReceivers;

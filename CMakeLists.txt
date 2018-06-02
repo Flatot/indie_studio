@@ -33,6 +33,7 @@ set(SRCS 	source/main.cpp
 		source/Graphic.cpp
 		source/IMyEventReceiver.cpp
 		source/EventManager.cpp
+		source/Floor.cpp
 		source/Config.cpp)
 
 # CREATE THE BINARY
