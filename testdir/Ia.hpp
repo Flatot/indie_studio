@@ -32,21 +32,15 @@ namespace bbm {
 		void affDmap();
 		void pathFindingDefensive();
 		bool checkAllDefensive(int dir);
+		bool checkAllBreakable(int dir, int y, int x);
+		bool aliveIfBomb();
+		void changeDMapToBMap();
+		void generateDMap();
 	private:
 		std::vector<std::vector<int>>	d_map;
+		std::vector<std::vector<int>> a_map;
+		std::vector<std::vector<int>> f_map;
 		std::vector<std::vector<int>>	map;
 		std::vector<int> moveAllDefensive(int dir);
 	};
 }
-
-
-/*
- * i
- *
- *
- *
- *
- *
- *
- *
- */
