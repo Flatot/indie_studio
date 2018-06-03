@@ -16,10 +16,18 @@ bbm::Map::Map() :
 	std::cout << "Map constructed" << std::endl;
 }
 
-bbm::Map::Map(int length, int width, std::vector<std::vector<int>> map) :
-	_length(length),
-	_width(width),
+bbm::Map::Map(std::vector<std::vector<int>> map) :
+	_length(map.size()),
+	_width(map[0].size()),
 	_map(map)
 {
 	std::cout << "Map constructed" << std::endl;
+}
+
+void bbm::Map::display() {
+	for (int j = 0; j < _map.size(); j++) {
+		for (int i = 0; i < _map[0].size(); i++)
+			std::cout << _map[j][i];
+		std::cout << std::endl;
+	}
 }

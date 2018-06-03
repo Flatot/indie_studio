@@ -13,7 +13,8 @@ namespace bbm {
 	class Map {
 	public:
 		Map();
-		Map(int length, int width, std::vector<std::vector<int> > map);
+		Map(std::vector<std::vector<int> > map);
+		void display();
 	private:
 		int _length;
 		int _width;

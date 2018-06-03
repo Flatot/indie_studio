@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Match.hpp"
 #include "Game.hpp"
+#include "MapGenerator.hpp"
 
 bbm::Match::Match(Game &game) :
 	IMyEventReceiver(),
@@ -25,6 +26,8 @@ bbm::Match::Match(Game &game) :
 
 void bbm::Match::init()
 {
+	_map = MapGenerator::generate("./assets/maps/map1");
+	_map.display();
 }
 
 bool bbm::Match::OnEvent(const irr::SEvent &event)
@@ -49,13 +52,11 @@ bool bbm::Match::run()
 {
 	activate();
 	
-//	_graphic.getGuienv()->addStaticText(L"Hello Match! This is the Irrlicht Software renderer!",
-//			irr::core::rect<irr::s32>(10,10,260,22), false);
 	while(_graphic.getDevice()->run() && isActive()) {
 		_graphic.setWindowCaption(_camera->getPosition(), L"Match loop");
 		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
+
 		_graphic.getScene()->drawAll();		
-//		_graphic.getGuienv()->drawAll();
 		_graphic.getDriver()->endScene();
 	}
 	deactivate();

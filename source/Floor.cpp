@@ -17,8 +17,8 @@ bbm::Floor::Floor(Graphic &graphic) :
 	auto *scene = graphic.getScene();
 	auto *driver = graphic.getDriver();
 
-	for (int z = 0; z < 11; ++z) {
-		for (int x = 0; x < 13; ++x) {
+	for (int z = 0; z < 13; ++z) {
+		for (int x = 0; x < 15; ++x) {
 			auto pos = irr::core::vector3df(x * _coefX, _coefY, 
 					z * _coefZ);
 			auto *floor = scene->addAnimatedMeshSceneNode(
