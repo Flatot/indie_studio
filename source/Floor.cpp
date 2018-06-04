@@ -11,7 +11,7 @@ bbm::Floor::Floor(Graphic &graphic) :
 	_meshPath("./assets/model3D/floor/Sci-Fi-Floor-1-OBJ.obj"),
 	_texturePath("./assets/model3D/floor/textures/Sci-Fi-Floor-Gloss.tga"),
 	_coefX(0.2f),
-	_coefY(0),
+	_coefY(0.2f),
 	_coefZ(0.2f)
 {
 	auto *scene = graphic.getScene();
@@ -19,7 +19,7 @@ bbm::Floor::Floor(Graphic &graphic) :
 
 	for (int z = 0; z < 13; ++z) {
 		for (int x = 0; x < 15; ++x) {
-			auto pos = irr::core::vector3df(x * _coefX, _coefY, 
+			auto pos = irr::core::vector3df(x * _coefX, 0, 
 					z * _coefZ);
 			auto *floor = scene->addAnimatedMeshSceneNode(
 					scene->getMesh(_meshPath), 0, -1, pos, 

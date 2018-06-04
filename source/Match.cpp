@@ -9,6 +9,7 @@
 #include "Match.hpp"
 #include "Game.hpp"
 #include "MapGenerator.hpp"
+#include "Player.hpp"
 
 bbm::Match::Match(Game &game) :
 	IMyEventReceiver(),
@@ -22,14 +23,18 @@ bbm::Match::Match(Game &game) :
 {
 	_evManager->addEventReceiver(this);
 	_camera = _graphic.getScene()->addCameraSceneNode(0, 
-			irr::core::vector3df(1.3f, 2.6f, -3.4f), 
-			irr::core::vector3df(1.2f, 0, 0));
+			irr::core::vector3df(1.3f, 3.f, -3.4f), 
+			irr::core::vector3df(1.6f, 0, 0));
 
 }
 
 void bbm::Match::init()
 {
 	_map.loadMap(MapGenerator::generate("./assets/maps/map1"));
+	_map.addEntity(new Player(*this, 1, 1, PLAYER_1));
+	_map.addEntity(new Player(*this, 1, 2, PLAYER_2));
+	_map.addEntity(new Player(*this, 1, 3, PLAYER_3));
+	_map.addEntity(new Player(*this, 1, 4, PLAYER_4));
 	std::cout << _map << std::endl;
 }
 

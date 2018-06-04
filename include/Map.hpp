@@ -24,6 +24,7 @@ namespace bbm {
 		std::vector<IEntity *> &getFromPos(int y, int x);
 		int getEntitiesFromPos(int y, int x) const;
 		void clear();
+		void addEntity(IEntity *entity);
 
 	private:
 		std::vector<int> getVecFromLine(std::string line, 

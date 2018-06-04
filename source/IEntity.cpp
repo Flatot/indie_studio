@@ -27,9 +27,19 @@ bbm::IEntity::~IEntity()
 		_mesh->remove();
 }
 
-int bbm::IEntity::getIdEntity()
+int bbm::IEntity::getIdEntity() const
 {
 	return _idEntity;
+}
+
+int bbm::IEntity::getPosX() const
+{
+	return _x;
+}
+
+int bbm::IEntity::getPosZ() const
+{
+	return _z;
 }
 
 void bbm::IEntity::setCoefs(float coefX, float coefY, float coefZ)
@@ -39,7 +49,7 @@ void bbm::IEntity::setCoefs(float coefX, float coefY, float coefZ)
 	_coefZ = coefZ;
 }
 
-void bbm::IEntity::setMesh(irr::scene::IMeshSceneNode *mesh)
+void bbm::IEntity::setMesh(irr::scene::ISceneNode *mesh)
 {
 	_mesh = mesh;
 }
@@ -49,7 +59,7 @@ void bbm::IEntity::setTexturePath(std::string &path)
 	_texturePath = path;
 }
 
-irr::scene::IMeshSceneNode *bbm::IEntity::getMesh()
+irr::scene::ISceneNode *bbm::IEntity::getMesh()
 {
 	return _mesh;
 }

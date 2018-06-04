@@ -14,9 +14,10 @@ bbm::UnbreakableBlock::UnbreakableBlock(Match &match, float x, float z) :
 {
 	_idEntity = UNBREAKABLE_BLOCK;
 	setCoefs(0.4f, 0.4f, 0.4f);
-	irr::core::vector3df pos(x * _coefX, 0, z * _coefZ);
-	_mesh = match.getGraphic().getScene()->addCubeSceneNode(
-				0.4f, 0, -1, pos);
+	auto pos = irr::core::vector3df(x * _coefX, _coefY, z * _coefZ);
+	auto scene = _match.getGraphic().getScene();
+
+	_mesh = scene->addCubeSceneNode(0.4f, 0, -1, pos);
 	_mesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 }
 

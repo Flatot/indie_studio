@@ -6,8 +6,10 @@
 */
 
 #include <sstream>
+#include <iostream>
 #include "Map.hpp"
 #include "UnbreakableBlock.hpp"
+#include "Player.hpp"
 
 bbm::Map::Map(Match &match) :
 	_match(match),
@@ -24,15 +26,23 @@ void bbm::Map::loadMap(std::vector<std::vector<int>> map)
 	if (!_height)
 		return;
 	_width = map[0].size();
-	for (int i = 0; i < _height; ++i) {
+	for (int y = 0; y < _height; ++y) {
 		_map.push_back(std::vector<std::vector<IEntity *>>());
-		for (int j = 0; j < _width; ++j) {
-			_map[i].push_back(std::vector<IEntity *>());
-			if (map[i][j] & UNBREAKABLE_BLOCK)
-				_map[i][j].push_back(new UnbreakableBlock(_match, 
-							i, j));
+		for (int x = 0; x < _width; ++x) {
+			_map[y].push_back(std::vector<IEntity *>());
+			if (map[y][x] & UNBREAKABLE_BLOCK)
+				_map[y][x].push_back(new UnbreakableBlock(_match, 
+							y, x));
 //			if (map[i][j] & BREAKABLE_BLOCK)
 //				_map[i][j].push_back();
+			if (map[y][x] & PLAYER_1)
+				_map[y][x].push_back(new Player(_match, y, x, PLAYER_1));
+			if (map[y][x] & PLAYER_2)
+				_map[y][x].push_back(new Player(_match, y, x, PLAYER_2));
+			if (map[y][x] & PLAYER_3)
+				_map[y][x].push_back(new Player(_match, y, x, PLAYER_3));
+			if (map[y][x] & PLAYER_4)
+				_map[y][x].push_back(new Player(_match, y, x, PLAYER_4));
 		}
 	}
 }
@@ -124,4 +134,13 @@ void bbm::Map::clear()
 		}
 	}
 	_map.clear();
+}
+
+void bbm::Map::addEntity(IEntity *entity)
+{
+	if (!entity) {
+		std::cerr << "Map::addEntity, entity == nullptr" << std::endl;
+		exit(84);
+	}
+	_map[entity->getPosZ()][entity->getPosX()].push_back(entity);
 }

@@ -33,12 +33,14 @@ namespace bbm {
 		virtual void spawn() = 0;
 		virtual void die() = 0;
 		virtual void update() = 0;
-		int getIdEntity();
+		int getIdEntity() const;
+		int getPosX() const;
+		int getPosZ() const;
 
 		void setCoefs(float coefX, float coefY, float coefZ);
-		void setMesh(irr::scene::IMeshSceneNode *mesh);
+		void setMesh(irr::scene::ISceneNode *mesh);
 		void setTexturePath(std::string &path);
-		irr::scene::IMeshSceneNode *getMesh();
+		irr::scene::ISceneNode *getMesh();
 	protected:
 
 
@@ -51,7 +53,7 @@ namespace bbm {
 		float _coefX;
 		float _coefY;
 		float _coefZ;
-		irr::scene::IMeshSceneNode *_mesh;
+		irr::scene::ISceneNode *_mesh;
 		Entities _idEntity;
 	};
 }
