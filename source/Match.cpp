@@ -29,11 +29,8 @@ bbm::Match::Match(Game &game) :
 
 void bbm::Match::init()
 {
-	std::cout << "Ici" << std::endl;
 	_map.loadMap(MapGenerator::generate("./assets/maps/map1"));
-	std::cout << "la" << std::endl;
-	_map.display();
-	std::cout << "etla" << std::endl;
+	std::cout << _map << std::endl;
 }
 
 bool bbm::Match::OnEvent(const irr::SEvent &event)
