@@ -14,7 +14,7 @@
 #include "Match.hpp"
 
 namespace bbm {
-	class Player : public IPlayer, IMyEventReceiver {
+	class Player : public IPlayer, public IMyEventReceiver {
 	public: 
 		Player(Match &match, float x, float z, Entities playerNum);
 		virtual void spawn() override;

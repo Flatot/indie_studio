@@ -32,17 +32,17 @@ void bbm::Map::loadMap(std::vector<std::vector<int>> map)
 			_map[y].push_back(std::vector<IEntity *>());
 			if (map[y][x] & UNBREAKABLE_BLOCK)
 				_map[y][x].push_back(new UnbreakableBlock(_match, 
-							y, x));
+							x, y));
 //			if (map[i][j] & BREAKABLE_BLOCK)
 //				_map[i][j].push_back();
 			if (map[y][x] & PLAYER_1)
-				_map[y][x].push_back(new Player(_match, y, x, PLAYER_1));
+				_map[y][x].push_back(new Player(_match, x, y, PLAYER_1));
 			if (map[y][x] & PLAYER_2)
-				_map[y][x].push_back(new Player(_match, y, x, PLAYER_2));
+				_map[y][x].push_back(new Player(_match, x, y, PLAYER_2));
 			if (map[y][x] & PLAYER_3)
-				_map[y][x].push_back(new Player(_match, y, x, PLAYER_3));
+				_map[y][x].push_back(new Player(_match, x, y, PLAYER_3));
 			if (map[y][x] & PLAYER_4)
-				_map[y][x].push_back(new Player(_match, y, x, PLAYER_4));
+				_map[y][x].push_back(new Player(_match, x, y, PLAYER_4));
 		}
 	}
 }
