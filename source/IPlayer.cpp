@@ -8,9 +8,10 @@
 #include "IPlayer.hpp"
 #include "Match.hpp"
 
-bbm::IPlayer::IPlayer(Match &match, float x, float y, bool isTraversable) :
-	IEntity(match, x, y, isTraversable)
+bbm::IPlayer::IPlayer(Match &match, float x, float z, Entities playerNum) :
+	IEntity(match, x, z, true)
 {
+	_idEntity = playerNum;
 	std::cout << "IPlayer constructed" << std::endl;
 }
 

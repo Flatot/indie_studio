@@ -7,7 +7,8 @@
 
 #include "Ia.hpp"
 
-Ia::Ia(Match &match, float x, float y) : _match(match), _x(x), _y(y)
+Ia::Ia(Match &match, float x, float z, Entities playerNum) : 
+	_IPlayer(match, x, z, playerNum);
 {
 	std::cout << "IA constructed" << std::endl;
 }

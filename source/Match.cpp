@@ -15,7 +15,10 @@ bbm::Match::Match(Game &game) :
 	_game(game),
 	_graphic(game.getGraphic()),
 	_evManager(new EventManager()),
-	_floor(game.getGraphic())
+	_floor(game.getGraphic()),
+	_map(*this),
+	_players(),
+	_camera()
 {
 	_evManager->addEventReceiver(this);
 	_camera = _graphic.getScene()->addCameraSceneNode(0, 
@@ -26,8 +29,11 @@ bbm::Match::Match(Game &game) :
 
 void bbm::Match::init()
 {
-	_map = MapGenerator::generate("./assets/maps/map1");
+	std::cout << "Ici" << std::endl;
+	_map.loadMap(MapGenerator::generate("./assets/maps/map1"));
+	std::cout << "la" << std::endl;
 	_map.display();
+	std::cout << "etla" << std::endl;
 }
 
 bool bbm::Match::OnEvent(const irr::SEvent &event)
@@ -71,4 +77,9 @@ void bbm::Match::update()
 bbm::EventManager *bbm::Match::getEventManager()
 {
 	return _evManager;
+}
+
+bbm::Graphic &bbm::Match::getGraphic()
+{
+	return _graphic;
 }

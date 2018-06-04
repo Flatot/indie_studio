@@ -19,6 +19,7 @@
 #include "IPlayer.hpp"
 #include "Map.hpp"
 #include "Floor.hpp"
+#include "UnbreakableBlock.hpp"
 // #include "IBonus.hpp"
 // #include "IBomb.hpp"
 
@@ -34,6 +35,7 @@ namespace bbm {
 		virtual bool run();
 		void update();
 		EventManager *getEventManager();
+		Graphic &getGraphic();
 
 	private:
 		Game &_game;
@@ -41,7 +43,7 @@ namespace bbm {
 		EventManager *_evManager;
 		Floor _floor;
 		Map _map;
-		std::vector<IEntity *> _blocks;
+		std::vector<UnbreakableBlock> _unbreakableBlocks;
 		// std::vector<IBonus *> _bonus;
 		// std::vector<IBomb *> _bombs;
 		std::vector<IPlayer *> _players;

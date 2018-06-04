@@ -7,15 +7,16 @@
 
 #pragma once
 
-#include "IEventReceiver.h"
+#include "IMyEventReceiver.hpp"
 
+#include "IEntity.hpp"
 #include "IPlayer.hpp"
 #include "Match.hpp"
 
 namespace bbm {
-	class Player : public IPlayer, irr::IEventReceiver {
+	class Player : public IPlayer, IMyEventReceiver {
 	public: 
-		Player(Match &match, float x, float y, bool isTraversable);
+		Player(Match &match, float x, float z, Entities playerNum);
 		virtual void spawn() override;
 		virtual void die() override;
 		virtual void update() override;

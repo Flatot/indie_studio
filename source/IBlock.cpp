@@ -7,8 +7,8 @@
 
 #include "IBlock.hpp"
 
-bbm::IBlock::IBlock(Match &match, float x, float y, bool isTraversable) :
-	IEntity(match, x, y, isTraversable)
+bbm::IBlock::IBlock(Match &match, float x, float z, bool isTraversable) :
+	IEntity(match, x, z, isTraversable)
 {
 	std::cout << "IBlock constructed" << std::endl;
 }

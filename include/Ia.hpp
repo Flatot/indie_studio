@@ -8,13 +8,14 @@
 #pragma once
 
 #include <vector>
+#include "IEntity.hpp"
 #include "IPlayer.hpp"
 #include "Match.hpp"
 
 namespace bbm {
 	class Ia : public IPlayer {
 	public:
-		Ia(Match &match, float x, float y);
+		Ia(Match &match, float x, float z, Entities playerNum);
 		~IA();
 		virtual void spawn() override;
 		virtual void die() override;

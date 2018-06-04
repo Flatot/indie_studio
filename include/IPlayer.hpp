@@ -14,7 +14,7 @@ namespace bbm {
 
 	class IPlayer : public IEntity {
 	public:
-		IPlayer(Match &match, float x, float y, bool isTraversable);
+		IPlayer(Match &match, float x, float z, Entities playerNum);
 		virtual void spawn() = 0;
 		virtual void die() = 0;
 		virtual void update() = 0;

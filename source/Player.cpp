@@ -7,8 +7,8 @@
 
 #include "Player.hpp"
 
-bbm::Player::Player(Match &match, float x, float y, bool isTraversable) :
-	bbm::IPlayer(match, x, y, isTraversable), irr::IEventReceiver()
+bbm::Player::Player(Match &match, float x, float z, Entities playerNum) :
+	bbm::IPlayer(match, x, z, playerNum)
 {
 	std::cout << "Player constructed" << std::endl;
 }
