@@ -114,3 +114,14 @@ std::vector<int> bbm::Map::getVecFromLine(std::string line,
 	tmp.push_back(std::stoi(line, &sz));
 	return tmp;
 }
+
+void bbm::Map::clear()
+{
+	for (int z = 0; z < getHeight(); ++z) {
+		for (int x = 0; x < getWidth(); ++x) {
+			for (int i = 0; i < _map[z][x].size(); ++i)
+				delete _map[z][x][i];
+		}
+	}
+	_map.clear();
+}

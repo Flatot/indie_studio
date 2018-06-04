@@ -21,6 +21,12 @@ bbm::IEntity::IEntity(Match &match, float x, float z, bool isTraversable) :
 	std::cout << "IEntity constructed" << std::endl;
 }
 
+bbm::IEntity::~IEntity()
+{
+	if (_mesh)
+		_mesh->remove();
+}
+
 int bbm::IEntity::getIdEntity()
 {
 	return _idEntity;
@@ -41,4 +47,9 @@ void bbm::IEntity::setMesh(irr::scene::IMeshSceneNode *mesh)
 void bbm::IEntity::setTexturePath(std::string &path)
 {
 	_texturePath = path;
+}
+
+irr::scene::IMeshSceneNode *bbm::IEntity::getMesh()
+{
+	return _mesh;
 }

@@ -29,15 +29,18 @@ namespace bbm {
 	class IEntity {
 	public:
 		IEntity(Match &match, float x, float z, bool isTraversable);
+		~IEntity();
 		virtual void spawn() = 0;
 		virtual void die() = 0;
 		virtual void update() = 0;
 		int getIdEntity();
 
-	protected:
 		void setCoefs(float coefX, float coefY, float coefZ);
 		void setMesh(irr::scene::IMeshSceneNode *mesh);
 		void setTexturePath(std::string &path);
+		irr::scene::IMeshSceneNode *getMesh();
+	protected:
+
 
 		Match &_match;
 		bool _isTraversable;

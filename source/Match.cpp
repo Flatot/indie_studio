@@ -62,6 +62,7 @@ bool bbm::Match::run()
 		_graphic.getScene()->drawAll();		
 		_graphic.getDriver()->endScene();
 	}
+	_map.clear();
 	deactivate();
 	return true;
 }
