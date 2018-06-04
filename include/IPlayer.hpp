@@ -7,10 +7,19 @@
 
 #pragma once
 
+#include <chrono>
+#include "IMyEventReceiver.hpp"
 #include "IEntity.hpp"
 
 namespace bbm {
 	class Match;
+
+	enum Move {
+		LEFT = 1,
+		RIGHT = 2,
+		TOP = 4,
+		BOTTOM = 8
+	};
 
 	class IPlayer : public IEntity {
 	public:
@@ -18,13 +27,16 @@ namespace bbm {
 		virtual void spawn() = 0;
 		virtual void die() = 0;
 		virtual void update() = 0;
+		void move();
 		void moveLeft();
 		void moveRight();
 		void moveTop();
 		void moveBottom();
 		void putBomb();
 
-	private:
+	protected:
+		int _move;
+		std::chrono::steady_clock::time_point _timePoint;
 		unsigned int power;
 		unsigned int nbBombMax;
 		unsigned int nbBombUsed;

@@ -13,12 +13,17 @@ bbm::UnbreakableBlock::UnbreakableBlock(Match &match, float x, float z) :
 	IBlock(match, x, z, false)
 {
 	_idEntity = UNBREAKABLE_BLOCK;
-	setCoefs(0.4f, 0.4f, 0.4f);
-	auto pos = irr::core::vector3df(x * _coefX, _coefY, z * _coefZ);
+	_texturePath = "./assets/model3D/Cube/textures/Cube_diffuse.jpg";
+	setCoefs(1.f, 1.f, 2.f);
+	auto position = irr::core::vector3df(x * _coefX, _coefY, z * _coefZ);
+	auto rotation = irr::core::vector3df(0, 0, 0);
+	auto scale = irr::core::vector3df(_coefX, _coefY, _coefZ);
 	auto scene = _match.getGraphic().getScene();
+	auto driver = _match.getGraphic().getDriver();
 
-	_mesh = scene->addCubeSceneNode(0.4f, 0, -1, pos);
+	_mesh = scene->addCubeSceneNode(1.f, 0, -1, position, rotation, scale);
 	_mesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	_mesh->setMaterialTexture(0, driver->getTexture(_texturePath.c_str()));
 }
 
 void bbm::UnbreakableBlock::spawn()
