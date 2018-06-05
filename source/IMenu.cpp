@@ -17,7 +17,7 @@ bbm::IMenu::IMenu(Game &game) :
 	_menus(),
 	_focused(0)
 {
-
+	_evManager->addEventReceiver(this);
 }
 
 bbm::EventManager *bbm::IMenu::getEventManager()

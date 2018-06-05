@@ -5,6 +5,7 @@
 // Graphic implementation
 //
 
+#include <iostream>
 #include "Graphic.hpp"
 
 bbm::Graphic::Graphic(int width, int height, bool fullscreen, 
@@ -78,4 +79,40 @@ void	bbm::Graphic::setHeight(int height)
 void	bbm::Graphic::setFullscreen(bool fullscreen)
 {
 	_fullscreen = fullscreen;
+}
+
+void bbm::Graphic::setWindowCaption(const irr::core::vector3df &posCam, 
+		const wchar_t *str)
+{
+	wchar_t title[256] = {0};
+	static int lastFps = 0;
+	int fps = _driver->getFPS();
+
+	if (lastFps != fps)
+		lastFps = fps;
+	swprintf(title, 256, L"[%ls] X: [%f] Y: [%f] Z: [%f] FPS: [%d]", str, 
+			posCam.X, posCam.Y, posCam.Z, fps);
+	_device->setWindowCaption(title);
+}
+
+void bbm::Graphic::setWindowCaption(const irr::core::vector3df &posCam)
+{
+	setWindowCaption(posCam, L"");
+}
+
+void bbm::Graphic::setWindowCaption(const wchar_t *str)
+{
+	wchar_t title[256] = {0};
+	static int lastFps = 0;
+	int fps = _driver->getFPS();
+
+	if (lastFps != fps)
+		lastFps = fps;
+	swprintf(title, 256, L"[%ls] FPS: [%d]", str, fps);
+	_device->setWindowCaption(title);
+}
+
+void bbm::Graphic::setWindowCaption()
+{
+	setWindowCaption(L"");
 }

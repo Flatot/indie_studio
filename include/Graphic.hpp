@@ -28,6 +28,12 @@ namespace bbm {
 		void	setHeight(int);
 		void	setFullscreen(bool);
 		void	clearDevice();
+		void setWindowCaption(const irr::core::vector3df &posCam, 
+				const wchar_t *str);
+		void setWindowCaption(const irr::core::vector3df &posCam);
+		void setWindowCaption(const wchar_t *str);
+		void setWindowCaption();
+				
 
 	private:
 		int _width;

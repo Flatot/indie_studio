@@ -9,6 +9,8 @@
 
 #include <vector>
 
+#include "ICameraSceneNode.h"
+
 #include "IMyEventReceiver.hpp"
 #include "EventManager.hpp"
 
@@ -16,6 +18,7 @@
 #include "IEntity.hpp"
 #include "IPlayer.hpp"
 #include "Map.hpp"
+#include "Floor.hpp"
 // #include "IBonus.hpp"
 // #include "IBomb.hpp"
 
@@ -36,10 +39,13 @@ namespace bbm {
 		Game &_game;
 		Graphic &_graphic;
 		EventManager *_evManager;
+		Floor _floor;
 		Map _map;
 		std::vector<IEntity *> _blocks;
 		// std::vector<IBonus *> _bonus;
 		// std::vector<IBomb *> _bombs;
 		std::vector<IPlayer *> _players;
+		
+		irr::scene::ICameraSceneNode *_camera;
 	};
 }
