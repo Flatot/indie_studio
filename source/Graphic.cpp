@@ -12,14 +12,22 @@ bbm::Graphic::Graphic(int width, int height, bool fullscreen,
 		IMyEventReceiver *evReceiver) :
 	_width(width),
 	_height(height),
-	_fullscreen(fullscreen)
+	_fullscreen(fullscreen),
+	_evReceiver(evReceiver)
 {
-	_device = irr::createDevice(irr::video::EDT_OPENGL,
-			irr::core::dimension2d<irr::u32>(_width, _height), 32,
-			_fullscreen, false, false, evReceiver);
-	_driver = _device->getVideoDriver();
-	_scene = _device->getSceneManager();
-	_guienv = _device->getGUIEnvironment();
+	_driverType = irr::video::EDT_OPENGL;
+	setupDevice();
+}
+
+void	bbm::Graphic::clearDevice()
+{
+	_device->drop();
+}
+
+void	bbm::Graphic::setupDevice()
+{
+	_device = irr::createDevice(_driverType, irr::core::dimension2d<irr::u32>(_width, _height), 32, _fullscreen, false, false, _evReceiver);
+	_device->setResizable(false);
 }
 
 irr::IrrlichtDevice *bbm::Graphic::getDevice()
@@ -29,17 +37,17 @@ irr::IrrlichtDevice *bbm::Graphic::getDevice()
 
 irr::video::IVideoDriver *bbm::Graphic::getDriver()
 {
-	return _driver;
+	return _device->getVideoDriver();
 }
 
 irr::scene::ISceneManager *bbm::Graphic::getScene()
 {
-	return _scene;
+	return _device->getSceneManager();
 }
 
 irr::gui::IGUIEnvironment *bbm::Graphic::getGuienv()
 {
-	return _guienv;
+	return _device->getGUIEnvironment();
 }
 	
 irr::ILogger *bbm::Graphic::getLogger()
@@ -81,4 +89,29 @@ void bbm::Graphic::setWindowCaption(const wchar_t *str)
 void bbm::Graphic::setWindowCaption()
 {
 	setWindowCaption(L"");
+}
+
+void	bbm::Graphic::setDevice(irr::IrrlichtDevice *device)
+{
+	_device = device;
+}
+
+irr::video::E_DRIVER_TYPE	bbm::Graphic::getDriverType() const
+{
+	return _driverType;
+}
+
+void	bbm::Graphic::setWidth(int width)
+{
+	_width = width;
+}
+
+void	bbm::Graphic::setHeight(int height)
+{
+	_height = height;
+}
+
+void	bbm::Graphic::setFullscreen(bool fullscreen)
+{
+	_fullscreen = fullscreen;
 }

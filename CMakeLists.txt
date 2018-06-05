@@ -3,9 +3,13 @@ project(Bomberman)
 
 set(BINARY_NAME bomberman)
 
+<<<<<<< HEAD
 set(CMAKE_CXX_STANDARD 17)
 add_compile_options(-ggdb)
 set_source_files_properties(PlayerConfig.cpp Config.cpp PROPERTIES COMPILE_FLAGS -W -Wall -Wextra)
+=======
+set(CMAKE_CXX_STANDARD 14)
+>>>>>>> menus starter pack
 
 # CREATE IRRLICHT STATIC LIB FOR LINUX
 set(IRRLICHT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Irrlicht)
@@ -19,7 +23,7 @@ add_dependencies(irrlicht build_irrlicht)
 # GIVE LIB AND INCLUDE FOLDERS
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
-include_directories(${INCLUDE_DIR} ${INCLUDE_DIR}/irrlicht)
+include_directories(${INCLUDE_DIR} ${INCLUDE_DIR}/irrlicht ${INCLUDE_DIR}/Menus)
 
 
 # SOURCES FILES
@@ -36,6 +40,7 @@ set(SRCS 	source/main.cpp
 		source/Graphic.cpp
 		source/IMyEventReceiver.cpp
 		source/EventManager.cpp
+<<<<<<< HEAD
 		source/Floor.cpp
 		source/MapGenerator.cpp
 		source/UnbreakableBlock.cpp
@@ -49,6 +54,15 @@ set(SRCS 	source/main.cpp
 		source/Bomb.cpp
 		source/Explosion.cpp
 		source/PlayerConfig.cpp)
+=======
+		source/Config.cpp
+		source/Menus/MenuMain.cpp
+		source/Menus/MenuInGame.cpp
+		source/Menus/MenuSettings.cpp
+		source/Menus/MenuAudio.cpp
+		source/Menus/Corners.cpp
+		)
+>>>>>>> menus starter pack
 
 # CREATE THE BINARY
 add_executable(${BINARY_NAME} ${SRCS})

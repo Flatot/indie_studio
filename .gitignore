@@ -9,3 +9,4 @@ a.out
 cmake-build-debug/
 Config.cfg
 vgcore*
+.vscode
