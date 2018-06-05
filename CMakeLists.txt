@@ -34,6 +34,8 @@ set(SRCS 	source/main.cpp
 		source/IMyEventReceiver.cpp
 		source/EventManager.cpp
 		source/Floor.cpp
+		source/MapGenerator.cpp
+		source/UnbreakableBlock.cpp
 		source/Config.cpp)
 
 # CREATE THE BINARY
