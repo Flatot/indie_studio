@@ -16,7 +16,7 @@
 namespace bbm {
 	class Player : public IPlayer, public IMyEventReceiver {
 	public: 
-		Player(Match &match, float x, float z, Entities playerNum);
+		Player(Match &match, float z, float x, Entities playerNum);
 		virtual void spawn() override;
 		virtual void die() override;
 		virtual void update() override;

@@ -32,9 +32,9 @@ void bbm::Match::init()
 {
 	_map.loadMap(MapGenerator::generate("./assets/maps/map1"));
 	_players.push_back(new Player(*this, 1, 1, PLAYER_1));
-	_players.push_back(new Player(*this, 13, 11, PLAYER_2));
-	_players.push_back(new Player(*this, 13, 1, PLAYER_3));
-	_players.push_back(new Player(*this, 1, 11, PLAYER_4));
+	_players.push_back(new Player(*this, 11, 13, PLAYER_2));
+	_players.push_back(new Player(*this, 1, 13, PLAYER_3));
+	_players.push_back(new Player(*this, 11, 1, PLAYER_4));
 	auto lala = static_cast<Player *>(_players[0]);
 	_evManager->addEventReceiver(lala);
 //	_evManager->addEventReceiver(_players[1]);
@@ -99,4 +99,9 @@ bbm::EventManager *bbm::Match::getEventManager()
 bbm::Graphic &bbm::Match::getGraphic()
 {
 	return _graphic;
+}
+
+bbm::Map &bbm::Match::getMap()
+{
+	return _map;
 }

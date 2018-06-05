@@ -9,7 +9,7 @@
 #include "UnbreakableBlock.hpp"
 #include "Match.hpp"
 
-bbm::UnbreakableBlock::UnbreakableBlock(Match &match, float x, float z) :
+bbm::UnbreakableBlock::UnbreakableBlock(Match &match, float z, float x) :
 	IBlock(match, x, z, false)
 {
 	_idEntity = UNBREAKABLE_BLOCK;

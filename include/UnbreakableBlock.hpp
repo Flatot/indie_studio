@@ -14,7 +14,7 @@ namespace bbm {
 
 	class UnbreakableBlock : public IBlock {
 	public:
-		UnbreakableBlock(Match &match, float x, float z);
+		UnbreakableBlock(Match &match, float z, float x);
 		virtual void spawn() override;
 		virtual void die() override;
 		virtual void update() override;

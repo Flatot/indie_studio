@@ -7,6 +7,7 @@
 
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 #include "Map.hpp"
 #include "UnbreakableBlock.hpp"
 #include "Player.hpp"
@@ -32,17 +33,17 @@ void bbm::Map::loadMap(std::vector<std::vector<int>> map)
 			_map[y].push_back(std::vector<IEntity *>());
 			if (map[y][x] & UNBREAKABLE_BLOCK)
 				_map[y][x].push_back(new UnbreakableBlock(_match, 
-							x, y));
+							y, x));
 //			if (map[i][j] & BREAKABLE_BLOCK)
 //				_map[i][j].push_back();
 			if (map[y][x] & PLAYER_1)
-				_map[y][x].push_back(new Player(_match, x, y, PLAYER_1));
+				_map[y][x].push_back(new Player(_match, y, x, PLAYER_1));
 			if (map[y][x] & PLAYER_2)
-				_map[y][x].push_back(new Player(_match, x, y, PLAYER_2));
+				_map[y][x].push_back(new Player(_match, y, x, PLAYER_2));
 			if (map[y][x] & PLAYER_3)
-				_map[y][x].push_back(new Player(_match, x, y, PLAYER_3));
+				_map[y][x].push_back(new Player(_match, y, x, PLAYER_3));
 			if (map[y][x] & PLAYER_4)
-				_map[y][x].push_back(new Player(_match, x, y, PLAYER_4));
+				_map[y][x].push_back(new Player(_match, y, x, PLAYER_4));
 		}
 	}
 }
@@ -143,4 +144,23 @@ void bbm::Map::addEntity(IEntity *entity)
 		exit(84);
 	}
 	_map[entity->getPosZ()][entity->getPosX()].push_back(entity);
+}
+
+void bbm::Map::removeEntity(IEntity *entity)
+{
+	auto &vec = _map[entity->getPosZ()][entity->getPosX()];
+	
+	vec.erase(std::remove(vec.begin(), vec.end(), entity), vec.end());
+}
+
+std::pair<std::vector<bbm::IEntity *>::iterator, 
+	std::vector<bbm::IEntity *>::iterator> 
+	bbm::Map::getItEntity(IEntity *entity)
+{
+	auto vec = _map[entity->getPosZ()][entity->getPosX()];
+
+	for (auto it = vec.begin(); it != vec.end(); ++it)
+		if ((*it)->getIdEntity() == entity->getIdEntity())
+			return std::make_pair(it, vec.end());
+	return std::make_pair(vec.end(), vec.end());
 }

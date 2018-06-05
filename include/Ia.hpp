@@ -15,7 +15,7 @@
 namespace bbm {
 	class Ia : public IPlayer {
 	public:
-		Ia(Match &match, float x, float z, Entities playerNum);
+		Ia(Match &match, float z, float x, Entities playerNum);
 		~IA();
 		virtual void spawn() override;
 		virtual void die() override;

@@ -7,7 +7,7 @@
 
 #include "IEntity.hpp"
 
-bbm::IEntity::IEntity(Match &match, float x, float z, bool isTraversable) :
+bbm::IEntity::IEntity(Match &match, float z, float x, bool isTraversable) :
 	_match(match),
 	_x(x),
 	_z(z),

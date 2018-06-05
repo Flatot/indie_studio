@@ -28,7 +28,7 @@ namespace bbm {
 
 	class IEntity {
 	public:
-		IEntity(Match &match, float x, float z, bool isTraversable);
+		IEntity(Match &match, float z, float x, bool isTraversable);
 		~IEntity();
 		virtual void spawn() = 0;
 		virtual void die() = 0;

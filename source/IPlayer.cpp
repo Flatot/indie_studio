@@ -8,14 +8,15 @@
 #include "IPlayer.hpp"
 #include "Match.hpp"
 
-bbm::IPlayer::IPlayer(Match &match, float x, float z, Entities playerNum) :
+bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
 	IEntity(match, x, z, true),
 	_move(0),
-	_timePoint(std::chrono::steady_clock::now())
+	_timePoint(std::chrono::steady_clock::now()),
+	_speed(0)
 {
 	_idEntity = playerNum;
-	setCoefs(.3f, .3f, .3f);
-	auto position = irr::core::vector3df(x, 0, z);
+	setCoefs(.33f, .33f, .33f);
+	auto position = irr::core::vector3df(_x, 0, _z * 2);
 	auto rotation = irr::core::vector3df(0, 0, 0);
 	auto scale = irr::core::vector3df(_coefX, _coefY, _coefZ);
 	auto scene = _match.getGraphic().getScene();
@@ -58,30 +59,92 @@ void bbm::IPlayer::move()
 
 void	bbm::IPlayer::moveLeft()
 {
+	auto &map = _match.getMap();
+	auto itPlayer = map.getItEntity(this);
+	IEntity * player;
+	float new_x;
+
+	if (itPlayer.first == itPlayer.second)
+		return;
+	player = *itPlayer.first;
 	std::cout << "MoveLeft" << std::endl;
 	_mesh->setRotation(irr::core::vector3df(0.f, -90.f, 0.f));
-	_x -= 0.1f;
+	new_x = _x - (0.1f + (0.01f * _speed));
+	if (std::floor(_x) != std::floor(new_x)) {
+		map.removeEntity(this);
+		_x = new_x;
+		map.addEntity(this);
+	} else
+		_x = new_x;
+	std::cout << map << std::endl;
 }
 
 void	bbm::IPlayer::moveRight()
 {
+	auto &map = _match.getMap();
+	auto itPlayer = map.getItEntity(this);
+	IEntity * player;
+	float new_x;
+
+	if (itPlayer.first == itPlayer.second)
+		return;
+	player = *itPlayer.first;
 	std::cout << "MoveRight" << std::endl;
 	_mesh->setRotation(irr::core::vector3df(0.f, 90.f, 0.f));
-	_x += 0.1f;
+	new_x = _x + (0.1f + (0.01f * _speed));
+	if (std::floor(_x) != std::floor(new_x)) {
+		std::cout << "before remove" << std::endl;
+		map.removeEntity(this);
+		std::cout << "after remove" << std::endl;
+		_x = new_x;
+		map.addEntity(this);
+	} else
+		_x = new_x;
+	std::cout << map << std::endl;
 }
 
 void	bbm::IPlayer::moveTop()
 {
+	auto &map = _match.getMap();
+	auto itPlayer = map.getItEntity(this);
+	IEntity * player;
+	float new_z;
+
+	if (itPlayer.first == itPlayer.second)
+		return;
+	player = *itPlayer.first;
 	std::cout << "MoveTop" << std::endl;
 	_mesh->setRotation(irr::core::vector3df(0.f, 0.f, 0.f));
-	_z += 0.2f;
+	new_z = _z + (0.1f + (0.01f * _speed));
+	if (std::floor(_z) != std::floor(new_z)) {
+		map.removeEntity(this);
+		_z = new_z;
+		map.addEntity(this);
+	} else
+		_z = new_z;
+	std::cout << map << std::endl;
 }
 
 void	bbm::IPlayer::moveBottom()
 {
+	auto &map = _match.getMap();
+	auto itPlayer = map.getItEntity(this);
+	IEntity * player;
+	float new_z;
+
+	if (itPlayer.first == itPlayer.second)
+		return;
+	player = *itPlayer.first;
 	std::cout << "MoveBottom" << std::endl;
 	_mesh->setRotation(irr::core::vector3df(0.f, 180.f, 0.f));
-	_z -= 0.2f;
+	new_z = _z - (0.1f + (0.01f * _speed));
+	if (std::floor(_z) != std::floor(new_z)) {
+		map.removeEntity(this);
+		_z = new_z;
+		map.addEntity(this);
+	} else
+		_z = new_z;
+	std::cout << map << std::endl;
 }
 
 void	bbm::IPlayer::putBomb()

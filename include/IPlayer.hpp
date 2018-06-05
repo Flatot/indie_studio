@@ -23,7 +23,7 @@ namespace bbm {
 
 	class IPlayer : public IEntity {
 	public:
-		IPlayer(Match &match, float x, float z, Entities playerNum);
+		IPlayer(Match &match, float z, float x, Entities playerNum);
 		virtual void spawn() = 0;
 		virtual void die() = 0;
 		virtual void update() = 0;
@@ -37,6 +37,7 @@ namespace bbm {
 	protected:
 		int _move;
 		std::chrono::steady_clock::time_point _timePoint;
+		int _speed;
 		unsigned int power;
 		unsigned int nbBombMax;
 		unsigned int nbBombUsed;

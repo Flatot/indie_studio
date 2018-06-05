@@ -36,6 +36,7 @@ namespace bbm {
 		void update();
 		EventManager *getEventManager();
 		Graphic &getGraphic();
+		Map &getMap();
 
 	private:
 		Game &_game;
