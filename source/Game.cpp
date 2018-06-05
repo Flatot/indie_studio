@@ -36,6 +36,16 @@ bool bbm::Game::OnEvent(const irr::SEvent &event)
 	static int i = 0;
 
 	std::cout << "[OnEvent - Game]" << std::endl;
+	if (event.EventType == irr::EET_GUI_EVENT) {
+		irr::s32 id = event.GUIEvent.Caller->getID();
+		if (event.GUIEvent.EventType == irr::gui::EGET_BUTTON_CLICKED) {
+			// switch (id) {
+			// case bbm::GUI_BUTTON_:
+			// 	break;
+			// }
+			std::cout << "id => " << id << std::endl;
+		}
+	}
 	if (isKeyPressed(irr::KEY_KEY_Q, NONE)) {
 		_graphic.getDevice()->closeDevice();		
 		return true;
@@ -52,6 +62,12 @@ bool bbm::Game::OnEvent(const irr::SEvent &event)
 
 bool bbm::Game::run()
 {
+	bool	changed = true;
+	bbm::MenuMain	menu(*this);
+	bbm::MenuInGame	ingame(*this);
+	bbm::MenuSettings	settings(*this);
+	int	i = 0;
+
 	activate();
 	_graphic.getDevice()->setWindowCaption(L"Game loop");
 	
@@ -62,7 +78,15 @@ bool bbm::Game::run()
 		
 		_graphic.getGuienv()->drawAll();
 		_graphic.getDriver()->endScene();
+		if (changed) {
+			settings.run();
+			changed = false;
+		}
 		launchMatch();
+		i += 1;
+		// if (i % 300 == 0) {
+		// 	menu.quitGame();
+		// }
 	}
 	_graphic.getDevice()->drop();
 	deactivate();

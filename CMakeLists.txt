@@ -3,7 +3,7 @@ project(Bomberman)
 
 set(BINARY_NAME bomberman)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 
 # CREATE IRRLICHT STATIC LIB FOR LINUX
 set(IRRLICHT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Irrlicht)
@@ -17,7 +17,7 @@ add_dependencies(irrlicht build_irrlicht)
 # GIVE LIB AND INCLUDE FOLDERS
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
-include_directories(${INCLUDE_DIR} ${INCLUDE_DIR}/irrlicht)
+include_directories(${INCLUDE_DIR} ${INCLUDE_DIR}/irrlicht ${INCLUDE_DIR}/Menus)
 
 
 # SOURCES FILES
@@ -33,7 +33,13 @@ set(SRCS 	source/main.cpp
 		source/Graphic.cpp
 		source/IMyEventReceiver.cpp
 		source/EventManager.cpp
-		source/Config.cpp)
+		source/Config.cpp
+		source/Menus/MenuMain.cpp
+		source/Menus/MenuInGame.cpp
+		source/Menus/MenuSettings.cpp
+		source/Menus/MenuAudio.cpp
+		source/Menus/Corners.cpp
+		)
 
 # CREATE THE BINARY
 add_executable(${BINARY_NAME} ${SRCS})

@@ -9,6 +9,7 @@
 
 #include "irrlicht.h"
 #include "IMyEventReceiver.hpp"
+#include "driverChoice.h"
 
 namespace bbm {
 	class Graphic {
@@ -20,14 +21,20 @@ namespace bbm {
 		irr::scene::ISceneManager *getScene();
 		irr::gui::IGUIEnvironment *getGuienv();
 		irr::ILogger *getLogger();
+		void	setDevice(irr::IrrlichtDevice *);
+		irr::video::E_DRIVER_TYPE	getDriverType() const;
+		void	setupDevice();
+		void	setWidth(int);
+		void	setHeight(int);
+		void	setFullscreen(bool);
+		void	clearDevice();
 
 	private:
 		int _width;
 		int _height;
 		bool _fullscreen;
 		irr::IrrlichtDevice *_device;
-		irr::video::IVideoDriver *_driver;
-		irr::scene::ISceneManager *_scene;
-		irr::gui::IGUIEnvironment *_guienv;
+		irr::video::E_DRIVER_TYPE _driverType;
+		IMyEventReceiver *_evReceiver;
 	};
 }

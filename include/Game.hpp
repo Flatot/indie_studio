@@ -16,6 +16,9 @@
 #include "Graphic.hpp"
 #include "IMenu.hpp"
 #include "Match.hpp"
+#include "MenuMain.hpp"
+#include "MenuInGame.hpp"
+#include "MenuSettings.hpp"
 // #include "PlayerConfig.hpp"
 
 namespace bbm {

@@ -8,12 +8,13 @@
 #include "IMyEventReceiver.hpp"
 
 bbm::IMyEventReceiver::IMyEventReceiver() :
-	_isActive(false),
-	_keys({false}),
-	_keysCtrl({false}),
-	_keysShift({false})
+	_isActive(false)
 {
-
+	for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; i++) {
+		_keys[i] = false;
+		_keysCtrl[i] = false;
+		_keysShift[i] = false;
+	}
 }
 
 bool bbm::IMyEventReceiver::OnEvent(const irr::SEvent &event)
@@ -62,6 +63,7 @@ bool bbm::IMyEventReceiver::isKeyPressed(irr::EKEY_CODE key, SPECIALKEY specialK
 	case SHIFT:
 		return _keysShift[key];
 	}
+	return false;
 }
 
 void bbm::IMyEventReceiver::resetKey(irr::EKEY_CODE key, SPECIALKEY specialKey)
