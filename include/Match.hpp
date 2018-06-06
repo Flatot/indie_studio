@@ -20,7 +20,7 @@
 #include "Map.hpp"
 #include "Floor.hpp"
 #include "UnbreakableBlock.hpp"
-// #include "IBonus.hpp"
+#include "IBonus.hpp"
 // #include "IBomb.hpp"
 
 namespace bbm {
@@ -34,6 +34,7 @@ namespace bbm {
 		virtual void draw();
 		virtual bool run();
 		void update();
+		void print_skybase();
 		EventManager *getEventManager();
 		Graphic &getGraphic();
 		Map &getMap();
@@ -45,7 +46,7 @@ namespace bbm {
 		Floor _floor;
 		Map _map;
 		std::vector<UnbreakableBlock> _unbreakableBlocks;
-		// std::vector<IBonus *> _bonus;
+		std::vector<IBonus *> _bonus;
 		// std::vector<IBomb *> _bombs;
 		std::vector<IPlayer *> _players;
 		

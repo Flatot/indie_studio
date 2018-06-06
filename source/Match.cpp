@@ -10,6 +10,10 @@
 #include "Game.hpp"
 #include "MapGenerator.hpp"
 #include "Player.hpp"
+#include "BombUp.hpp"
+#include "SpeedUp.hpp"
+#include "FireUp.hpp"
+#include "WallPass.hpp"
 
 bbm::Match::Match(Game &game) :
 	IMyEventReceiver(),
@@ -22,9 +26,28 @@ bbm::Match::Match(Game &game) :
 	_camera()
 {
 	_evManager->addEventReceiver(this);
-	_camera = _graphic.getScene()->addCameraSceneNode(0, 
-			irr::core::vector3df(7.5f, 20.f, -2.f), 
-			irr::core::vector3df(7.5f, 0, 6.5f));
+	irr::SKeyMap keyMap[5];                    // re-assigne les commandes
+	keyMap[0].Action = irr::EKA_MOVE_FORWARD;  // avancer
+	keyMap[0].KeyCode = irr::KEY_KEY_I;        // w
+	keyMap[1].Action = irr::EKA_MOVE_BACKWARD; // reculer
+	keyMap[1].KeyCode = irr::KEY_KEY_K;        // s
+	keyMap[2].Action = irr::EKA_STRAFE_LEFT;   // a gauche
+	keyMap[2].KeyCode = irr::KEY_KEY_J;        // a
+	keyMap[3].Action = irr::EKA_STRAFE_RIGHT;  // a droite
+	keyMap[3].KeyCode = irr::KEY_KEY_L;        // d
+	keyMap[4].Action = irr::EKA_JUMP_UP;       // saut
+	keyMap[4].KeyCode = irr::KEY_SPACE;        // barre espace
+
+	_camera = _graphic.getScene()->addCameraSceneNodeFPS(       // ajout de la camera FPS
+		0,                                     // pas de noeud parent
+		100.0f,                                // vitesse de rotation
+		0.01f,                                  // vitesse de deplacement
+		-1,                                    // pas de numero d'ID
+		keyMap,                                // on change la keymap
+		3);
+	// _camera = _graphic.getScene()->addCameraSceneNode(0,
+	// 	irr::core::vector3df(13.96f, 18.97f, 3.83f),
+	// 	irr::core::vector3df(14, -12, 14));
 
 }
 
@@ -40,10 +63,18 @@ void bbm::Match::init()
 //	_evManager->addEventReceiver(_players[1]);
 //	_evManager->addEventReceiver(_players[2]);
 //	_evManager->addEventReceiver(_players[3]);
+	_bonus.push_back(new BombUp(*this, 2, 6, true));
+	_bonus.push_back(new SpeedUp(*this, 4, 6, true));
+	_bonus.push_back(new FireUp(*this, 6, 6, true));
+	_bonus.push_back(new WallPass(*this, 8, 6, true));
 	_map.addEntity(_players[0]);
 	_map.addEntity(_players[1]);
 	_map.addEntity(_players[2]);
 	_map.addEntity(_players[3]);
+	_map.addEntity(_bonus[0]);
+	_map.addEntity(_bonus[1]);
+	_map.addEntity(_bonus[2]);
+	_map.addEntity(_bonus[3]);
 	std::cout << _map << std::endl;
 	std::cout << "height: " << _map.getHeight() << std::endl;
 	std::cout << "width: " << _map.getWidth() << std::endl;
@@ -68,10 +99,23 @@ void bbm::Match::draw()
 
 }
 
+void bbm::Match::print_skybase()
+{
+	auto *path = "assets/model3D/Sky/space.jpg";
+	auto *skybase = _graphic.getScene()->addSkyBoxSceneNode(
+		_graphic.getDriver()->getTexture(path),
+		_graphic.getDriver()->getTexture(path),
+		_graphic.getDriver()->getTexture(path),
+		_graphic.getDriver()->getTexture(path),
+		_graphic.getDriver()->getTexture(path),
+		_graphic.getDriver()->getTexture(path));
+}
+
 bool bbm::Match::run()
 {
 	activate();
-	
+
+	print_skybase();
 	while(_graphic.getDevice()->run() && isActive()) {
 		_graphic.setWindowCaption(_camera->getPosition(), L"Match loop");
 		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
