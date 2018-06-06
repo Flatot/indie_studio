@@ -12,7 +12,7 @@
 namespace bbm {
 	class IBlock : public IEntity {
 	public:
-		IBlock(Match &match, float x, float y, bool isTraversable);
+		IBlock(Match &match, float z, float x, bool isTraversable);
 		virtual void spawn() = 0;
 		virtual void die() = 0;
 		virtual void update() = 0;

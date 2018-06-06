@@ -35,6 +35,12 @@ set(SRCS 	source/main.cpp
 		source/EventManager.cpp
 		source/Floor.cpp
 		source/MapGenerator.cpp
+		source/UnbreakableBlock.cpp
+		source/IBonus.cpp
+		source/BombUp.cpp
+		source/SpeedUp.cpp
+		source/WallPass.cpp
+		source/FireUp.cpp
 		source/Config.cpp
 		source/PlayerConfig.cpp)
 

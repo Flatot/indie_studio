@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <string>
 #include "Graphic.hpp"
 
 namespace bbm {
@@ -14,8 +15,8 @@ namespace bbm {
 	public:
 		Floor(Graphic &graphic);
 	private:
-		const char *_meshPath;
-		const char *_texturePath;
+		std::string _meshPath;
+		std::string _texturePath;
 		float _coefX;
 		float _coefY;
 		float _coefZ;

@@ -9,10 +9,12 @@
 
 #include <iostream>
 
+#include "IMeshSceneNode.h"
+
 namespace bbm {
 	class Match;
 
-	enum Entites{
+	enum Entities{
 		BLANK = 0,
 		UNBREAKABLE_BLOCK = 1,
 		BREAKABLE_BLOCK = 2,
@@ -26,15 +28,32 @@ namespace bbm {
 
 	class IEntity {
 	public:
-		IEntity(Match &match, float x, float y, bool isTraversable);
+		IEntity(Match &match, float z, float x, bool isTraversable);
+		~IEntity();
 		virtual void spawn() = 0;
 		virtual void die() = 0;
 		virtual void update() = 0;
+		int getIdEntity() const;
+		int getPosX() const;
+		int getPosZ() const;
 
+		void setCoefs(float coefX, float coefY, float coefZ);
+		void setMesh(irr::scene::ISceneNode *mesh);
+		void setTexturePath(std::string &path);
+		irr::scene::ISceneNode *getMesh();
 	protected:
+
+
 		Match &_match;
 		bool _isTraversable;
 		float _x;
-		float _y;
+		float _z;
+		std::string _meshPath;
+		std::string _texturePath;
+		float _coefX;
+		float _coefY;
+		float _coefZ;
+		irr::scene::ISceneNode *_mesh;
+		Entities _idEntity;
 	};
 }

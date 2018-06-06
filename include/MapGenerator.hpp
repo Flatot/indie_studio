@@ -9,12 +9,11 @@
 
 #include <iostream>
 #include <vector>
-#include "Map.hpp"
 
 namespace bbm {
 	class MapGenerator {
 	public:
-		static Map generate(std::string path);
+		static std::vector<std::vector<int>> generate(std::string path);
 	private:
 		static void getMapFromFile(std::string path);
 		static void createBreakable();

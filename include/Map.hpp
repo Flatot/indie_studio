@@ -8,23 +8,35 @@
 #pragma once
 
 #include <vector>
+#include "IEntity.hpp"
 #include <iostream>
 #include <fstream>
 
 namespace bbm {
 	class Map {
 	public:
-		Map();
-		Map(std::vector<std::vector<int> > map);
+		Map(Match &match);
+		void loadMap(std::vector<std::vector<int>> map);
 		void save();
 		void load();
-		void display();
-		std::vector<std::vector<int>> getMap() const{ return _map ;};
+		int getHeight() const;
+		int getWidth() const;
+		std::vector<IEntity *> &getFromPos(int y, int x);
+		int getEntitiesFromPos(int y, int x) const;
+		void clear();
+		void addEntity(IEntity *entity);
+		std::pair<std::vector<IEntity *>::iterator, 
+			std::vector<IEntity *>::iterator> 
+				getItEntity(IEntity *entity);
+		void removeEntity(IEntity *entity);
 	private:
-		std::vector<int> getVecFromLine(std::string line, std::string delimiter) const;
-		int _length;
+		std::vector<int> getVecFromLine(std::string line, 
+				std::string delimiter) const;
+
+		Match &_match;
+		int _height;
 		int _width;
-		std::vector<std::vector<int> > _map;
+		std::vector<std::vector<std::vector<IEntity *>>> _map;
 	};
 
 }
