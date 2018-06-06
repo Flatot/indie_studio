@@ -6,15 +6,22 @@
 //
 
 #pragma once
+#include <vector>
+#include "PlayerConfig.hpp"
+
 
 namespace bbm {
 	class Config {
 	public:
 		Config();
 		void loadConfig();
-		int getScreenWidth();
-		int getScreenHeight();
-		bool getFullscreen();
+		void saveConfig();
+		int getScreenWidth() const;
+		int getScreenHeight() const;
+		int getVolumeEffect() const;
+		int getVolumeGeneral() const;
+		bool getFullscreen() const;
+		bbm::PlayerConfig getPlayerConfigs(int idx) const;
 
 	private:
 		bool _fullscreen;
@@ -22,6 +29,10 @@ namespace bbm {
 		int _screenHeight;
 		int _volumeGeneral;
 		int _volumeEffect;
-		//PlayerConfig _playerConfig[4]
+		std::vector<bbm::PlayerConfig> _playerConfig;
+		void doWithTokens(std::string tok1, std::string tok2);
+		void handleLine(std::string line, std::string delimiter);
 	};
 }
+std::ostream& operator<< (std::ostream& stream, bbm::Config const& conf);
+
