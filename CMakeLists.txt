@@ -35,7 +35,8 @@ set(SRCS 	source/main.cpp
 		source/EventManager.cpp
 		source/Floor.cpp
 		source/MapGenerator.cpp
-		source/Config.cpp)
+		source/Config.cpp
+		source/PlayerConfig.cpp)
 
 # CREATE THE BINARY
 add_executable(${BINARY_NAME} ${SRCS})
