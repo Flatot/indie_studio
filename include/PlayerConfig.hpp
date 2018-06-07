@@ -6,6 +6,7 @@
 //
 
 #pragma once
+
 #include <map>
 #include <fstream>
 #include <ostream>
@@ -13,17 +14,15 @@
 #include "IEntity.hpp"
 #include "irrlicht.h"
 
-typedef struct	s_keys
-{
+typedef struct s_keys {
 	std::string str;
 	irr::EKEY_CODE keycode;
 } keys_t;
 
-
 namespace bbm {
 	class PlayerConfig {
 	public:
-		PlayerConfig(bbm::Entites entity);
+		PlayerConfig(bbm::Entities entity);
 		std::map<std::string, irr::EKEY_CODE> getMap() const;
 		std::string getName() const;
 		void loadConfig();
@@ -31,7 +30,7 @@ namespace bbm {
 		irr::EKEY_CODE stringToCode(std::string str) const;
 	private:
 		std::string _name;
-		bbm::Entites _entity;
+		bbm::Entities _entity;
 		std::map<std::string, irr::EKEY_CODE> _keys;
 		bool isValuable(std::string str);
 		bool handleLine(std::string line, std::string delimiter, bool start);
@@ -39,8 +38,7 @@ namespace bbm {
 }
 std::ostream& operator<< (std::ostream& stream, bbm::PlayerConfig const& playerConf);
 
-static std::string valuableControl[5] =
-{
+static std::string valuableControl[5] = {
 	"PUT_BOMB",
 	"UP",
 	"DOWN",
@@ -48,8 +46,7 @@ static std::string valuableControl[5] =
 	"LEFT"
 };
 
-static keys_t keysparse[] =
-{
+static keys_t keysparse[] = {
 	{"KEY_LBUTTON", irr::KEY_LBUTTON},	// Left mouse button
 	{"KEY_RBUTTON", irr::KEY_RBUTTON},	// Right mouse button
 	{"KEY_CANCEL", irr::KEY_CANCEL},	// Control-break processing

@@ -7,10 +7,10 @@
 
 #include "PlayerConfig.hpp"
 
-bbm::PlayerConfig::PlayerConfig(bbm::Entites entity) : _entity(entity)
+bbm::PlayerConfig::PlayerConfig(bbm::Entities entity) : _entity(entity)
 {
 	switch(entity) {
-		case bbm::Entites::PLAYER_1:
+		case bbm::Entities::PLAYER_1:
 			_name = "PLAYER_1";
 			_keys["PUT_BOMB"] = irr::KEY_SPACE;
 			_keys["UP"] = irr::KEY_UP;
@@ -18,7 +18,7 @@ bbm::PlayerConfig::PlayerConfig(bbm::Entites entity) : _entity(entity)
 			_keys["RIGHT"] = irr::KEY_RIGHT;
 			_keys["LEFT"] = irr::KEY_LEFT;
 			break;
-		case bbm::Entites::PLAYER_2:
+		case bbm::Entities::PLAYER_2:
 			_name = "PLAYER_2";
 			_keys["PUT_BOMB"] = irr::KEY_KEY_E;
 			_keys["UP"] = irr::KEY_KEY_Z;
@@ -26,7 +26,7 @@ bbm::PlayerConfig::PlayerConfig(bbm::Entites entity) : _entity(entity)
 			_keys["RIGHT"] = irr::KEY_KEY_S;
 			_keys["LEFT"] = irr::KEY_KEY_D;
 			break;
-		case bbm::Entites::PLAYER_3:
+		case bbm::Entities::PLAYER_3:
 			_name = "PLAYER_3";
 			_keys["PUT_BOMB"] = irr::KEY_KEY_P;
 			_keys["UP"] = irr::KEY_KEY_O;
@@ -34,7 +34,7 @@ bbm::PlayerConfig::PlayerConfig(bbm::Entites entity) : _entity(entity)
 			_keys["RIGHT"] = irr::KEY_KEY_K;
 			_keys["LEFT"] = irr::KEY_KEY_M;
 			break;
-		case bbm::Entites::PLAYER_4:
+		case bbm::Entities::PLAYER_4:
 			_name = "PLAYER_4";
 			_keys["PUT_BOMB"] = irr::KEY_KEY_U;
 			_keys["UP"] = irr::KEY_KEY_Y;

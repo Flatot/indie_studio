@@ -15,10 +15,10 @@ bbm::Config::Config() :
 	_volumeGeneral(50),
 	_volumeEffect(50)
 {
-	_playerConfig.push_back(PlayerConfig(bbm::Entites::PLAYER_1));
-	_playerConfig.push_back(PlayerConfig(bbm::Entites::PLAYER_2));
-	_playerConfig.push_back(PlayerConfig(bbm::Entites::PLAYER_3));
-	_playerConfig.push_back(PlayerConfig(bbm::Entites::PLAYER_4));
+	_playerConfig.push_back(PlayerConfig(bbm::Entities::PLAYER_1));
+	_playerConfig.push_back(PlayerConfig(bbm::Entities::PLAYER_2));
+	_playerConfig.push_back(PlayerConfig(bbm::Entities::PLAYER_3));
+	_playerConfig.push_back(PlayerConfig(bbm::Entities::PLAYER_4));
 }
 
 void bbm::Config::saveConfig()

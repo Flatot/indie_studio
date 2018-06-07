@@ -128,7 +128,6 @@ void bbm::Match::update()
 {
 	int lastSize;
 
-	std::cout << "size p " << _players.size() << std::endl;
 	for (auto it = _players.begin(); it < _players.end(); ++it)
 		(*it)->update();
 	lastSize = _bombs.size();
