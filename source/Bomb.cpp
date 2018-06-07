@@ -23,8 +23,10 @@ bbm::Bomb::Bomb(Match &match, float z, float x, IPlayer *owner) :
 	_idEntity = BOMB;
 	_texturePath = "./assets/model3D/bomb/Bomb_obj/Albedo.png";
 	_meshPath = "./assets/model3D/bomb/Bomb_obj/Bomb.obj";
-	setCoefs(3.f, 3.f, 3.f);
-	auto position = irr::core::vector3df(x * _coefX, _coefY, z * _coefZ);
+	setCoefs(1.5f, 1.5f, 1.5f);
+	x = std::floor(x);
+	z = std::floor(z);
+	auto position = irr::core::vector3df(x, 0.5, z);
 	auto rotation = irr::core::vector3df(0, 0, 0);
 	auto scale = irr::core::vector3df(_coefX, _coefY, _coefZ);
 	auto scene = _match.getGraphic().getScene();
@@ -86,6 +88,8 @@ void bbm::Bomb::explode()
 {
 	bool directions[4] = {true, true, true, true};
 
+	_x = std::floor(_x);
+	_z = std::floor(_z);
 	addExplosion(new Explosion(_match, _z, _x, this));
 	for (int i = 1; i <= _power; ++i) {
 		if (directions[0])
