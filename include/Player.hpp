@@ -22,7 +22,7 @@ namespace bbm {
 		virtual void die() override;
 		virtual void update() override;
 		virtual bool OnEvent(const irr::SEvent &event) override;
-
+		bool checkCollision(int, int);
 	private:
 	};
 }

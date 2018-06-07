@@ -18,8 +18,8 @@ bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
 	_passWall(false)
 {
 	_idEntity = playerNum;
-	setCoefs(.33f, .33f, .33f);
-	auto position = irr::core::vector3df(_x * 2, 1, _z * 2);
+	setCoefs(.15f, .15f, .15f);
+	auto position = irr::core::vector3df(_x, 0.5f, _z);
 	auto rotation = irr::core::vector3df(0, 0, 0);
 	auto scale = irr::core::vector3df(_coefX, _coefY, _coefZ);
 	auto scene = _match.getGraphic().getScene();
@@ -78,6 +78,7 @@ void	bbm::IPlayer::moveLeft()
 	float new_x = _x - (0.1f + (0.01f * _speed));
 
 	_mesh->setRotation(irr::core::vector3df(0.f, -90.f, 0.f));
+	std::cout << "new_x: " << new_x << std::endl;
 	if (std::floor(_x) != std::floor(new_x)) {
 		if (!checkCollision(_z, new_x))
 			return;
@@ -94,6 +95,7 @@ void	bbm::IPlayer::moveRight()
 	auto &map = _match.getMap();
 	float new_x = _x + (0.1f + (0.01f * _speed));
 
+	std::cout << "new_x: " << new_x << std::endl;
 	_mesh->setRotation(irr::core::vector3df(0.f, 90.f, 0.f));
 	if (std::floor(_x) != std::floor(new_x)) {
 		if (!checkCollision(_z, new_x))

@@ -17,8 +17,8 @@ bbm::Explosion::Explosion(Match &match, float z, float x, Bomb *owner) :
 {
 	_idEntity = EXPLOSION;
 	_texturePath = "./assets/model3D/Cube/fire.jpg";
-	setCoefs(2.f, 2.f, 2.f);
-	auto position = irr::core::vector3df(x * _coefX, _coefY, z * _coefZ);
+	setCoefs(1.f, 1.f, 1.f);
+	auto position = irr::core::vector3df(x, _coefY, z);
 	auto rotation = irr::core::vector3df(0, 0, 0);
 	auto scale = irr::core::vector3df(_coefX, _coefY, _coefZ);
 	auto scene = _match.getGraphic().getScene();
