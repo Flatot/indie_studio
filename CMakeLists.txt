@@ -37,6 +37,7 @@ set(SRCS 	source/main.cpp
 		source/Floor.cpp
 		source/MapGenerator.cpp
 		source/UnbreakableBlock.cpp
+		source/BreakableBlock.cpp
 		source/IBonus.cpp
 		source/BombUp.cpp
 		source/SpeedUp.cpp
@@ -45,7 +46,7 @@ set(SRCS 	source/main.cpp
 		source/Config.cpp
 		source/Bomb.cpp
 		source/Explosion.cpp
-		)
+		source/PlayerConfig.cpp)
 
 # CREATE THE BINARY
 add_executable(${BINARY_NAME} ${SRCS})

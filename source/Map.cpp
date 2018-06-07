@@ -10,6 +10,7 @@
 #include <algorithm>
 #include "Map.hpp"
 #include "UnbreakableBlock.hpp"
+#include "BreakableBlock.hpp"
 #include "Player.hpp"
 
 bbm::Map::Map(Match &match) :
@@ -39,8 +40,9 @@ void bbm::Map::loadMap(std::vector<std::vector<int>> map)
 			if (map[y][x] & UNBREAKABLE_BLOCK)
 				_map[y][x].push_back(new UnbreakableBlock(_match, 
 							y, x));
-//			if (map[i][j] & BREAKABLE_BLOCK)
-//				_map[i][j].push_back();
+			if (map[y][x] & BREAKABLE_BLOCK)
+				_map[y][x].push_back(new BreakableBlock(_match,
+							y, x));
 			if (map[y][x] & PLAYER_1)
 				_map[y][x].push_back(new Player(_match, y, x, PLAYER_1));
 			if (map[y][x] & PLAYER_2)
