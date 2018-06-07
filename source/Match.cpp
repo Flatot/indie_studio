@@ -116,7 +116,7 @@ bool bbm::Match::run()
 
 		_graphic.getScene()->drawAll();		
 		_graphic.getDriver()->endScene();
-		_players[0]->move();
+//		_players[0]->move();
 		update();
 	}
 	_map.clear();

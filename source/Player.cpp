@@ -33,6 +33,7 @@ void bbm::Player::die()
 
 void bbm::Player::update()
 {
+	move();
 	_mesh->setPosition(irr::core::vector3df(_x * 2, 1.f, _z * 2));
 }
 
