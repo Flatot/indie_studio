@@ -14,10 +14,9 @@ int main()
 	bbm::Config config;
 
 	bbm::Game g(config);
-	auto *log = g.getGraphic().getDevice()->getLogger();
-	log->log("Debut\n");
 
 	g.run();
+	std::cout << "ENNNND" << std::endl;
 
 	return 0;
 }

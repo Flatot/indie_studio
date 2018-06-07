@@ -21,6 +21,11 @@ bbm::Map::Map(Match &match) :
 	std::cout << "Map constructed" << std::endl;
 }
 
+bbm::Map::~Map()
+{
+
+}
+
 void bbm::Map::loadMap(std::vector<std::vector<int>> map)
 {
 	_height = map.size();
@@ -128,12 +133,10 @@ std::vector<int> bbm::Map::getVecFromLine(std::string line,
 
 void bbm::Map::clear()
 {
-	for (int z = 0; z < getHeight(); ++z) {
-		for (int x = 0; x < getWidth(); ++x) {
+	for (int z = 0; z < getHeight(); ++z)
+		for (int x = 0; x < getWidth(); ++x)
 			for (int i = 0; i < _map[z][x].size(); ++i)
 				delete _map[z][x][i];
-		}
-	}
 	_map.clear();
 }
 

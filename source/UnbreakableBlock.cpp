@@ -13,8 +13,8 @@ bbm::UnbreakableBlock::UnbreakableBlock(Match &match, float z, float x) :
 	IBlock(match, x, z, false)
 {
 	_idEntity = UNBREAKABLE_BLOCK;
-	_texturePath = "./assets/model3D/Cube/textures/Cube_diffuse.jpg";
-	setCoefs(1.f, 1.f, 2.f);
+	_texturePath = "./assets/brick2_2.bmp";
+	setCoefs(1.f, 1.f, 1.f);
 	auto position = irr::core::vector3df(x * _coefX, _coefY, z * _coefZ);
 	auto rotation = irr::core::vector3df(0, 0, 0);
 	auto scale = irr::core::vector3df(_coefX, _coefY, _coefZ);

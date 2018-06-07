@@ -21,7 +21,7 @@
 #include "Floor.hpp"
 #include "UnbreakableBlock.hpp"
 #include "IBonus.hpp"
-// #include "IBomb.hpp"
+#include "Bomb.hpp"
 
 namespace bbm {
 	class Game;
@@ -38,6 +38,10 @@ namespace bbm {
 		EventManager *getEventManager();
 		Graphic &getGraphic();
 		Map &getMap();
+		void addBomb(Bomb *bomb);
+		void removeBomb(Bomb *bomb);
+		void addPlayer(IPlayer *player);
+		void removePlayer(IPlayer *player);
 
 	private:
 		Game &_game;
@@ -45,9 +49,7 @@ namespace bbm {
 		EventManager *_evManager;
 		Floor _floor;
 		Map _map;
-		std::vector<UnbreakableBlock> _unbreakableBlocks;
-		std::vector<IBonus *> _bonus;
-		// std::vector<IBomb *> _bombs;
+		std::vector<Bomb *> _bombs;
 		std::vector<IPlayer *> _players;
 		
 		irr::scene::ICameraSceneNode *_camera;

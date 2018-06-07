@@ -4,6 +4,7 @@ project(Bomberman)
 set(BINARY_NAME bomberman)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb")
 
 # CREATE IRRLICHT STATIC LIB FOR LINUX
 set(IRRLICHT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Irrlicht)
@@ -41,7 +42,10 @@ set(SRCS 	source/main.cpp
 		source/SpeedUp.cpp
 		source/WallPass.cpp
 		source/FireUp.cpp
-		source/Config.cpp)
+		source/Config.cpp
+		source/Bomb.cpp
+		source/Explosion.cpp
+		)
 
 # CREATE THE BINARY
 add_executable(${BINARY_NAME} ${SRCS})

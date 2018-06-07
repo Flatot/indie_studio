@@ -24,22 +24,28 @@ namespace bbm {
 	class IPlayer : public IEntity {
 	public:
 		IPlayer(Match &match, float z, float x, Entities playerNum);
+		virtual ~IPlayer();
 		virtual void spawn() = 0;
-		virtual void die() = 0;
+		virtual void die() override;
 		virtual void update() = 0;
 		void move();
+		void putBomb();
+
+		int getPower();
+		void incBombCount();
+		void decBombCount();
+	private:
 		void moveLeft();
 		void moveRight();
 		void moveTop();
 		void moveBottom();
-		void putBomb();
-
+		bool checkCollision(int new_z, int new_x);
 	protected:
 		int _move;
 		std::chrono::steady_clock::time_point _timePoint;
 		int _speed;
-		unsigned int power;
-		unsigned int nbBombMax;
-		unsigned int nbBombUsed;
+		int _power;
+		int _bombCount;
+		bool _passWall;
 	};
 }

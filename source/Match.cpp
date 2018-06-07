@@ -14,6 +14,7 @@
 #include "SpeedUp.hpp"
 #include "FireUp.hpp"
 #include "WallPass.hpp"
+#include "Bomb.hpp"
 
 bbm::Match::Match(Game &game) :
 	IMyEventReceiver(),
@@ -22,11 +23,12 @@ bbm::Match::Match(Game &game) :
 	_evManager(new EventManager()),
 	_floor(game.getGraphic()),
 	_map(*this),
+	_bombs(),
 	_players(),
 	_camera()
 {
 	_evManager->addEventReceiver(this);
-	irr::SKeyMap keyMap[5];                    // re-assigne les commandes
+/*	irr::SKeyMap keyMap[5];                    // re-assigne les commandes
 	keyMap[0].Action = irr::EKA_MOVE_FORWARD;  // avancer
 	keyMap[0].KeyCode = irr::KEY_KEY_I;        // w
 	keyMap[1].Action = irr::EKA_MOVE_BACKWARD; // reculer
@@ -44,37 +46,29 @@ bbm::Match::Match(Game &game) :
 		0.01f,                                  // vitesse de deplacement
 		-1,                                    // pas de numero d'ID
 		keyMap,                                // on change la keymap
-		3);
-	// _camera = _graphic.getScene()->addCameraSceneNode(0,
-	// 	irr::core::vector3df(13.96f, 18.97f, 3.83f),
-	// 	irr::core::vector3df(14, -12, 14));
+		3);*/
+	_camera = _graphic.getScene()->addCameraSceneNode(0,
+			irr::core::vector3df(13.96f, 18.97f, 3.83f),
+			irr::core::vector3df(14, -12, 14));
 
 }
 
 void bbm::Match::init()
 {
 	_map.loadMap(MapGenerator::generate("./assets/maps/map1"));
-	_players.push_back(new Player(*this, 1, 1, PLAYER_1));
-	_players.push_back(new Player(*this, 11, 13, PLAYER_2));
-	_players.push_back(new Player(*this, 1, 13, PLAYER_3));
-	_players.push_back(new Player(*this, 11, 1, PLAYER_4));
+	addPlayer(new Player(*this, 1, 1, PLAYER_1));
+	addPlayer(new Player(*this, 11, 13, PLAYER_2));
+	addPlayer(new Player(*this, 1, 13, PLAYER_3));
+	addPlayer(new Player(*this, 11, 1, PLAYER_4));
 	auto lala = static_cast<Player *>(_players[0]);
 	_evManager->addEventReceiver(lala);
 //	_evManager->addEventReceiver(_players[1]);
 //	_evManager->addEventReceiver(_players[2]);
 //	_evManager->addEventReceiver(_players[3]);
-	_bonus.push_back(new BombUp(*this, 2, 6, true));
-	_bonus.push_back(new SpeedUp(*this, 4, 6, true));
-	_bonus.push_back(new FireUp(*this, 6, 6, true));
-	_bonus.push_back(new WallPass(*this, 8, 6, true));
-	_map.addEntity(_players[0]);
-	_map.addEntity(_players[1]);
-	_map.addEntity(_players[2]);
-	_map.addEntity(_players[3]);
-	_map.addEntity(_bonus[0]);
-	_map.addEntity(_bonus[1]);
-	_map.addEntity(_bonus[2]);
-	_map.addEntity(_bonus[3]);
+	_map.addEntity(new BombUp(*this, 2, 6, true));
+	_map.addEntity(new SpeedUp(*this, 4, 6, true));
+	_map.addEntity(new FireUp(*this, 6, 6, true));
+	_map.addEntity(new WallPass(*this, 8, 6, true));
 	std::cout << _map << std::endl;
 	std::cout << "height: " << _map.getHeight() << std::endl;
 	std::cout << "width: " << _map.getWidth() << std::endl;
@@ -132,7 +126,19 @@ bool bbm::Match::run()
 
 void bbm::Match::update()
 {
-	_players[0]->update();
+	int lastSize;
+
+	std::cout << "size p " << _players.size() << std::endl;
+	for (auto it = _players.begin(); it < _players.end(); ++it)
+		(*it)->update();
+	lastSize = _bombs.size();
+	for (int i = 0; i < _bombs.size(); ++i) {
+		_bombs[i]->update();
+		if (lastSize != _bombs.size()) {
+			lastSize = _bombs.size();
+			--i;
+		}
+	}
 }
 
 bbm::EventManager *bbm::Match::getEventManager()
@@ -148,4 +154,30 @@ bbm::Graphic &bbm::Match::getGraphic()
 bbm::Map &bbm::Match::getMap()
 {
 	return _map;
+}
+
+void bbm::Match::addBomb(Bomb *bomb)
+{
+	_bombs.push_back(bomb);
+}
+
+void bbm::Match::removeBomb(Bomb *bomb)
+{
+	for (auto it = _bombs.begin(); it != _bombs.end(); ++it)
+		if (*it == bomb)
+			_bombs.erase(it--);
+}
+
+void bbm::Match::addPlayer(IPlayer *player)
+{
+	_players.push_back(player);
+}
+
+void bbm::Match::removePlayer(IPlayer *player)
+{
+	for (auto it = _players.begin(); it != _players.end(); ++it) {
+		if (*it == player) {
+			_players.erase(it--);
+		}
+	}
 }

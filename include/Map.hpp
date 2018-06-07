@@ -16,6 +16,7 @@ namespace bbm {
 	class Map {
 	public:
 		Map(Match &match);
+		~Map();
 		void loadMap(std::vector<std::vector<int>> map);
 		void save();
 		void load();

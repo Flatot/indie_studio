@@ -25,6 +25,7 @@ bbm::IEntity::~IEntity()
 {
 	if (_mesh)
 		_mesh->remove();
+	std::cout << "IENTITY DESTRUCTOR" << std::endl;
 }
 
 int bbm::IEntity::getIdEntity() const
@@ -40,6 +41,11 @@ int bbm::IEntity::getPosX() const
 int bbm::IEntity::getPosZ() const
 {
 	return _z;
+}
+
+bool bbm::IEntity::is(Entities entity) const
+{
+	return _idEntity == entity;
 }
 
 void bbm::IEntity::setCoefs(float coefX, float coefY, float coefZ)

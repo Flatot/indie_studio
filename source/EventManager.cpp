@@ -38,7 +38,7 @@ void bbm::EventManager::removeEventReceiver(IMyEventReceiver *ev)
 {
 	for (auto it = _evReceivers.begin(); it != _evReceivers.end(); ++it)
 		if (*it == ev)
-			_evReceivers.erase(it);
+			_evReceivers.erase(it--);
 }
 
 void bbm::EventManager::addEventReceiver(IMyEventReceiver *ev)

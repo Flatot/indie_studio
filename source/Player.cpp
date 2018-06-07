@@ -14,6 +14,11 @@ bbm::Player::Player(Match &match, float z, float x, Entities playerNum) :
 	activate();
 }
 
+bbm::Player::~Player()
+{
+	std::cout << "PLAYER DESTRUCTOR" << std::endl;
+}
+
 void bbm::Player::spawn()
 {
 
@@ -21,7 +26,9 @@ void bbm::Player::spawn()
 
 void bbm::Player::die()
 {
-
+	deactivate();
+	_match.getEventManager()->removeEventReceiver(this);
+	IPlayer::die();
 }
 
 void bbm::Player::update()
@@ -44,5 +51,7 @@ bool bbm::Player::OnEvent(const irr::SEvent &event)
 		_move | BOTTOM : _move & ~BOTTOM;
 	if (isKeyPressed(irr::KEY_KEY_L, NONE))
 		++_speed;
+	if (isKeyPressed(irr::KEY_KEY_B, NONE))
+		putBomb();
 	return false;
 }

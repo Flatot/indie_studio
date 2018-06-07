@@ -23,7 +23,8 @@ namespace bbm {
 		PLAYER_3 = 16,
 		PLAYER_4 = 32,
 		BOMB = 64,
-		BONUS = 128
+		EXPLOSION = 128,
+		BONUS = 256
 	};
 
 	class IEntity {
@@ -36,6 +37,7 @@ namespace bbm {
 		int getIdEntity() const;
 		int getPosX() const;
 		int getPosZ() const;
+		bool is(Entities entity) const;
 
 		void setCoefs(float coefX, float coefY, float coefZ);
 		void setMesh(irr::scene::ISceneNode *mesh);
