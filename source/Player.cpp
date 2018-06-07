@@ -26,7 +26,7 @@ void bbm::Player::die()
 
 void bbm::Player::update()
 {
-	_mesh->setPosition(irr::core::vector3df(_x, 0.f, _z * 2));
+	_mesh->setPosition(irr::core::vector3df(_x * 2, 1.f, _z * 2));
 }
 
 bool bbm::Player::OnEvent(const irr::SEvent &event)

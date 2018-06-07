@@ -1,19 +1,19 @@
 //
 // EPITECH PROJECT, 2018
-// UnbreakableBlock.cpp
+// BreakableBlock.cpp
 // File description:
-// Unbreakable block implementation
+// Breakable block implementation
 //
 
 #include <iostream>
-#include "UnbreakableBlock.hpp"
+#include "BreakableBlock.hpp"
 #include "Match.hpp"
 
-bbm::UnbreakableBlock::UnbreakableBlock(Match &match, float z, float x) :
-	IBlock(match, x, z, false)
+bbm::BreakableBlock::BreakableBlock(Match &match, float z, float x) :
+	IBlock(match, x, z, true)
 {
-	_idEntity = UNBREAKABLE_BLOCK;
-	_texturePath = "./assets/model3D/Cube/unbreakable.jpg";
+	_idEntity = BREAKABLE_BLOCK;
+	_texturePath = "./assets/model3D/Cube/breakable.jpg";
 	setCoefs(2.f, 2.f, 2.f);
 	auto position = irr::core::vector3df(x * _coefX, _coefY, z * _coefZ);
 	auto rotation = irr::core::vector3df(0, 0, 0);
@@ -26,17 +26,17 @@ bbm::UnbreakableBlock::UnbreakableBlock(Match &match, float z, float x) :
 	_mesh->setMaterialTexture(0, driver->getTexture(_texturePath.c_str()));
 }
 
-void bbm::UnbreakableBlock::spawn()
+void bbm::BreakableBlock::spawn()
 {
-	std::cout << "Unbreakable Block spawned" << std::endl;
+	std::cout << "Breakable Block spawned" << std::endl;
 }
 
-void bbm::UnbreakableBlock::die()
+void bbm::BreakableBlock::die()
 {
-	std::cout << "Unbreakable Block died" << std::endl;
+	std::cout << "Breakable Block died" << std::endl;
 }
 
-void bbm::UnbreakableBlock::update()
+void bbm::BreakableBlock::update()
 {
-	std::cout << "Unbreakable Block updated" << std::endl;
+	std::cout << "Breakable Block updated" << std::endl;
 }

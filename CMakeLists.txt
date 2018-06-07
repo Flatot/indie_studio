@@ -36,6 +36,7 @@ set(SRCS 	source/main.cpp
 		source/Floor.cpp
 		source/MapGenerator.cpp
 		source/UnbreakableBlock.cpp
+		source/BreakableBlock.cpp
 		source/IBonus.cpp
 		source/BombUp.cpp
 		source/SpeedUp.cpp
