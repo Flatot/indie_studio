@@ -16,7 +16,7 @@ bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
 {
 	_idEntity = playerNum;
 	setCoefs(.33f, .33f, .33f);
-	auto position = irr::core::vector3df(_x, 0, _z * 2);
+	auto position = irr::core::vector3df(_x * 2, 1, _z * 2);
 	auto rotation = irr::core::vector3df(0, 0, 0);
 	auto scale = irr::core::vector3df(_coefX, _coefY, _coefZ);
 	auto scene = _match.getGraphic().getScene();
