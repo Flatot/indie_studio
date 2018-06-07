@@ -30,7 +30,7 @@ namespace bbm {
 	class IEntity {
 	public:
 		IEntity(Match &match, float z, float x, bool isTraversable);
-		~IEntity();
+		virtual ~IEntity();
 		virtual void spawn() = 0;
 		virtual void die() = 0;
 		virtual void update() = 0;

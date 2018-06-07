@@ -20,10 +20,8 @@ namespace bbm {
 		void spawn() override;
 		void die() override;
 		void update() override;
-		bool isAlive();
 	private:
 		Bomb *_owner;
 		std::chrono::steady_clock::time_point _timePoint;
-		bool _alive;
 	};
 }

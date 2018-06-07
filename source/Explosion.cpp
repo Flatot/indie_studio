@@ -12,8 +12,7 @@
 bbm::Explosion::Explosion(Match &match, float z, float x, Bomb *owner) :
 	IEntity(match, z, x, true),
 	_owner(owner),
-	_timePoint(std::chrono::steady_clock::now()),
-	_alive(true)
+	_timePoint(std::chrono::steady_clock::now())
 {
 	_idEntity = EXPLOSION;
 	_texturePath = "./assets/model3D/Cube/fire.jpg";
@@ -31,7 +30,7 @@ bbm::Explosion::Explosion(Match &match, float z, float x, Bomb *owner) :
 
 bbm::Explosion::~Explosion()
 {
-	std::cout << "EXPLOSION DESTRUCTOR" << std::endl;
+
 }
 
 void bbm::Explosion::spawn()
@@ -41,9 +40,15 @@ void bbm::Explosion::spawn()
 
 void bbm::Explosion::die()
 {
-	std::cout << "Explosion die()" << std::endl;
+	auto entities = _match.getMap().getFromPos(_z, _x);
+	auto idEntities = _match.getMap().getEntitiesFromPos(_z, _x);
+
 	_owner->removeExplosion(this);
-	_alive = false;
+	if (idEntities & BREAKABLE_BLOCK)
+		for (int i = 0; i < entities.size(); ++i, 
+				entities = _match.getMap().getFromPos(_z, _x))
+			if (entities[i] != this && !entities[i]->is(BOMB))
+				entities[i--]->die();
 	delete this;
 }
 
@@ -54,14 +59,11 @@ void bbm::Explosion::update()
 	auto diff = std::chrono::duration_cast<std::chrono::seconds>
 		(timePoint - _timePoint);
 
-	for (int i = 0; i < entities.size(); ++i)
-		if (!entities[i]->is(EXPLOSION) && !entities[i]->is(BOMB))
+	for (int i = 0; i < entities.size(); ++i, 
+			entities = _match.getMap().getFromPos(_z, _x))
+		if (entities[i] != this && !entities[i]->is(BOMB) && 
+				!entities[i]->is(BREAKABLE_BLOCK))
 			entities[i--]->die();
 	if (diff.count() >= 1)
 		die();
-}
-
-bool bbm::Explosion::isAlive()
-{
-	return _alive;
 }

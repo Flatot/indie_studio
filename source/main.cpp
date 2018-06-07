@@ -12,11 +12,8 @@
 int main()
 {
 	bbm::Config config;
-
 	bbm::Game g(config);
 
 	g.run();
-	std::cout << "ENNNND" << std::endl;
-
 	return 0;
 }

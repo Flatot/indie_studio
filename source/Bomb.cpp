@@ -19,7 +19,6 @@ bbm::Bomb::Bomb(Match &match, float z, float x, IPlayer *owner) :
 	_exploded(false),
 	_explosions()
 {
-	std::cout << "NEW BOMB" << std::endl;
 	_idEntity = BOMB;
 	_texturePath = "./assets/model3D/bomb/Bomb_obj/Albedo.png";
 	_meshPath = "./assets/model3D/bomb/Bomb_obj/Bomb.obj";
@@ -40,7 +39,7 @@ bbm::Bomb::Bomb(Match &match, float z, float x, IPlayer *owner) :
 
 bbm::Bomb::~Bomb()
 {
-	std::cout << "Bomb destructor" << std::endl;
+
 }
 
 void bbm::Bomb::spawn()
@@ -50,7 +49,6 @@ void bbm::Bomb::spawn()
 
 void bbm::Bomb::die()
 {
-	std::cout << "Bomb die()" << std::endl;
 	_mesh->remove();
 	_mesh = nullptr;
 	_owner->incBombCount();
@@ -105,38 +103,34 @@ void bbm::Bomb::explode()
 
 bool bbm::Bomb::explodeLine(int z, int x)
 {
-	std::cout << "ExplodeLine" << std::endl;
 	auto entities = _map.getFromPos(z, x);
+	auto idEntities = _map.getEntitiesFromPos(z, x);
 	bool ret = true;
 	bool kill = false;
 	std::vector<IEntity *> toKill;
 
-	for (auto it = entities.begin(); it != entities.end(); ++it) {
-		if ((*it)->is(UNBREAKABLE_BLOCK) || (*it)->is(EXPLOSION)) {
-			return false;
-		} else if (!kill && (*it)->is(BREAKABLE_BLOCK)) {
-			toKill.push_back(*it);
-		} else if ((*it)->is(BOMB)) {
-			(*it--)->die();
-			return false;
-		} 
-		if (kill) {
-			toKill.push_back(*it);
-		} else {
-			ret = true;
-		}
-	}
-	if (kill)
-		for (; toKill.size() > 0;)
-			toKill[0]->die();
-	if (ret)
+	// A refaire now
+	if ((idEntities & UNBREAKABLE_BLOCK))
+		return false;
+	if ((idEntities & BREAKABLE_BLOCK) && !(idEntities & EXPLOSION)) {
 		addExplosion(new Explosion(_match, z, x, this));
-	return ret;
+		return false;
+	}
+	if ((idEntities & BOMB)) {
+		if (!(idEntities & EXPLOSION)) {
+			for (auto it = entities.begin(); it != entities.end(); ++it, entities = _map.getFromPos(z, x))
+				if (!(*it)->is(BOMB))
+					(*it--)->die();
+			entities[0]->die();
+		}
+		return false;
+	}
+	addExplosion(new Explosion(_match, z, x, this));
+	return true;
 }
 
 void bbm::Bomb::addExplosion(Explosion *explo)
 {
-	std::cout << "EXPLOSION ADDED" << std::endl;
 	_explosions.push_back(explo);
 	_map.addEntity(explo);
 	std::cout << _map << std::endl;

@@ -34,6 +34,8 @@ void bbm::BreakableBlock::spawn()
 void bbm::BreakableBlock::die()
 {
 	std::cout << "Breakable Block died" << std::endl;
+	_match.getMap().removeEntity(this);
+	delete this;
 }
 
 void bbm::BreakableBlock::update()

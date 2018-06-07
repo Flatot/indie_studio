@@ -25,7 +25,6 @@ bbm::IEntity::~IEntity()
 {
 	if (_mesh)
 		_mesh->remove();
-	std::cout << "IENTITY DESTRUCTOR" << std::endl;
 }
 
 int bbm::IEntity::getIdEntity() const

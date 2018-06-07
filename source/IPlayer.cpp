@@ -13,8 +13,8 @@ bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
 	_move(0),
 	_timePoint(std::chrono::steady_clock::now()),
 	_speed(0),
-	_power(1),
-	_bombCount(1),
+	_power(3),
+	_bombCount(3),
 	_passWall(false)
 {
 	_idEntity = playerNum;
@@ -41,13 +41,12 @@ bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
 
 bbm::IPlayer::~IPlayer()
 {
-	std::cout << "IPLAYER DESTRUCTOR" << std::endl;
+	_match.getMap().removeEntity(this);
+	_match.removePlayer(this);
 }
 
 void bbm::IPlayer::die()
 {
-	_match.getMap().removeEntity(this);
-	_match.removePlayer(this);
 	delete this;
 }
 
@@ -78,7 +77,6 @@ void	bbm::IPlayer::moveLeft()
 	float new_x = _x - (0.1f + (0.01f * _speed));
 
 	_mesh->setRotation(irr::core::vector3df(0.f, -90.f, 0.f));
-	std::cout << "new_x: " << new_x << std::endl;
 	if (std::floor(_x) != std::floor(new_x)) {
 		if (!checkCollision(_z, new_x))
 			return;
@@ -95,7 +93,6 @@ void	bbm::IPlayer::moveRight()
 	auto &map = _match.getMap();
 	float new_x = _x + (0.1f + (0.01f * _speed));
 
-	std::cout << "new_x: " << new_x << std::endl;
 	_mesh->setRotation(irr::core::vector3df(0.f, 90.f, 0.f));
 	if (std::floor(_x) != std::floor(new_x)) {
 		if (!checkCollision(_z, new_x))
@@ -144,7 +141,9 @@ void	bbm::IPlayer::moveBottom()
 
 void	bbm::IPlayer::putBomb()
 {
-	if (_bombCount <= 0)
+	auto idEntities = _match.getMap().getEntitiesFromPos(_z, _x);
+
+	if (_bombCount <= 0 || (idEntities & BOMB))
 		return;
 	decBombCount();
 	IEntity *bomb = new Bomb(_match, _z, _x, this);

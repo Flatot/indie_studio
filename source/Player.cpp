@@ -16,7 +16,7 @@ bbm::Player::Player(Match &match, float z, float x, Entities playerNum) :
 
 bbm::Player::~Player()
 {
-	std::cout << "PLAYER DESTRUCTOR" << std::endl;
+	_match.getEventManager()->removeEventReceiver(this);
 }
 
 void bbm::Player::spawn()
@@ -27,7 +27,6 @@ void bbm::Player::spawn()
 void bbm::Player::die()
 {
 	deactivate();
-	_match.getEventManager()->removeEventReceiver(this);
 	IPlayer::die();
 }
 
@@ -56,15 +55,15 @@ bool bbm::Player::OnEvent(const irr::SEvent &event)
 	IMyEventReceiver::OnEvent(event);
 
 	std::cout << "[OnEvent - Player]" << std::endl;
-	_move = (isKeyPressed(irr::KEY_KEY_Q, NONE)) ? 
+	_move = (isKeyPressed(irr::KEY_KEY_A, NONE)) ? 
 		_move | LEFT : _move & ~LEFT;
-	_move = (isKeyPressed(irr::KEY_KEY_Z, NONE)) ? 
+	_move = (isKeyPressed(irr::KEY_KEY_W, NONE)) ? 
 		_move | TOP : _move & ~TOP;
 	_move = (isKeyPressed(irr::KEY_KEY_D, NONE)) ? 
 		_move | RIGHT : _move & ~RIGHT;
 	_move = (isKeyPressed(irr::KEY_KEY_S, NONE)) ? 
 		_move | BOTTOM : _move & ~BOTTOM;
-	if (isKeyPressed(irr::KEY_KEY_L, NONE))
+	if (isKeyPressed(irr::KEY_KEY_N, NONE))
 		++_speed;
 	if (isKeyPressed(irr::KEY_KEY_B, NONE))
 		putBomb();
