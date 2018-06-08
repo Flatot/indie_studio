@@ -10,7 +10,6 @@
 bbm::Player::Player(Match &match, float z, float x, Entities playerNum) :
 	bbm::IPlayer(match, x, z, playerNum)
 {
-	std::cout << "Player constructed" << std::endl;
 	activate();
 }
 
