@@ -48,7 +48,7 @@ bbm::Match::Match(Game &game) :
 	// 	keyMap,                                // on change la keymap
 	// 	3);
 	_camera = _graphic.getScene()->addCameraSceneNode(0,
-			irr::core::vector3df(6.92f, 10.05f, 2.16f),
+			irr::core::vector3df(6.92f, 16.05f, 2.16f),
 			irr::core::vector3df(6.94f, -1.82f, 5.70f));
 
 }
@@ -76,9 +76,9 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 	IMyEventReceiver::OnEvent(event);
 	
 	std::cout << "[OnEvent - Match]" << std::endl;
-	if (isKeyPressed(irr::KEY_KEY_A, NONE)) {
+	if (isKeyPressed(irr::KEY_KEY_Q, NONE)) {
 		deactivate();
-		resetKey(irr::KEY_KEY_A, NONE);
+		resetKey(irr::KEY_KEY_Q, NONE);
 		return true;
 	}
 	return false;
@@ -113,10 +113,11 @@ bool bbm::Match::run()
 		// std::cout << "x : " << lala.X << " y : " << lala.Y << " z : " << lala.Z << std::endl;
 		_graphic.getScene()->drawAll();
 		_graphic.getDriver()->endScene();
-		_players[0]->move();
 		update();
 	}
 	_map.clear();
+	_players.clear();
+	_bombs.clear();
 	deactivate();
 	return true;
 }

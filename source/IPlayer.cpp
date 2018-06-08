@@ -43,48 +43,37 @@ bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
 	animatedMesh->setAnimationSpeed(15);
 }
 
-void bbm::IPlayer::getTexture()
-{
-	if (_idEntity == bbm::Entities::PLAYER_1)
-		_texture = "assets/model3D/player/PLAYER_1.jpg";
-	if (_idEntity == bbm::Entities::PLAYER_2)
-		_texture = "assets/model3D/player/PLAYER_2.jpg";
-	if (_idEntity == bbm::Entities::PLAYER_3)
-		_texture = "assets/model3D/player/PLAYER_3.jpg";
-	if (_idEntity == bbm::Entities::PLAYER_4)
-		_texture = "assets/model3D/player/PLAYER_4.jpg";
-}
-
 bbm::IPlayer::~IPlayer()
 {
-	std::cout << "IPLAYER DESTRUCTOR" << std::endl;
+	_match.getMap().removeEntity(this);
+	_match.removePlayer(this);
 }
 
 void bbm::IPlayer::die()
 {
-	_match.getMap().removeEntity(this);
-	_match.removePlayer(this);
 	delete this;
 }
 
 void bbm::IPlayer::get_bonus()
 {
-	int i = 0;
-	auto entities = _match.getMap().getEntitiesFromPos(_z, _x);
-	if (entities & BONUS) {
-		auto entites = _match.getMap().getFromPos(_z, _x);
-		while (i != entites.size() && !entites[i]->is(BONUS))
-			i++;
-		if (entites[i]->getType() == WALLPASS)
-			_passWall = true;
-		else if (entites[i]->getType() == BOMBUP)
-			++_bombCount;
-		if (entites[i]->getType() == SPEEDUP)
-			_speed += 0.1;
-		else if (entites[i]->getType() == FIREUP)
-			++_power;
-		entites[i]->die();
+	auto entity = _match.getMap().getEntity(_z, _x, BONUS);
+
+	if (!entity)
+		return;
+	switch (entity->getType()) {
+	case WALLPASS:
+		_passWall = true;
+		break;
+	case BOMBUP:
+		incBombCount();
+		break;
+	case SPEEDUP:
+		_speed += 1;
+		break;
+	case FIREUP:
+		++_power;
 	}
+	entity->die();
 }
 
 void bbm::IPlayer::move()
@@ -115,7 +104,6 @@ void	bbm::IPlayer::moveLeft()
 	float new_x = _x - (0.1f + (0.01f * _speed));
 
 	_mesh->setRotation(irr::core::vector3df(0.f, -90.f, 0.f));
-	std::cout << "new_x: " << new_x << std::endl;
 	if (std::floor(_x) != std::floor(new_x)) {
 		if (!checkCollision(_z, new_x))
 			return;
@@ -133,7 +121,6 @@ void	bbm::IPlayer::moveRight()
 	float new_x = _x + (0.1f + (0.01f * _speed));
 
 	std::cout << "new_x: " << new_x << std::endl;
-	_mesh->setRotation(irr::core::vector3df(0.f, 90.f, 0.f));
 	if (std::floor(_x) != std::floor(new_x)) {
 		if (!checkCollision(_z, new_x))
 			return;
@@ -181,7 +168,10 @@ void	bbm::IPlayer::moveBottom()
 
 void	bbm::IPlayer::putBomb()
 {
-	if (_bombCount <= 0)
+	int idEntities = _match.getMap().getEntitiesFromPos(_z, _x);
+
+	if (_bombCount <= 0 || (idEntities & BOMB) || 
+			(idEntities & BREAKABLE_BLOCK))
 		return;
 	decBombCount();
 	IEntity *bomb = new Bomb(_match, _z, _x, this);
@@ -213,4 +203,16 @@ bool bbm::IPlayer::checkCollision(int new_z, int new_x)
 	if ((entities & BREAKABLE_BLOCK) || (entities & BOMB))
 		return _passWall;
 	return true;
+}
+
+void bbm::IPlayer::getTexture()
+{
+	if (_idEntity == bbm::Entities::PLAYER_1)
+		_texture = "assets/model3D/player/PLAYER_1.jpg";
+	if (_idEntity == bbm::Entities::PLAYER_2)
+		_texture = "assets/model3D/player/PLAYER_2.jpg";
+	if (_idEntity == bbm::Entities::PLAYER_3)
+		_texture = "assets/model3D/player/PLAYER_3.jpg";
+	if (_idEntity == bbm::Entities::PLAYER_4)
+		_texture = "assets/model3D/player/PLAYER_4.jpg";
 }

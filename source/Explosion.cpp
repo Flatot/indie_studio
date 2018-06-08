@@ -52,7 +52,7 @@ void bbm::Explosion::random_bonus(int random)
 		auto *bonus = new FireUp(_match, _z, _x, true);
 		_match.getMap().addEntity(bonus);
 	}
-	if (random >= 36 && random <= 55) {
+	if (random >= 36 && random <= 65) {
 		auto *bonus = new BombUp(_match, _z, _x, true);
 		_match.getMap().addEntity(bonus);
 	}
@@ -70,12 +70,12 @@ void bbm::Explosion::die()
 
 	_owner->removeExplosion(this);
 	if (idEntities & BREAKABLE_BLOCK) {
-		for (int i = 0; i < entities.size(); ++i, 
-				entities = _match.getMap().getFromPos(_z, _x))
-			if (entities[i] != this && !entities[i]->is(BOMB))
-				entities[i--]->die();
+		auto breakableBlock = _match.getMap().getEntity(_z, _x, 
+				BREAKABLE_BLOCK);
+		if (breakableBlock)
+			breakableBlock->die();
 		random = rand() % 100;
-		if (random >= 0 && random <= 20) {
+		if (random >= 0 && random <= 30) {
 			random = rand() % 100;
 			random_bonus(random);
 		}

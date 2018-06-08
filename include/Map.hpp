@@ -24,6 +24,7 @@ namespace bbm {
 		int getWidth() const;
 		std::vector<IEntity *> &getFromPos(int y, int x);
 		int getEntitiesFromPos(int y, int x) const;
+		IEntity *getEntity(int y, int x, Entities entity);
 		void clear();
 		void addEntity(IEntity *entity);
 		std::pair<std::vector<IEntity *>::iterator, 
