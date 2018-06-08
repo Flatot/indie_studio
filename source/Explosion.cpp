@@ -8,6 +8,10 @@
 #include "Explosion.hpp"
 #include "Bomb.hpp"
 #include "Match.hpp"
+#include "BombUp.hpp"
+#include "SpeedUp.hpp"
+#include "FireUp.hpp"
+#include "WallPass.hpp"
 
 bbm::Explosion::Explosion(Match &match, float z, float x, Bomb *owner) :
 	IEntity(match, z, x, true),
@@ -38,17 +42,44 @@ void bbm::Explosion::spawn()
 	
 }
 
+void bbm::Explosion::random_bonus(int random)
+{
+	if (random >= 0 && random <= 5) {
+		auto *bonus = new WallPass(_match, _z, _x, true);
+		_match.getMap().addEntity(bonus);
+	}
+	else if (random >= 6 && random <= 35) {
+		auto *bonus = new FireUp(_match, _z, _x, true);
+		_match.getMap().addEntity(bonus);
+	}
+	if (random >= 36 && random <= 55) {
+		auto *bonus = new BombUp(_match, _z, _x, true);
+		_match.getMap().addEntity(bonus);
+	}
+	if (random >= 56 && random <= 100) {
+		auto *bonus = new SpeedUp(_match, _z, _x, true);
+		_match.getMap().addEntity(bonus);
+	}
+}
+
 void bbm::Explosion::die()
 {
 	auto entities = _match.getMap().getFromPos(_z, _x);
 	auto idEntities = _match.getMap().getEntitiesFromPos(_z, _x);
+	int random;
 
 	_owner->removeExplosion(this);
-	if (idEntities & BREAKABLE_BLOCK)
+	if (idEntities & BREAKABLE_BLOCK) {
 		for (int i = 0; i < entities.size(); ++i, 
 				entities = _match.getMap().getFromPos(_z, _x))
 			if (entities[i] != this && !entities[i]->is(BOMB))
 				entities[i--]->die();
+		random = rand() % 100;
+		if (random >= 0 && random <= 20) {
+			random = rand() % 100;
+			random_bonus(random);
+		}
+	}
 	delete this;
 }
 

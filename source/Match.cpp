@@ -28,27 +28,27 @@ bbm::Match::Match(Game &game) :
 	_camera()
 {
 	_evManager->addEventReceiver(this);
-/*	 irr::SKeyMap keyMap[5];                    // re-assigne les commandes
-	 keyMap[0].Action = irr::EKA_MOVE_FORWARD;  // avancer
-	 keyMap[0].KeyCode = irr::KEY_KEY_I;        // w
-	 keyMap[1].Action = irr::EKA_MOVE_BACKWARD; // reculer
-	 keyMap[1].KeyCode = irr::KEY_KEY_K;        // s
-	 keyMap[2].Action = irr::EKA_STRAFE_LEFT;   // a gauche
-	 keyMap[2].KeyCode = irr::KEY_KEY_J;        // a
-	 keyMap[3].Action = irr::EKA_STRAFE_RIGHT;  // a droite
-	 keyMap[3].KeyCode = irr::KEY_KEY_L;        // d
-	 keyMap[4].Action = irr::EKA_JUMP_UP;       // saut
-	 keyMap[4].KeyCode = irr::KEY_SPACE;        // barre espace
+	// irr::SKeyMap keyMap[5];                    // re-assigne les commandes
+	// keyMap[0].Action = irr::EKA_MOVE_FORWARD;  // avancer
+	// keyMap[0].KeyCode = irr::KEY_KEY_I;        // w
+	// keyMap[1].Action = irr::EKA_MOVE_BACKWARD; // reculer
+	// keyMap[1].KeyCode = irr::KEY_KEY_K;        // s
+	// keyMap[2].Action = irr::EKA_STRAFE_LEFT;   // a gauche
+	// keyMap[2].KeyCode = irr::KEY_KEY_J;        // a
+	// keyMap[3].Action = irr::EKA_STRAFE_RIGHT;  // a droite
+	// keyMap[3].KeyCode = irr::KEY_KEY_L;        // d
+	// keyMap[4].Action = irr::EKA_JUMP_UP;       // saut
+	// keyMap[4].KeyCode = irr::KEY_SPACE;        // barre espace
 
-	 _camera = _graphic.getScene()->addCameraSceneNodeFPS(       // ajout de la camera FPS
-	 	0,                                     // pas de noeud parent
-	 	100.0f,                                // vitesse de rotation
-	 	0.01f,                                  // vitesse de deplacement
-	 	-1,                                    // pas de numero d'ID
-	 	keyMap,                                // on change la keymap
-	 	3);*/
+	// _camera = _graphic.getScene()->addCameraSceneNodeFPS(       // ajout de la camera FPS
+	// 	0,                                     // pas de noeud parent
+	// 	100.0f,                                // vitesse de rotation
+	// 	0.01f,                                  // vitesse de deplacement
+	// 	-1,                                    // pas de numero d'ID
+	// 	keyMap,                                // on change la keymap
+	// 	3);
 	_camera = _graphic.getScene()->addCameraSceneNode(0,
-			irr::core::vector3df(6.92f, 13.05f, 2.16f),
+			irr::core::vector3df(6.92f, 10.05f, 2.16f),
 			irr::core::vector3df(6.94f, -1.82f, 5.70f));
 
 }
@@ -60,13 +60,11 @@ void bbm::Match::init()
 	addPlayer(new Player(*this, 11.5, 13.5, PLAYER_2));
 	addPlayer(new Player(*this, 1.5, 13.5, PLAYER_3));
 	addPlayer(new Player(*this, 11.5, 1.5, PLAYER_4));
-	for (auto player: _players)
-		_map.addEntity(player);
 	auto lala = static_cast<Player *>(_players[0]);
 	_evManager->addEventReceiver(lala);
-//	_evManager->addEventReceiver(_players[1]);
-//	_evManager->addEventReceiver(_players[2]);
-//	_evManager->addEventReceiver(_players[3]);
+	// _evManager->addEventReceiver(_players[1]);
+	// _evManager->addEventReceiver(_players[2]);
+	// _evManager->addEventReceiver(_players[3]);
 	std::cout << _map << std::endl;
 	std::cout << "height: " << _map.getHeight() << std::endl;
 	std::cout << "width: " << _map.getWidth() << std::endl;
@@ -78,9 +76,9 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 	IMyEventReceiver::OnEvent(event);
 	
 	std::cout << "[OnEvent - Match]" << std::endl;
-	if (isKeyPressed(irr::KEY_KEY_Q, NONE)) {
+	if (isKeyPressed(irr::KEY_KEY_A, NONE)) {
 		deactivate();
-		resetKey(irr::KEY_KEY_Q, NONE);
+		resetKey(irr::KEY_KEY_A, NONE);
 		return true;
 	}
 	return false;
@@ -115,12 +113,10 @@ bool bbm::Match::run()
 		// std::cout << "x : " << lala.X << " y : " << lala.Y << " z : " << lala.Z << std::endl;
 		_graphic.getScene()->drawAll();
 		_graphic.getDriver()->endScene();
-//		_players[0]->move();
+		_players[0]->move();
 		update();
 	}
 	_map.clear();
-	_players.clear();
-	_bombs.clear();
 	deactivate();
 	return true;
 }

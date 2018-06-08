@@ -22,6 +22,7 @@ bbm::SpeedUp::SpeedUp(Match &match, float z, float x, bool isTraversable) :
 	_mesh = scene->addCubeSceneNode(1.f, 0, -1, position, rotation, scale);
 	_mesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	_mesh->setMaterialTexture(0, driver->getTexture(_texturePath.c_str()));
+	_type = SPEEDUP;
 }
 
 void bbm::SpeedUp::spawn()
@@ -31,7 +32,9 @@ void bbm::SpeedUp::spawn()
 
 void bbm::SpeedUp::die()
 {
-
+	std::cout << "SpeedUp died" << std::endl;
+	_match.getMap().removeEntity(this);
+	delete this;
 }
 
 void bbm::SpeedUp::update()
