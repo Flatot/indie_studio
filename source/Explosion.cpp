@@ -44,20 +44,20 @@ void bbm::Explosion::spawn()
 
 void bbm::Explosion::random_bonus(int random)
 {
-	if (random >= 0 && random <= 5) {
-		auto *bonus = new WallPass(_match, _z, _x, true);
-		_match.getMap().addEntity(bonus);
-	}
-	else if (random >= 6 && random <= 35) {
+	// if (random >= 0 && random <= 5) {
+	// 	auto *bonus = new WallPass(_match, _z, _x, true);
+	// 	_match.getMap().addEntity(bonus);
+	// }
+	// else if (random >= 6 && random <= 35) {
+	// 	auto *bonus = new FireUp(_match, _z, _x, true);
+	// 	_match.getMap().addEntity(bonus);
+	// }
+	// if (random >= 36 && random <= 55) {
+	// 	auto *bonus = new BombUp(_match, _z, _x, true);
+	// 	_match.getMap().addEntity(bonus);
+	// }
+	if (random >= 0 && random <= 100) { //56
 		auto *bonus = new FireUp(_match, _z, _x, true);
-		_match.getMap().addEntity(bonus);
-	}
-	if (random >= 36 && random <= 55) {
-		auto *bonus = new BombUp(_match, _z, _x, true);
-		_match.getMap().addEntity(bonus);
-	}
-	if (random >= 56 && random <= 100) {
-		auto *bonus = new SpeedUp(_match, _z, _x, true);
 		_match.getMap().addEntity(bonus);
 	}
 }

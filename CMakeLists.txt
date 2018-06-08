@@ -31,6 +31,7 @@ set(SRCS 	source/main.cpp
 		source/IPlayer.cpp
 		source/Map.cpp
 		source/Player.cpp
+		source/Ia.cpp
 		source/Graphic.cpp
 		source/IMyEventReceiver.cpp
 		source/EventManager.cpp

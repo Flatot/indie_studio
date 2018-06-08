@@ -10,6 +10,7 @@
 #include "Game.hpp"
 #include "MapGenerator.hpp"
 #include "Player.hpp"
+#include "Ia.hpp"
 #include "BombUp.hpp"
 #include "SpeedUp.hpp"
 #include "FireUp.hpp"
@@ -57,12 +58,11 @@ void bbm::Match::init()
 {
 	_map.loadMap(MapGenerator::generate("./assets/maps/map1"));
 	addPlayer(new Player(*this, 1.5, 1.5, PLAYER_1));
-	addPlayer(new Player(*this, 11.5, 13.5, PLAYER_2));
-	addPlayer(new Player(*this, 1.5, 13.5, PLAYER_3));
-	addPlayer(new Player(*this, 11.5, 1.5, PLAYER_4));
+	addPlayer(new Ia(*this, 11.5, 13.5, PLAYER_2));
+	addPlayer(new Ia(*this, 1.5, 13.5, PLAYER_3));
+	addPlayer(new Ia(*this, 11.5, 1.5, PLAYER_4));
 	auto lala = static_cast<Player *>(_players[0]);
 	_evManager->addEventReceiver(lala);
-	// _evManager->addEventReceiver(_players[1]);
 	// _evManager->addEventReceiver(_players[2]);
 	// _evManager->addEventReceiver(_players[3]);
 	std::cout << _map << std::endl;
@@ -114,6 +114,9 @@ bool bbm::Match::run()
 		_graphic.getScene()->drawAll();
 		_graphic.getDriver()->endScene();
 		_players[0]->move();
+		_players[1]->analyseMap();
+		_players[2]->analyseMap();
+		_players[3]->analyseMap();
 		update();
 	}
 	_map.clear();

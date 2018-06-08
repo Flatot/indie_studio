@@ -60,6 +60,11 @@ bbm::IPlayer::~IPlayer()
 	std::cout << "IPLAYER DESTRUCTOR" << std::endl;
 }
 
+void bbm::IPlayer::analyseMap()
+{
+	this->analyseMap();
+}
+
 void bbm::IPlayer::die()
 {
 	_match.getMap().removeEntity(this);

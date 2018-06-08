@@ -23,7 +23,7 @@ namespace bbm {
 		void explode();
 		void addExplosion(Explosion *explo);
 		void removeExplosion(Explosion *explo);
-
+		int getPower() const;
 	private:
 		bool explodeLine(int z, int x);
 		

@@ -34,7 +34,7 @@ bbm::Bomb::Bomb(Match &match, float z, float x, IPlayer *owner) :
 
 	_mesh = scene->addAnimatedMeshSceneNode(mesh, 0, -1, position, rotation, scale);
 	_mesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	_mesh->setMaterialTexture(0, driver->getTexture(_texturePath.c_str()));
+	_mesh->setMaterialTexture(0, driver->getTexture(_texturePath.c_str()));;
 }
 
 bbm::Bomb::~Bomb()
@@ -80,6 +80,11 @@ void bbm::Bomb::update()
 		delete this;
 	} 
 
+}
+
+int bbm::Bomb::getPower() const
+{
+	return _power;
 }
 
 void bbm::Bomb::explode()

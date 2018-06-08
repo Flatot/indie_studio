@@ -28,6 +28,7 @@ namespace bbm {
 		virtual void spawn() = 0;
 		virtual void die() override;
 		virtual void update() = 0;
+		virtual void analyseMap();
 		void move();
 		void putBomb();
 
@@ -36,14 +37,14 @@ namespace bbm {
 		void decBombCount();
 	private:
 		void getTexture();
-		void moveLeft();
-		void moveRight();
-		void moveTop();
-		void moveBottom();
 		bool checkCollision(int new_z, int new_x);
 		void get_bonus();
 		std::string _texture;
 	protected:
+		void moveLeft();
+		void moveRight();
+		void moveTop();
+		void moveBottom();
 		int _move;
 		std::chrono::steady_clock::time_point _timePoint;
 		int _speed;

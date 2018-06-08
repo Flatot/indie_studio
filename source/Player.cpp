@@ -11,10 +11,10 @@ bbm::Player::Player(Match &match, float z, float x, Entities playerNum) :
 	bbm::IPlayer(match, x, z, playerNum)
 {
 	std::cout << "Player constructed" << std::endl;
-	auto scene = _match.getGraphic().getScene();
-	auto mesh = scene->getMesh("./assets/model3D/player/ninja.b3d");
-	auto animatedMesh = static_cast<
-		irr::scene::IAnimatedMeshSceneNode *>(_mesh);
+	// auto scene = _match.getGraphic().getScene();
+	// auto mesh = scene->getMesh("./assets/model3D/player/ninja.b3d");
+	// auto animatedMesh = static_cast<
+	// 	irr::scene::IAnimatedMeshSceneNode *>(_mesh);
 	activate();
 }
 
