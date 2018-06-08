@@ -112,8 +112,12 @@ bool bbm::Bomb::explodeLine(int z, int x)
 	if ((idEntities & UNBREAKABLE_BLOCK))
 		return false;
 	if ((idEntities & BREAKABLE_BLOCK)) {
-		if (!(idEntities & EXPLOSION))
+		if (!(idEntities & EXPLOSION)) {
+			auto block = _map.getEntity(z, x, BREAKABLE_BLOCK);
+			if (block)
+				block->getMesh()->setVisible(false);
 			addExplosion(new Explosion(_match, z, x, this));
+		}
 		return false;
 	}
 	if ((idEntities & BOMB)) {

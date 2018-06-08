@@ -43,14 +43,14 @@ void bbm::Map::loadMap(std::vector<std::vector<int>> map)
 			if (map[y][x] & BREAKABLE_BLOCK)
 				_map[y][x].push_back(new BreakableBlock(_match,
 							y, x));
-			if (map[y][x] & PLAYER_1)
+/*			if (map[y][x] & PLAYER_1)
 				_map[y][x].push_back(new Player(_match, y, x, PLAYER_1));
 			if (map[y][x] & PLAYER_2)
 				_map[y][x].push_back(new Player(_match, y, x, PLAYER_2));
 			if (map[y][x] & PLAYER_3)
 				_map[y][x].push_back(new Player(_match, y, x, PLAYER_3));
 			if (map[y][x] & PLAYER_4)
-				_map[y][x].push_back(new Player(_match, y, x, PLAYER_4));
+				_map[y][x].push_back(new Player(_match, y, x, PLAYER_4));*/
 		}
 	}
 }

@@ -75,7 +75,7 @@ void bbm::Explosion::die()
 		if (breakableBlock)
 			breakableBlock->die();
 		random = rand() % 100;
-		if (random >= 0 && random <= 30) {
+		if (random >= 0 && random <= 40) {
 			random = rand() % 100;
 			random_bonus(random);
 		}
@@ -95,6 +95,6 @@ void bbm::Explosion::update()
 		if (entities[i] != this && !entities[i]->is(BOMB) && 
 				!entities[i]->is(BREAKABLE_BLOCK))
 			entities[i--]->die();
-	if (diff.count() >= 1)
+	if (diff.count() >= 0.75)
 		die();
 }

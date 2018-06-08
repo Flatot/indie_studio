@@ -23,11 +23,8 @@ bbm::IEntity::IEntity(Match &match, float z, float x, bool isTraversable) :
 
 bbm::IEntity::~IEntity()
 {
-	std::cout << "Ientity destructor" << std::endl;
-	if (_mesh) {
-		std::cout << "mesh remove" << std::endl;
+	if (_mesh)
 		_mesh->remove();
-	}
 }
 
 int bbm::IEntity::getIdEntity() const

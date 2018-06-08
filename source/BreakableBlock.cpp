@@ -29,7 +29,7 @@ bbm::BreakableBlock::BreakableBlock(Match &match, float z, float x) :
 
 bbm::BreakableBlock::~BreakableBlock()
 {
-	std::cout << "BreakableBlock destructor" << std::endl;
+
 }
 
 void bbm::BreakableBlock::spawn()

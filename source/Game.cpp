@@ -30,6 +30,11 @@ bbm::Graphic &bbm::Game::getGraphic()
 	return _graphic;
 }
 
+bbm::Config &bbm::Game::getConfig()
+{
+	return _config;
+}
+
 bool bbm::Game::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);

@@ -33,10 +33,13 @@ namespace bbm {
 		bbm::Entities _entity;
 		std::map<std::string, irr::EKEY_CODE> _keys;
 		bool isValuable(std::string str);
-		bool handleLine(std::string line, std::string delimiter, bool start);
+		bool handleLine(std::string line, std::string delimiter, 
+				bool start);
 	};
 }
-std::ostream& operator<< (std::ostream& stream, bbm::PlayerConfig const& playerConf);
+
+std::ostream& operator<< (std::ostream& stream, 
+		bbm::PlayerConfig const& playerConf);
 
 static std::string valuableControl[5] = {
 	"PUT_BOMB",
