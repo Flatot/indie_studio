@@ -8,6 +8,7 @@
 #include <iostream>
 #include "BreakableBlock.hpp"
 #include "Match.hpp"
+#include "BombUp.hpp"
 
 bbm::BreakableBlock::BreakableBlock(Match &match, float z, float x) :
 	IBlock(match, x, z, true)

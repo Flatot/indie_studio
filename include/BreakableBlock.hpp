@@ -18,7 +18,6 @@ namespace bbm {
 		virtual void spawn() override;
 		virtual void die() override;
 		virtual void update() override;
-
 	private:
 	};
 }

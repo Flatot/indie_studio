@@ -18,6 +18,5 @@ namespace bbm {
 		virtual void update() = 0;
 
 	private:
-
 	};
 }

@@ -68,3 +68,8 @@ irr::scene::ISceneNode *bbm::IEntity::getMesh()
 {
 	return _mesh;
 }
+
+bbm::Type bbm::IEntity::getType() const
+{
+	return _type;
+}

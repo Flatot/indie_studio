@@ -27,6 +27,13 @@ namespace bbm {
 		BONUS = 256
 	};
 
+	enum Type {
+		WALLPASS = 1,
+		SPEEDUP = 2,
+		BOMBUP = 4,
+		FIREUP = 8
+	};
+
 	class IEntity {
 	public:
 		IEntity(Match &match, float z, float x, bool isTraversable);
@@ -42,10 +49,10 @@ namespace bbm {
 		void setCoefs(float coefX, float coefY, float coefZ);
 		void setMesh(irr::scene::ISceneNode *mesh);
 		void setTexturePath(std::string &path);
+		Type getType() const;
 		irr::scene::ISceneNode *getMesh();
+
 	protected:
-
-
 		Match &_match;
 		bool _isTraversable;
 		float _x;
@@ -57,5 +64,6 @@ namespace bbm {
 		float _coefZ;
 		irr::scene::ISceneNode *_mesh;
 		Entities _idEntity;
+		Type _type;
 	};
 }

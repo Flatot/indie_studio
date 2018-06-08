@@ -35,11 +35,14 @@ namespace bbm {
 		void incBombCount();
 		void decBombCount();
 	private:
+		void getTexture();
 		void moveLeft();
 		void moveRight();
 		void moveTop();
 		void moveBottom();
 		bool checkCollision(int new_z, int new_x);
+		void get_bonus();
+		std::string _texture;
 	protected:
 		int _move;
 		std::chrono::steady_clock::time_point _timePoint;
