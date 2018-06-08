@@ -120,7 +120,6 @@ void	bbm::IPlayer::moveLeft()
 	float new_x = _x - (0.1f + (0.01f * _speed));
 
 	_mesh->setRotation(irr::core::vector3df(0.f, -90.f, 0.f));
-	std::cout << "new_x: " << new_x << std::endl;
 	if (std::floor(_x) != std::floor(new_x)) {
 		if (!checkCollision(_z, new_x))
 			return;
@@ -137,7 +136,6 @@ void	bbm::IPlayer::moveRight()
 	auto &map = _match.getMap();
 	float new_x = _x + (0.1f + (0.01f * _speed));
 
-	std::cout << "new_x: " << new_x << std::endl;
 	_mesh->setRotation(irr::core::vector3df(0.f, 90.f, 0.f));
 	if (std::floor(_x) != std::floor(new_x)) {
 		if (!checkCollision(_z, new_x))

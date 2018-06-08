@@ -15,6 +15,8 @@ bbm::Player::Player(Match &match, float z, float x, Entities playerNum) :
 	// auto mesh = scene->getMesh("./assets/model3D/player/ninja.b3d");
 	// auto animatedMesh = static_cast<
 	// 	irr::scene::IAnimatedMeshSceneNode *>(_mesh);
+	_passWall = true;
+	_power = 5;
 	activate();
 }
 

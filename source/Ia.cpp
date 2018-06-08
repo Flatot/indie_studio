@@ -82,12 +82,10 @@ void	bbm::Ia::fill_dangerosity(int bombLen, int y, int x)
 void	bbm::Ia::scaleBomb()
 {
 	int	bLen = 2;
-	int	entities;
 
 	for (int y = 0; y < _match.getMap().getHeight(); y++) {
 		for (int x = 0; x < _match.getMap().getWidth(); x++) {
-			entities = _match.getMap().getEntitiesFromPos(y, x);
-			if ((entities & BOMB)) {
+			if (d_map[y][x] == 2) {
 				auto entites = _match.getMap().getFromPos(y, x);
 				for (int i = 0; i < entites.size(); ++i) {
 					if (entites[i]->is(BOMB)) {
@@ -101,8 +99,9 @@ void	bbm::Ia::scaleBomb()
 	}
 }
 
-void bbm::Ia::generateDMap()
+std::vector<std::vector<int>> bbm::Ia::generateDMap()
 {
+	std::vector<std::vector<int>> newMap;
 	std::vector<int> tmp;
 	int entities;
 
@@ -112,15 +111,16 @@ void bbm::Ia::generateDMap()
 			if ((entities & BREAKABLE_BLOCK) ||
 				(entities & UNBREAKABLE_BLOCK))
 				tmp.push_back(1);
-			else if ((entities & BOMB))
+			else if ((entities & BOMB)) {
 				tmp.push_back(2);
+			}
 			else
 				tmp.push_back(0);
 		}
-		d_map.push_back(tmp);
+		newMap.push_back(tmp);
 		tmp.clear();
 	}
-	scaleBomb();
+	return newMap;
 }
 
 bool bbm::Ia::checkAllDefensive(int dir)
@@ -232,23 +232,27 @@ void bbm::Ia::move_to_rec()
 		return ;
 	}
 	if (rec[0] == 1) {
-		moveLeft();
+		moveRight();
 		return ;
 	}
 	if (rec[0] == 2) {
 		moveTop();
 		return ;
 	}
-	moveRight();
-	
+	if (rec[0] == 3)
+		moveLeft();
 }
 
 void bbm::Ia::analyseMap()
 {
-	generateDMap();
+	d_map = generateDMap();
+	scaleBomb();
+	
 	if (d_map[_z][_x] == 2) {
 		defensive_mode();
 		move_to_rec();
+		d_map.clear();
+		rec.clear();
     	}
 	// else {
 	// 	active_mode();

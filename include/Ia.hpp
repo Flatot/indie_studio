@@ -36,7 +36,7 @@ namespace bbm {
 		// bool checkAllBreakable(int dir, int y, int x);
 		// bool aliveIfBomb();
 		// void changeDMapToBMap();
-		void generateDMap();
+		std::vector<std::vector<int>> generateDMap();
 	private:
 		// std::vector<std::vector<int> > _direction;
 		std::vector<std::vector<int>> d_map;
