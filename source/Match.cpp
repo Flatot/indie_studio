@@ -103,7 +103,7 @@ void bbm::Match::draw()
 
 void bbm::Match::print_skybase()
 {
-	std::string path = "assets/model3D/Sky/space.jpg";
+	std::string path = "assets/model3D/Sky/brouillard.jpg";
 	auto texture = _graphic.getDriver()->getTexture(path.c_str());
 	auto skybase = _graphic.getScene()->addSkyBoxSceneNode(texture, 
 			texture, texture, texture, texture, texture);

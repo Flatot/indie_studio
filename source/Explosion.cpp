@@ -30,11 +30,35 @@ bbm::Explosion::Explosion(Match &match, float z, float x, Bomb *owner) :
 	_mesh = scene->addCubeSceneNode(1.f, 0, -1, position, rotation, scale);
 	_mesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	_mesh->setMaterialTexture(0, driver->getTexture(_texturePath.c_str()));
+	particlesImplementation(_x, _z);
 }
 
 bbm::Explosion::~Explosion()
 {
 
+}
+
+void bbm::Explosion::particlesImplementation(int x, int z)
+{
+	_p = _match.getGraphic().getScene()->addParticleSystemSceneNode(false);
+	irr::scene::IParticleEmitter* emitter = _p->createBoxEmitter(
+	irr::core::aabbox3d<irr::f32>(x - 0.5, 0, z - 0.5, x + 0.5, 2, z + 0.5),
+	irr::core::vector3df(0.0f,0.002f,0.0f),
+	80,100,	irr::video::SColor(0,0,0,0),
+	irr::video::SColor(0,255,255,255), 90, 90, 0,
+	irr::core::dimension2df(0.1f,0.1f),
+	irr::core::dimension2df(0.4f,0.4f));
+	_p->setEmitter(emitter);
+	emitter->drop();
+	_p->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	_p->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
+	_p->setMaterialTexture(0, _match.getGraphic().getDriver()->
+		getTexture("assets/model3D/spec_effect/fire.bmp"));
+	_p->setMaterialType(irr::video::EMT_SOLID);
+	irr::scene::IParticleAffector* affector =
+	_p->createFadeOutParticleAffector(
+	irr::video::SColor(0,0,0,0),3);
+	_p->addAffector(affector);
 }
 
 void bbm::Explosion::spawn()
@@ -80,6 +104,7 @@ void bbm::Explosion::die()
 			random_bonus(random);
 		}
 	}
+	_p->remove();
 	delete this;
 }
 

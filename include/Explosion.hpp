@@ -9,6 +9,7 @@
 
 #include <chrono>
 #include "IEntity.hpp"
+#include "Graphic.hpp"
 
 namespace bbm {
 	class Bomb;
@@ -21,8 +22,10 @@ namespace bbm {
 		void die() override;
 		void update() override;
 		void random_bonus(int);
+		void particlesImplementation(int x, int z);
 	private:
 		Bomb *_owner;
 		std::chrono::steady_clock::time_point _timePoint;
+		irr::scene::IParticleSystemSceneNode* _p;
 	};
 }

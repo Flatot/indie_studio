@@ -9,7 +9,7 @@
 
 bbm::Floor::Floor(Graphic &graphic) :
 	_meshPath(""),
-	_texturePath("./assets/model3D/floor/textures/Sci-Fi-Floor-Diffuse.tga"),
+	_texturePath("./assets/model3D/floor/textures/tatami.jpg"),
 	_coefX(1.f),
 	_coefY(1.f),
 	_coefZ(1.f)

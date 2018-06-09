@@ -11,6 +11,7 @@
 #include "IPlayer.hpp"
 #include "Map.hpp"
 #include "Explosion.hpp"
+#include "Match.hpp"
 
 namespace bbm {
 	class Bomb : public IEntity {
@@ -26,12 +27,14 @@ namespace bbm {
 		int getPower() const;
 	private:
 		bool explodeLine(int z, int x);
-		
+		void particlesImplementation(int x, int z);
+
 		IPlayer *_owner;
 		int _power;
 		std::chrono::steady_clock::time_point _timePoint;
 		Map &_map;
 		bool _exploded;
 		std::vector<Explosion *> _explosions;
+		irr::scene::IParticleSystemSceneNode* _p;
 	};
 }
