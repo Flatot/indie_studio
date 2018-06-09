@@ -30,6 +30,7 @@ void    bbm::Ia::die()
 
 void    bbm::Ia::update()
 {
+	analyseMap();
         float z = _z - 0.5;
 	float x = _x - 0.5;
 

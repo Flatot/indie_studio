@@ -49,26 +49,28 @@ bbm::Match::Match(Game &game) :
 	// 	keyMap,                                // on change la keymap
 	// 	3);
 	_camera = _graphic.getScene()->addCameraSceneNode(0,
-			irr::core::vector3df(6.92f, 10.05f, 2.16f),
+			irr::core::vector3df(6.92f, 13.05f, 2.16f),
 			irr::core::vector3df(6.94f, -1.82f, 5.70f));
 
 }
 
 void bbm::Match::init()
 {
+	std::cout << "begin init" << std::endl;
+	//auto config = _game.getConfig();
 	_map.loadMap(MapGenerator::generate("./assets/maps/map1"));
 	addPlayer(new Player(*this, 1.5, 1.5, PLAYER_1));
 	addPlayer(new Ia(*this, 11.5, 13.5, PLAYER_2));
 	addPlayer(new Ia(*this, 1.5, 13.5, PLAYER_3));
 	addPlayer(new Ia(*this, 11.5, 1.5, PLAYER_4));
-	auto lala = static_cast<Player *>(_players[0]);
-	_evManager->addEventReceiver(lala);
-	// _evManager->addEventReceiver(_players[2]);
-	// _evManager->addEventReceiver(_players[3]);
+	//addPlayer(new Player(*this, 11.5, 13.5, PLAYER_2));
+	//addPlayer(new Player(*this, 1.5, 13.5, PLAYER_3));
+	//addPlayer(new Player(*this, 11.5, 1.5, PLAYER_4));
 	std::cout << _map << std::endl;
 	std::cout << "height: " << _map.getHeight() << std::endl;
 	std::cout << "width: " << _map.getWidth() << std::endl;
 
+	std::cout << "end init" << std::endl;
 }
 
 bool bbm::Match::OnEvent(const irr::SEvent &event)
@@ -76,11 +78,12 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 	IMyEventReceiver::OnEvent(event);
 	
 	std::cout << "[OnEvent - Match]" << std::endl;
-	if (isKeyPressed(irr::KEY_KEY_A, NONE)) {
+	if (isKeyPressed(irr::KEY_KEY_Q, NONE)) {
 		deactivate();
-		resetKey(irr::KEY_KEY_A, NONE);
+		resetKey(irr::KEY_KEY_Q, NONE);
 		return true;
 	}
+	std::cout << "end OnEvent Match" << std::endl;
 	return false;
 }
 
@@ -91,21 +94,21 @@ void bbm::Match::draw()
 
 void bbm::Match::print_skybase()
 {
-	auto *path = "assets/model3D/Sky/space.jpg";
-	auto *skybase = _graphic.getScene()->addSkyBoxSceneNode(
-		_graphic.getDriver()->getTexture(path),
-		_graphic.getDriver()->getTexture(path),
-		_graphic.getDriver()->getTexture(path),
-		_graphic.getDriver()->getTexture(path),
-		_graphic.getDriver()->getTexture(path),
-		_graphic.getDriver()->getTexture(path));
+	std::string path = "assets/model3D/Sky/space.jpg";
+	auto texture = _graphic.getDriver()->getTexture(path.c_str());
+	auto skybase = _graphic.getScene()->addSkyBoxSceneNode(texture, 
+			texture, texture, texture, texture, texture);
 }
 
 bool bbm::Match::run()
 {
+	std::cout << "begin run match" << std::endl;
+	std::cout << "1" << std::endl;
 	activate();
+	std::cout << "2" << std::endl;
 
 	print_skybase();
+	std::cout << "3" << std::endl;
 	while(_graphic.getDevice()->run() && isActive()) {
 		_graphic.setWindowCaption(_camera->getPosition(), L"Match loop");
 		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
@@ -113,14 +116,14 @@ bool bbm::Match::run()
 		// std::cout << "x : " << lala.X << " y : " << lala.Y << " z : " << lala.Z << std::endl;
 		_graphic.getScene()->drawAll();
 		_graphic.getDriver()->endScene();
-		_players[0]->move();
-		_players[1]->analyseMap();
-		_players[2]->analyseMap();
-		_players[3]->analyseMap();
 		update();
 	}
+	std::cout << "9" << std::endl;
 	_map.clear();
+	_players.clear();
+	_bombs.clear();
 	deactivate();
+	std::cout << "end run match" << std::endl;
 	return true;
 }
 
@@ -153,6 +156,11 @@ bbm::Graphic &bbm::Match::getGraphic()
 bbm::Map &bbm::Match::getMap()
 {
 	return _map;
+}
+
+bbm::Game &bbm::Match::getGame()
+{
+	return _game;
 }
 
 void bbm::Match::addBomb(Bomb *bomb)

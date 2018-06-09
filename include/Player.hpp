@@ -12,6 +12,7 @@
 #include "IEntity.hpp"
 #include "IPlayer.hpp"
 #include "Match.hpp"
+#include "PlayerConfig.hpp"
 
 namespace bbm {
 	class Player : public IPlayer, public IMyEventReceiver {
@@ -22,7 +23,10 @@ namespace bbm {
 		virtual void die() override;
 		virtual void update() override;
 		virtual bool OnEvent(const irr::SEvent &event) override;
-		bool checkCollision(int, int);
 	private:
+		PlayerConfig &getPlayerConfig();
+		bool checkCollision(int, int);
+
+		PlayerConfig &_playerConfig;
 	};
 }

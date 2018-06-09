@@ -39,7 +39,7 @@ bbm::Bomb::Bomb(Match &match, float z, float x, IPlayer *owner) :
 
 bbm::Bomb::~Bomb()
 {
-
+	std::cout << "bomb destructor" << std::endl;
 }
 
 void bbm::Bomb::spawn()
@@ -114,11 +114,15 @@ bool bbm::Bomb::explodeLine(int z, int x)
 	bool kill = false;
 	std::vector<IEntity *> toKill;
 
-	// A refaire now
 	if ((idEntities & UNBREAKABLE_BLOCK))
 		return false;
-	if ((idEntities & BREAKABLE_BLOCK) && !(idEntities & EXPLOSION)) {
-		addExplosion(new Explosion(_match, z, x, this));
+	if ((idEntities & BREAKABLE_BLOCK)) {
+		if (!(idEntities & EXPLOSION)) {
+			auto block = _map.getEntity(z, x, BREAKABLE_BLOCK);
+			if (block)
+				block->getMesh()->setVisible(false);
+			addExplosion(new Explosion(_match, z, x, this));
+		}
 		return false;
 	}
 	if ((idEntities & BOMB)) {

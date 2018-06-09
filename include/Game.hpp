@@ -24,6 +24,7 @@ namespace bbm {
 		Game(Config &config);
 
 		Graphic &getGraphic();
+		Config &getConfig();
 
 		virtual bool OnEvent(const irr::SEvent &event) override;
 		bool run();
@@ -45,7 +46,5 @@ namespace bbm {
 		IMenu *_inGameMenu;
 		Match _match;
 		bool _matchLaunched;
-	
-		// PlayerConfig _playersConfig[4];
 	};
 }

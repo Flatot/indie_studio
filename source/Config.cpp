@@ -19,6 +19,8 @@ bbm::Config::Config() :
 	_playerConfig.push_back(PlayerConfig(bbm::Entities::PLAYER_2));
 	_playerConfig.push_back(PlayerConfig(bbm::Entities::PLAYER_3));
 	_playerConfig.push_back(PlayerConfig(bbm::Entities::PLAYER_4));
+	loadConfig();
+	saveConfig();
 }
 
 void bbm::Config::saveConfig()
@@ -66,28 +68,15 @@ void bbm::Config::doWithTokens(std::string tok1, std::string tok2)
 	std::string::size_type sz;
 
 	if (tok1.compare("FULLSCREEN") == 0)
-	{
-		if (tok2.compare("false") == 0)
-			_fullscreen = false;
-		else
-			_fullscreen = true;
-	}
+		_fullscreen = tok2.compare("false");
 	if (tok1.compare("SCREEN_WIDTH") == 0)
-	{
 		_screenWidth = std::stoi(tok2, &sz);
-	}
 	if (tok1.compare("SCREEN_HEIGHT") == 0)
-	{
 		_screenHeight = std::stoi(tok2, &sz);
-	}
 	if (tok1.compare("VOLUME_GENERAL") == 0)
-	{
 		_volumeGeneral = std::stoi(tok2, &sz);
-	}
 	if (tok1.compare("VOLUME_EFFECT") == 0)
-	{
 		_volumeEffect = std::stoi(tok2, &sz);
-	}
 }
 
 int bbm::Config::getScreenWidth() const
@@ -110,9 +99,14 @@ int bbm::Config::getVolumeGeneral() const
 	return _volumeGeneral;
 }
 
-bbm::PlayerConfig bbm::Config::getPlayerConfigs(int idx) const
+bbm::PlayerConfig bbm::Config::getPlayerConfig(int idx) const
 {
-	return this->_playerConfig[idx];
+	return _playerConfig[idx];
+}
+
+bbm::PlayerConfig &bbm::Config::getPlayerConfig(int idx)
+{
+	return _playerConfig[idx];
 }
 
 bool bbm::Config::getFullscreen() const
@@ -128,9 +122,9 @@ std::ostream& operator<< (std::ostream& stream, bbm::Config const& conf)
 	stream << "SCREEN_HEIGHT:" << std::to_string(conf.getScreenHeight()) << std::endl;
 	stream << "VOLUME_GENERAL:" << std::to_string(conf.getVolumeGeneral()) << std::endl;
 	stream << "VOLUME_EFFECT:" << std::to_string(conf.getVolumeEffect()) << std::endl;
-	stream << conf.getPlayerConfigs(0);
-	stream << conf.getPlayerConfigs(1);
-	stream << conf.getPlayerConfigs(2);
-	stream << conf.getPlayerConfigs(3);
+	stream << conf.getPlayerConfig(0);
+	stream << conf.getPlayerConfig(1);
+	stream << conf.getPlayerConfig(2);
+	stream << conf.getPlayerConfig(3);
 	return stream;
 }

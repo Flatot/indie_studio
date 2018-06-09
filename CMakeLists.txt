@@ -4,7 +4,8 @@ project(Bomberman)
 set(BINARY_NAME bomberman)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb")
+add_compile_options(-ggdb)
+set_source_files_properties(PlayerConfig.cpp Config.cpp PROPERTIES COMPILE_FLAGS -W -Wall -Wextra)
 
 # CREATE IRRLICHT STATIC LIB FOR LINUX
 set(IRRLICHT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Irrlicht)

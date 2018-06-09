@@ -44,19 +44,19 @@ void bbm::Explosion::spawn()
 
 void bbm::Explosion::random_bonus(int random)
 {
-	// if (random >= 0 && random <= 5) {
-	// 	auto *bonus = new WallPass(_match, _z, _x, true);
-	// 	_match.getMap().addEntity(bonus);
-	// }
-	// else if (random >= 6 && random <= 35) {
-	// 	auto *bonus = new FireUp(_match, _z, _x, true);
-	// 	_match.getMap().addEntity(bonus);
-	// }
-	// if (random >= 36 && random <= 55) {
-	// 	auto *bonus = new BombUp(_match, _z, _x, true);
-	// 	_match.getMap().addEntity(bonus);
-	// }
-	if (random >= 0 && random <= 100) { //56
+	if (random >= 0 && random <= 5) {
+		auto *bonus = new WallPass(_match, _z, _x, true);
+		_match.getMap().addEntity(bonus);
+	}
+	else if (random >= 6 && random <= 35) {
+		auto *bonus = new FireUp(_match, _z, _x, true);
+		_match.getMap().addEntity(bonus);
+	}
+	if (random >= 36 && random <= 65) {
+		auto *bonus = new BombUp(_match, _z, _x, true);
+		_match.getMap().addEntity(bonus);
+	}
+	if (random >= 66 && random <= 100) { //56
 		auto *bonus = new FireUp(_match, _z, _x, true);
 		_match.getMap().addEntity(bonus);
 	}
@@ -70,12 +70,12 @@ void bbm::Explosion::die()
 
 	_owner->removeExplosion(this);
 	if (idEntities & BREAKABLE_BLOCK) {
-		for (int i = 0; i < entities.size(); ++i, 
-				entities = _match.getMap().getFromPos(_z, _x))
-			if (entities[i] != this && !entities[i]->is(BOMB))
-				entities[i--]->die();
+		auto breakableBlock = _match.getMap().getEntity(_z, _x, 
+				BREAKABLE_BLOCK);
+		if (breakableBlock)
+			breakableBlock->die();
 		random = rand() % 100;
-		if (random >= 0 && random <= 20) {
+		if (random >= 0 && random <= 40) {
 			random = rand() % 100;
 			random_bonus(random);
 		}
@@ -95,6 +95,6 @@ void bbm::Explosion::update()
 		if (entities[i] != this && !entities[i]->is(BOMB) && 
 				!entities[i]->is(BREAKABLE_BLOCK))
 			entities[i--]->die();
-	if (diff.count() >= 1)
+	if (diff.count() >= 0.75)
 		die();
 }

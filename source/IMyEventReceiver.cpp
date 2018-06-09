@@ -9,11 +9,15 @@
 
 bbm::IMyEventReceiver::IMyEventReceiver() :
 	_isActive(false),
-	_keys({false}),
-	_keysCtrl({false}),
-	_keysShift({false})
+	_keys(),
+	_keysCtrl(),
+	_keysShift()
 {
-
+	for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; ++i) {
+		_keys[i] = false;
+		_keysCtrl[i] = false;
+		_keysShift[i] = false;
+	}
 }
 
 bool bbm::IMyEventReceiver::OnEvent(const irr::SEvent &event)
@@ -62,6 +66,7 @@ bool bbm::IMyEventReceiver::isKeyPressed(irr::EKEY_CODE key, SPECIALKEY specialK
 	case SHIFT:
 		return _keysShift[key];
 	}
+	return false;
 }
 
 void bbm::IMyEventReceiver::resetKey(irr::EKEY_CODE key, SPECIALKEY specialKey)
@@ -81,7 +86,6 @@ void bbm::IMyEventReceiver::resetKey(irr::EKEY_CODE key, SPECIALKEY specialKey)
 
 void bbm::IMyEventReceiver::resetKeys()
 {
-	for (bool *it = std::begin(_keys); it != std::end(_keys); it) {
+	for (bool *it = std::begin(_keys); it != std::end(_keys); ++it)
 		*it = false;
-	}
 }

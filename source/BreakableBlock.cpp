@@ -27,6 +27,11 @@ bbm::BreakableBlock::BreakableBlock(Match &match, float z, float x) :
 	_mesh->setMaterialTexture(0, driver->getTexture(_texturePath.c_str()));
 }
 
+bbm::BreakableBlock::~BreakableBlock()
+{
+
+}
+
 void bbm::BreakableBlock::spawn()
 {
 	std::cout << "Breakable Block spawned" << std::endl;

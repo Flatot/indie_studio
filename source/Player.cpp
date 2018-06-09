@@ -6,23 +6,41 @@
 */
 
 #include "Player.hpp"
+#include "Game.hpp"
 
 bbm::Player::Player(Match &match, float z, float x, Entities playerNum) :
-	bbm::IPlayer(match, x, z, playerNum)
+	bbm::IPlayer(match, x, z, playerNum),
+	_playerConfig(getPlayerConfig())
 {
-	std::cout << "Player constructed" << std::endl;
-	// auto scene = _match.getGraphic().getScene();
-	// auto mesh = scene->getMesh("./assets/model3D/player/ninja.b3d");
-	// auto animatedMesh = static_cast<
-	// 	irr::scene::IAnimatedMeshSceneNode *>(_mesh);
 	_passWall = true;
 	_power = 5;
+	_match.getEventManager()->addEventReceiver(this);
+	_match.getMap().addEntity(this);
 	activate();
+}
+
+bbm::PlayerConfig &bbm::Player::getPlayerConfig()
+{
+	std::cout << "IDENTITY PLAYER: " << _idEntity << std::endl;
+	switch (_idEntity) {
+	case PLAYER_2:
+		return _match.getGame().getConfig().getPlayerConfig(1);
+	case PLAYER_3:
+		return _match.getGame().getConfig().getPlayerConfig(2);
+	case PLAYER_4:
+		return _match.getGame().getConfig().getPlayerConfig(3);
+	default:
+		return _match.getGame().getConfig().getPlayerConfig(0);
+	}
+	std::cout << _playerConfig << std::endl;
+	auto keyMap = _playerConfig.getMap();
+	for (int i = 0; i < 5; ++i)
+		std::cout << valuableControl[i] << keyMap[valuableControl[i]] << std::endl;
 }
 
 bbm::Player::~Player()
 {
-	std::cout << "PLAYER DESTRUCTOR" << std::endl;
+	_match.getEventManager()->removeEventReceiver(this);
 }
 
 void bbm::Player::spawn()
@@ -33,15 +51,14 @@ void bbm::Player::spawn()
 void bbm::Player::die()
 {
 	deactivate();
-	_match.getEventManager()->removeEventReceiver(this);
 	IPlayer::die();
 }
 
 void bbm::Player::update()
 {
+	move();
 	float z = _z - 0.5;
 	float x = _x - 0.5;
-
 	_mesh->setPosition(irr::core::vector3df(x, 0.5f, z));
 }
 
@@ -59,20 +76,23 @@ bool bbm::Player::checkCollision(int new_z, int new_x)
 
 bool bbm::Player::OnEvent(const irr::SEvent &event)
 {
-	IMyEventReceiver::OnEvent(event);
+	bool ret = IMyEventReceiver::OnEvent(event);
+	auto keyMap = _playerConfig.getMap();
 
-	std::cout << "[OnEvent - Player]" << std::endl;
-	_move = (isKeyPressed(irr::KEY_KEY_Q, NONE)) ? 
+	std::cout << "[OnEvent - Player][" << _idEntity << "]" << std::endl;
+	for (int i = 0; i < 5; ++i)
+		std::cout << valuableControl[i] << ":" << keyMap[valuableControl[i]] << "[" << isKeyPressed(keyMap[valuableControl[i]], NONE) << "]" << std::endl;
+
+	_move = (isKeyPressed(keyMap["LEFT"], NONE)) ? 
 		_move | LEFT : _move & ~LEFT;
-	_move = (isKeyPressed(irr::KEY_KEY_Z, NONE)) ? 
+	_move = (isKeyPressed(keyMap["UP"], NONE)) ? 
 		_move | TOP : _move & ~TOP;
-	_move = (isKeyPressed(irr::KEY_KEY_D, NONE)) ? 
+	_move = (isKeyPressed(keyMap["RIGHT"], NONE)) ? 
 		_move | RIGHT : _move & ~RIGHT;
-	_move = (isKeyPressed(irr::KEY_KEY_S, NONE)) ? 
+	_move = (isKeyPressed(keyMap["DOWN"], NONE)) ? 
 		_move | BOTTOM : _move & ~BOTTOM;
-	if (isKeyPressed(irr::KEY_KEY_L, NONE))
-		++_speed;
-	if (isKeyPressed(irr::KEY_KEY_B, NONE))
+	if (isKeyPressed(keyMap["PUT_BOMB"], NONE))
 		putBomb();
-	return false;
+	std::cout << "End OnEvent Player" << std::endl;
+	return ret;
 }

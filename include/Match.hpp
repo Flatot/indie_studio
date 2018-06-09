@@ -36,6 +36,7 @@ namespace bbm {
 		void update();
 		void print_skybase();
 		EventManager *getEventManager();
+		Game &getGame();
 		Graphic &getGraphic();
 		Map &getMap();
 		void addBomb(Bomb *bomb);
