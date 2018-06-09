@@ -60,7 +60,7 @@ void bbm::Graphic::setWindowCaption(const irr::core::vector3df &posCam,
 {
 	wchar_t title[256] = {0};
 	static int lastFps = 0;
-	int fps = _driver->getFPS();
+	int fps = getDriver()->getFPS();
 
 	if (lastFps != fps)
 		lastFps = fps;
@@ -78,7 +78,7 @@ void bbm::Graphic::setWindowCaption(const wchar_t *str)
 {
 	wchar_t title[256] = {0};
 	static int lastFps = 0;
-	int fps = _driver->getFPS();
+	int fps = getDriver()->getFPS();
 
 	if (lastFps != fps)
 		lastFps = fps;

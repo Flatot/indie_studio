@@ -21,6 +21,10 @@ namespace bbm {
 		int getVolumeEffect() const;
 		int getVolumeGeneral() const;
 		bool getFullscreen() const;
+		void setScreenWidth(int);
+		void setScreenHeight(int);
+		void setVolumeGeneral(int);
+		void setVolumeEffect(int);
 		bbm::PlayerConfig getPlayerConfig(int idx) const;
 		bbm::PlayerConfig &getPlayerConfig(int idx);
 
@@ -35,4 +39,5 @@ namespace bbm {
 		void handleLine(std::string line, std::string delimiter);
 	};
 }
+
 std::ostream& operator<< (std::ostream& stream, bbm::Config const& conf);

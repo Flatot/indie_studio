@@ -27,14 +27,22 @@ bbm::EventManager *bbm::IMenu::getEventManager()
 
 void	bbm::IMenu::previousOne()
 {
+	// _game.getGraphic().getGuienv()->
+	// removeFocus(_btns[_focused]->getButton());
 	_focused = _focused - 1;
 	if (_focused < 0)
-		_focused = _buttons.size() - 1;
+		_focused = _btns.size() - 1;
+	_game.getGraphic().getGuienv()->
+	setFocus(_btns[_focused]->getButton());
 }
 
 void	bbm::IMenu::nextOne()
 {
+	// _game.getGraphic().getGuienv()->
+	// removeFocus(_btns[_focused]->getButton());
 	_focused = _focused + 1;
-	if (_focused >= _buttons.size())
+	if (_focused >= _btns.size())
 		_focused = 0;
+	_game.getGraphic().getGuienv()->
+	setFocus(_btns[_focused]->getButton());
 }

@@ -13,16 +13,16 @@ bbm::Game::Game(Config &config) :
 	_evManager(new EventManager()),
 	_graphic(config.getScreenWidth(), config.getScreenHeight(), 
 			config.getFullscreen(), _evManager),
-	_mainMenu(nullptr),
-	_inGameMenu(nullptr),
+	_mainMenu(new bbm::MenuMain(*this)),
+	_inGameMenu(new bbm::MenuInGame(*this)),
 	_match(*this),
 	_matchLaunched(false)
 {
 	_evManager->setRoot(true);
 	_evManager->addEventReceiver(this);
 	_evManager->addEventReceiver(_match.getEventManager());
-	//_evManager->addEventReceiver(_mainMenu->getEventManager());
-	//_evManager->addEventReceiver(_inGameMenu->getEventManager());
+	_evManager->addEventReceiver(_mainMenu->getEventManager());
+	_evManager->addEventReceiver(_inGameMenu->getEventManager());
 }
 
 bbm::Graphic &bbm::Game::getGraphic()
@@ -30,7 +30,7 @@ bbm::Graphic &bbm::Game::getGraphic()
 	return _graphic;
 }
 
-bbm::Config &bbm::Game::getConfig()
+bbm::Config &bbm::Game::getConfig() const
 {
 	return _config;
 }
@@ -41,16 +41,6 @@ bool bbm::Game::OnEvent(const irr::SEvent &event)
 	static int i = 0;
 
 	std::cout << "[OnEvent - Game]" << std::endl;
-	if (event.EventType == irr::EET_GUI_EVENT) {
-		irr::s32 id = event.GUIEvent.Caller->getID();
-		if (event.GUIEvent.EventType == irr::gui::EGET_BUTTON_CLICKED) {
-			// switch (id) {
-			// case bbm::GUI_BUTTON_:
-			// 	break;
-			// }
-			std::cout << "id => " << id << std::endl;
-		}
-	}
 	if (isKeyPressed(irr::KEY_KEY_Q, NONE)) {
 		_graphic.getDevice()->closeDevice();		
 		return true;
@@ -68,30 +58,23 @@ bool bbm::Game::OnEvent(const irr::SEvent &event)
 bool bbm::Game::run()
 {
 	bool	changed = true;
-	bbm::MenuMain	menu(*this);
-	bbm::MenuInGame	ingame(*this);
-	bbm::MenuSettings	settings(*this);
-	int	i = 0;
 
 	activate();
-	
 	_graphic.getGuienv()->addStaticText(L"Hello Game! This is the Irrlicht Software renderer!",
 			irr::core::rect<irr::s32>(10,10,260,22), false);
 	while(_graphic.getDevice()->run()) {
 		_graphic.setWindowCaption(L"Game loop");
 		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
-		
 		_graphic.getGuienv()->drawAll();
 		_graphic.getDriver()->endScene();
 		if (changed) {
-			settings.run();
+			deactivate();
+			// _inGameMenu->run();
+			_mainMenu->run();
+			activate();
 			changed = false;
 		}
 		launchMatch();
-		i += 1;
-		// if (i % 300 == 0) {
-		// 	menu.quitGame();
-		// }
 	}
 	_graphic.getDevice()->drop();
 	deactivate();

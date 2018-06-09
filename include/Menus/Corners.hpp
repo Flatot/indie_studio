@@ -7,14 +7,22 @@
 
 #pragma once
 
-#include "IMenu.hpp"
+#include <iostream>
+#include "irrlicht.h"
+#include "Definer.hpp"
 
 namespace bbm {
 	class Corners {
 		public:
-			static ButtonInfos getCenteredVertical(const irr::core::dimension2du& screenSize, bbm::Position pos, const irr::core::dimension2du& buttonSize);
-			static ButtonInfos getCenteredHorizontal(const irr::core::dimension2du& screenSize, bbm::Position pos, const irr::core::dimension2du& buttonSize);
-			static ButtonInfos getCenteredAudio(const irr::core::dimension2du& screenSize, bbm::PositionMultiple pos, const irr::core::dimension2du& buttonSize);
+			static ButtonInfos getCenteredVertical(const
+			irr::core::dimension2du&, bbm::Position,
+			const irr::core::dimension2du&);
+			static ButtonInfos getCenteredHorizontal(const
+			irr::core::dimension2du&, bbm::Position,
+			const irr::core::dimension2du&);
+			static ButtonInfos getCenteredAudio(const
+			irr::core::dimension2du&, bbm::PositionMultiple,
+			const irr::core::dimension2du&);
 
 		protected:
 		private:

@@ -3,13 +3,9 @@ project(Bomberman)
 
 set(BINARY_NAME bomberman)
 
-<<<<<<< HEAD
 set(CMAKE_CXX_STANDARD 17)
 add_compile_options(-ggdb)
 set_source_files_properties(PlayerConfig.cpp Config.cpp PROPERTIES COMPILE_FLAGS -W -Wall -Wextra)
-=======
-set(CMAKE_CXX_STANDARD 14)
->>>>>>> menus starter pack
 
 # CREATE IRRLICHT STATIC LIB FOR LINUX
 set(IRRLICHT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Irrlicht)
@@ -40,7 +36,6 @@ set(SRCS 	source/main.cpp
 		source/Graphic.cpp
 		source/IMyEventReceiver.cpp
 		source/EventManager.cpp
-<<<<<<< HEAD
 		source/Floor.cpp
 		source/MapGenerator.cpp
 		source/UnbreakableBlock.cpp
@@ -53,16 +48,18 @@ set(SRCS 	source/main.cpp
 		source/Config.cpp
 		source/Bomb.cpp
 		source/Explosion.cpp
-		source/PlayerConfig.cpp)
-=======
+		source/PlayerConfig.cpp
 		source/Config.cpp
 		source/Menus/MenuMain.cpp
 		source/Menus/MenuInGame.cpp
 		source/Menus/MenuSettings.cpp
 		source/Menus/MenuAudio.cpp
+		source/Menus/MenuVideo.cpp
+		source/Menus/MenuNewGame.cpp
+		source/Menus/MenuControls.cpp
 		source/Menus/Corners.cpp
+		source/Menus/Button.cpp
 		)
->>>>>>> menus starter pack
 
 # CREATE THE BINARY
 add_executable(${BINARY_NAME} ${SRCS})
