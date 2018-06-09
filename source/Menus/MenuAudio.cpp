@@ -54,10 +54,8 @@ void	bbm::MenuAudio::setupButtons(
 
 bool	bbm::MenuAudio::takeActions(irr::s32 id)
 {
-	if (id == bbm::GUI_BUTTON_BACK) {
-		deactivate();
-		enableButtons(false);
-	}
+	if (id == bbm::GUI_BUTTON_BACK)
+		goBack();
 	return true;
 }
 
@@ -85,8 +83,19 @@ bool	bbm::MenuAudio::changeVolume()
 	return false;
 }
 
+void	bbm::MenuAudio::goBack()
+{
+	deactivate();
+	enableButtons(false);
+}
+
 bool	bbm::MenuAudio::keysHandling(const irr::SEvent &event)
 {
+	if (isKeyPressed(irr::KEY_ESCAPE, NONE)) {
+		goBack();
+		resetKeys();
+		return true;
+	}
 	if (isKeyPressed(irr::KEY_TAB, NONE)
 	|| isKeyPressed(irr::KEY_DOWN, NONE)) {
 		nextOne();
@@ -110,7 +119,7 @@ bool	bbm::MenuAudio::OnEvent(const irr::SEvent &event)
 			return takeActions(id);
 	}
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT)
-		keysHandling(event);
+		return keysHandling(event);
 	return false;
 }
 

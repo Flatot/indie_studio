@@ -128,11 +128,8 @@ bool	bbm::MenuControls::takeActions(irr::s32 id)
 		_btns[_focused]->getButton()->setPressed(false);
 		_focused = idx;
 	}
-	if (id == bbm::GUI_BUTTON_BACK) {
-		deactivate();
-		enableButtons(false);
-		return true;
-	}
+	if (id == bbm::GUI_BUTTON_BACK)
+		goBack();
 	if (!_changing && (id == bbm::GUI_BUTTON_FORWARD ||
 				id == bbm::GUI_BUTTON_BACKWARD ||
 				id == bbm::GUI_BUTTON_LEFT ||
@@ -166,21 +163,33 @@ bool	bbm::MenuControls::changePlayer()
 
 void	bbm::MenuControls::changeControl(const irr::SEvent &event)
 {
-	if (_focused == 0)
-		_pctrl[_player].forward = event.KeyInput.Key;
-	if (_focused == 1)
-		_pctrl[_player].left = event.KeyInput.Key;
-	if (_focused == 2)
-		_pctrl[_player].backward = event.KeyInput.Key;
-	if (_focused == 3)
-		_pctrl[_player].right = event.KeyInput.Key;
-	if (_focused == 4)
-		_pctrl[_player].bomb = event.KeyInput.Key;
+	if (!isKeyPressed(irr::KEY_ESCAPE, NONE)) {
+		if (_focused == 0)
+			_pctrl[_player].forward = event.KeyInput.Key;
+		if (_focused == 1)
+			_pctrl[_player].left = event.KeyInput.Key;
+		if (_focused == 2)
+			_pctrl[_player].backward = event.KeyInput.Key;
+		if (_focused == 3)
+			_pctrl[_player].right = event.KeyInput.Key;
+		if (_focused == 4)
+			_pctrl[_player].bomb = event.KeyInput.Key;
+	}
+}
+
+void	bbm::MenuControls::goBack()
+{
+	deactivate();
+	enableButtons(false);
 }
 
 bool	bbm::MenuControls::keysHandling(const irr::SEvent &event)
 {
-	if (_changing) {
+	if (!_changing && isKeyPressed(irr::KEY_ESCAPE, NONE)) {
+		goBack();
+		resetKeys();
+		return true;
+	} else if (_changing) {
 		changeControl(event);
 		_btns[_focused]->getButton()->setPressed(false);
 		_changing = false;
@@ -209,7 +218,7 @@ bool	bbm::MenuControls::OnEvent(const irr::SEvent &event)
 			return takeActions(id);
 	}
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT)
-		keysHandling(event);
+		return keysHandling(event);
 	return false;
 }
 

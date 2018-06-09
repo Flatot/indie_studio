@@ -31,6 +31,8 @@ namespace bbm {
 			void	continueGame();
 			void	initLoadImages();
 			void	setupLoadButton();
+			void	goBack();
+			bool	keysHandling(const irr::SEvent &);
 
 		protected:
 			IMenu *_settingsMenu;

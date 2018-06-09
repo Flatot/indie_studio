@@ -66,10 +66,8 @@ void	bbm::MenuSettings::setupButtons(
 
 bool	bbm::MenuSettings::takeActions(irr::s32 id)
 {
-	if (id == bbm::GUI_BUTTON_BACK) {
-		deactivate();
-		enableButtons(false);
-	}
+	if (id == bbm::GUI_BUTTON_BACK)
+		goBack();
 	if (id == bbm::GUI_BUTTON_AUDIO || id == bbm::GUI_BUTTON_VIDEO ||
 	id == bbm::GUI_BUTTON_CONTROLS) {
 		deactivate();
@@ -89,6 +87,31 @@ bool	bbm::MenuSettings::takeActions(irr::s32 id)
 	return true;
 }
 
+void	bbm::MenuSettings::goBack()
+{
+	deactivate();
+	enableButtons(false);
+}
+
+bool	bbm::MenuSettings::keysHandling(const irr::SEvent &event)
+{
+	if (isKeyPressed(irr::KEY_ESCAPE, NONE)) {
+		goBack();
+		resetKeys();
+		return true;
+	}
+	if (isKeyPressed(irr::KEY_TAB, NONE)
+	|| isKeyPressed(irr::KEY_DOWN, NONE)) {
+		nextOne();
+		return true;
+	} else if (isKeyPressed(irr::KEY_TAB, SHIFT)
+	|| isKeyPressed(irr::KEY_UP, NONE)) {
+		previousOne();
+		return true;
+	}
+	return false;
+}
+
 bool	bbm::MenuSettings::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);
@@ -99,17 +122,8 @@ bool	bbm::MenuSettings::OnEvent(const irr::SEvent &event)
 		if (event.GUIEvent.EventType == irr::gui::EGET_BUTTON_CLICKED)
 			return takeActions(id);
 	}
-	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
-		if (isKeyPressed(irr::KEY_TAB, NONE)
-		|| isKeyPressed(irr::KEY_DOWN, NONE)) {
-			nextOne();
-			return true;
-		} else if (isKeyPressed(irr::KEY_TAB, SHIFT)
-		|| isKeyPressed(irr::KEY_UP, NONE)) {
-			previousOne();
-			return true;
-		}
-	}
+	if (event.EventType == irr::EET_KEY_INPUT_EVENT)
+		return keysHandling(event);
 	return false;
 }
 

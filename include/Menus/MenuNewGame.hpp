@@ -38,6 +38,7 @@ namespace bbm {
 			void	setupTeams();
 			void	drawTeams(const irr::core::dimension2du&);
 			void	drawTeamColor(int idx, bbm::ButtonInfos &);
+			void	goBack();
 
 		protected:
 			std::vector<bbm::AttrEntity>	_attrs;

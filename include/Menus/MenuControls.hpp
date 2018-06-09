@@ -41,6 +41,7 @@ namespace bbm {
 			const wchar_t	*getCharByCode(irr::EKEY_CODE);
 			void	initializeControls();
 			void	pimgInitialize(irr::video::IVideoDriver *);
+			void	goBack();
 
 		protected:
 			int	_player;

@@ -59,10 +59,8 @@ void	bbm::MenuInGame::setupButtons(
 
 void	bbm::MenuInGame::actionsClosing(irr::s32 id)
 {
-	if (id == bbm::GUI_BUTTON_RESUME) {
-		deactivate();
-		enableButtons(false);
-	}
+	if (id == bbm::GUI_BUTTON_RESUME)
+		goBack();
 	if (id == bbm::GUI_BUTTON_SAVEQUIT) {
 		std::cout << "Save and quit" << std::endl;
 		deactivate();
@@ -91,6 +89,31 @@ bool	bbm::MenuInGame::takeActions(irr::s32 id)
 	return true;
 }
 
+void	bbm::MenuInGame::goBack()
+{
+	deactivate();
+	enableButtons(false);
+}
+
+bool	bbm::MenuInGame::keysHandling(const irr::SEvent &event)
+{
+	if (isKeyPressed(irr::KEY_ESCAPE, NONE)) {
+		goBack();
+		resetKeys();
+		return true;
+	}
+	if (isKeyPressed(irr::KEY_TAB, NONE)
+	|| isKeyPressed(irr::KEY_DOWN, NONE)) {
+		nextOne();
+		return true;
+	} else if (isKeyPressed(irr::KEY_TAB, SHIFT)
+	|| isKeyPressed(irr::KEY_UP, NONE)) {
+		previousOne();
+		return true;
+	}
+	return false;
+}
+
 bool	bbm::MenuInGame::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);
@@ -101,17 +124,8 @@ bool	bbm::MenuInGame::OnEvent(const irr::SEvent &event)
 		if (event.GUIEvent.EventType == irr::gui::EGET_BUTTON_CLICKED)
 			return takeActions(id);
 	}
-	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
-		if (isKeyPressed(irr::KEY_TAB, NONE)
-		|| isKeyPressed(irr::KEY_DOWN, NONE)) {
-			nextOne();
-			return true;
-		} else if (isKeyPressed(irr::KEY_TAB, SHIFT)
-		|| isKeyPressed(irr::KEY_UP, NONE)) {
-			previousOne();
-			return true;
-		}
-	}
+	if (event.EventType == irr::EET_KEY_INPUT_EVENT)
+		return keysHandling(event);
 	return false;
 }
 

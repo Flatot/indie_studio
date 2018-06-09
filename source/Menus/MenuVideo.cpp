@@ -73,15 +73,19 @@ void	bbm::MenuVideo::setupButtons(
 
 bool	bbm::MenuVideo::takeActions(irr::s32 id)
 {
-	if (id == bbm::GUI_BUTTON_BACK) {
-		deactivate();
-		enableButtons(false);
-		_res->setVisible(false);
-	}
+	if (id == bbm::GUI_BUTTON_BACK)
+		goBack();
 	if (id == bbm::GUI_BUTTON_RESOLUTION) {
 		updateResolution();
 	}
 	return true;
+}
+
+void	bbm::MenuVideo::goBack()
+{
+	deactivate();
+	enableButtons(false);
+	_res->setVisible(false);
 }
 
 void	bbm::MenuVideo::updateResolution()
@@ -115,6 +119,11 @@ bool	bbm::MenuVideo::changeResolution()
 
 bool	bbm::MenuVideo::keysHandling(const irr::SEvent &event)
 {
+	if (isKeyPressed(irr::KEY_ESCAPE, NONE)) {
+		goBack();
+		resetKeys();
+		return true;
+	}
 	if (isKeyPressed(irr::KEY_TAB, NONE)
 	|| isKeyPressed(irr::KEY_DOWN, NONE)) {
 		nextOne();
@@ -138,7 +147,7 @@ bool	bbm::MenuVideo::OnEvent(const irr::SEvent &event)
 			return takeActions(id);
 	}
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT)
-		keysHandling(event);
+		return keysHandling(event);
 	return false;
 }
 

@@ -125,6 +125,31 @@ void	bbm::MenuMain::continueGame()
 	}
 }
 
+void	bbm::MenuMain::goBack()
+{
+	deactivate();
+	enableButtons(false);
+}
+
+bool	bbm::MenuMain::keysHandling(const irr::SEvent &event)
+{
+	if (isKeyPressed(irr::KEY_ESCAPE, NONE)) {
+		goBack();
+		resetKeys();
+		return true;
+	}
+	if (isKeyPressed(irr::KEY_TAB, NONE)
+	|| isKeyPressed(irr::KEY_DOWN, NONE)) {
+		nextOne();
+		return true;
+	} else if (isKeyPressed(irr::KEY_TAB, SHIFT)
+	|| isKeyPressed(irr::KEY_UP, NONE)) {
+		previousOne();
+		return true;
+	}
+	return false;
+}
+
 bool	bbm::MenuMain::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);
@@ -135,17 +160,8 @@ bool	bbm::MenuMain::OnEvent(const irr::SEvent &event)
 		if (event.GUIEvent.EventType == irr::gui::EGET_BUTTON_CLICKED)
 			return takeActions(id);
 	}
-	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
-		if (isKeyPressed(irr::KEY_TAB, NONE)
-		|| isKeyPressed(irr::KEY_DOWN, NONE)) {
-			nextOne();
-			return true;
-		} else if (isKeyPressed(irr::KEY_TAB, SHIFT)
-		|| isKeyPressed(irr::KEY_UP, NONE)) {
-			previousOne();
-			return true;
-		}
-	}
+	if (event.EventType == irr::EET_KEY_INPUT_EVENT)
+		return keysHandling(event);
 	return false;
 }
 

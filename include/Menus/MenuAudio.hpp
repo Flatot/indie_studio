@@ -30,6 +30,7 @@ namespace bbm {
 			void	drawBackground(const irr::core::dimension2du&);
 			void	drawSceneBackground(
 				const irr::core::dimension2du&);
+			void	goBack();
 
 		protected:
 		private:

@@ -32,6 +32,7 @@ namespace bbm {
 			void	updateResolution();
 			void	setupResolution(
 				const irr::core::dimension2du&);
+			void	goBack();
 
 		protected:
 		private:

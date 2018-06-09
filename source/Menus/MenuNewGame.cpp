@@ -103,10 +103,8 @@ void	bbm::MenuNewGame::setupButtons(
 
 bool	bbm::MenuNewGame::takeActions(irr::s32 id)
 {
-	if (id == bbm::GUI_BUTTON_BACK) {
-		deactivate();
-		enableButtons(false);
-	}
+	if (id == bbm::GUI_BUTTON_BACK)
+		goBack();
 	if (id == bbm::GUI_BUTTON_START)
 		startGame();
 	return true;
@@ -148,8 +146,19 @@ bool	bbm::MenuNewGame::changeAttr()
 	return false;
 }
 
+void	bbm::MenuNewGame::goBack()
+{
+	deactivate();
+	enableButtons(false);
+}
+
 bool	bbm::MenuNewGame::keysHandling(const irr::SEvent &event)
 {
+	if (isKeyPressed(irr::KEY_ESCAPE, NONE)) {
+		goBack();
+		resetKeys();
+		return true;
+	}
 	if (isKeyPressed(irr::KEY_TAB, NONE)
 			|| isKeyPressed(irr::KEY_DOWN, NONE)) {
 		nextOne();
@@ -159,11 +168,10 @@ bool	bbm::MenuNewGame::keysHandling(const irr::SEvent &event)
 		previousOne();
 		return true;
 	}
-	if (isKeyPressed(irr::KEY_RETURN, NONE)) {
-		if (_focused < 4)
-			_teams[_focused] = _teams[_focused] + 1 >=
-				_teams.size() ? static_cast<bbm::TeamColor>(0) :
-				static_cast<bbm::TeamColor>(_teams[_focused] + 1);
+	if (isKeyPressed(irr::KEY_RETURN, NONE) && _focused < 4) {
+		_teams[_focused] = _teams[_focused] + 1 >=
+			_teams.size() ? static_cast<bbm::TeamColor>(0) :
+			static_cast<bbm::TeamColor>(_teams[_focused] + 1);
 		return true;
 	}
 	return changeAttr();
@@ -180,7 +188,7 @@ bool	bbm::MenuNewGame::OnEvent(const irr::SEvent &event)
 			return takeActions(id);
 	}
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT)
-		keysHandling(event);
+		return keysHandling(event);
 	return false;
 }
 

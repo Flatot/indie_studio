@@ -25,6 +25,8 @@ namespace bbm {
 				const irr::core::dimension2du& screenSize,
 				const irr::core::dimension2du& buttonSize);
 			void	actionsClosing(irr::s32 id);
+			bool	keysHandling(const irr::SEvent &);
+			void	goBack();
 
 		protected:
 			IMenu *_settingsMenu;
