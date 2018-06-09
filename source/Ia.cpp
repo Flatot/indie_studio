@@ -151,7 +151,6 @@ bool bbm::Ia::seeAllMoveDefensive(int dir)
 {
 	if (dir == 0) {
 		if (d_map[ym - 1][xm] != 1) {
-            std::cout << "i allow to go to " << d_map[ym - 1][xm] << std::endl;
             return (true);
         }
 		return (false);
@@ -163,8 +162,7 @@ bool bbm::Ia::seeAllMoveDefensive(int dir)
 	}
 	if (dir == 2) {
 		if (d_map[ym + 1][xm] != 1) {
-            std::cout << "i allow to go to " << d_map[ym + 1][xm] << std::endl;
-            return (true);
+           return (true);
         }
 		return (false);
 	}
@@ -234,7 +232,7 @@ void	bbm::Ia::defensive_mode()
 
 void bbm::Ia::move_to_rec()
 {
-	std::cerr << "rec[0] ==> " << rec[0] << std::endl;
+    std::cout << rec[0] << std::endl;
 	if (rec[0] == 0) {
 		moveBottom();
 		return ;
@@ -247,8 +245,16 @@ void bbm::Ia::move_to_rec()
 		moveTop();
 		return ;
 	}
-	if (rec[0] == 3)
-		moveLeft();
+	if (rec[0] == 3) {
+        moveLeft();
+        return;
+    }
+    if (rec[0] == 4){
+        putBomb();
+        return;
+
+    }
+	return;
 }
 
 void bbm::Ia::move_to_center()
@@ -273,124 +279,123 @@ void bbm::Ia::analyseMap()
 		rec.clear();
 		defensive_mode();
 		move_to_rec();
-		d_map.clear();
-    	}
+        std::cout << "defensive" << std::endl;
+        d_map.clear();
+    }
 	else {
-		move_to_center();
+        active_mode();
+        move_to_rec();
+        std::cout << "active" << std::endl;
+		//move_to_center();
 	}
-	// else {
-	// 	active_mode();
-	// }
 }
 
-// bool bbm::Ia::seeAllMove(int dir)
-// {
-// 	if (dir == 0){
-// 		if (map[_y - 1][_x] == bbm::Entites::BLANK)
-// 			return (true);
-// 		return (false);
-// 	}
-// 	if (dir == 1){
-// 		if (d_map[_y][_x + 1] == bbm::Entites::BLANK)
-// 			return (true);
-// 		return (false);
-// 	}
-// 	if (dir == 2){
-// 		if (d_map[_y + 1][_x] == bbm::Entites::BLANK)
-// 			return (true);
-// 		return (false);
-// 	}
-// 	if (d_map[_y][_x - 1] == bbm::Entites::BLANK)
-// 		return (true);
-// 	return (false);
-// }
+void	bbm::Ia::active_mode()
+{
+ 	rec.clear();
 
-// bool bbm::Ia::checkAllBreakable(int dir, int y, int x)
-// {
-// 	if (dir == 0){
-// 		if (map[y - 1][x] == bbm::Entites::BREAKABLE_BLOCK)
-// 			return (true);
-// 		return (false);
-// 	}
-// 	if (dir == 1){
-// 		if (map[y][x + 1] == bbm::Entites::BREAKABLE_BLOCK)
-// 			return (true);
-// 		return (false);
-// 	}
-// 	if (dir == 2){
-// 		if (map[y + 1][x] == bbm::Entites::BREAKABLE_BLOCK)
-// 			return (true);
-// 		return (false);
-// 	}
-// 	if (dir == 3){
-// 		if (map[y][x - 1] == bbm::Entites::BREAKABLE_BLOCK)
-// 			return (true);
-// 		return (false);
-// 	}
-// }
+    d_map = generateDMap();
+    scaleBomb();
+    if (searchBonus()) {
+        return;
+    }
+	else {
 
-// bool bbm::Ia::aliveIfBomb()
-// {
-// 	std::vector<int> tmp;
-// 	std::vector<std::vector<int>> mem_map;
+		for (int i = 0; i < 4; i++) {
+			if (checkAllBreakable(i, std::floor(_z), std::floor(_x)) && aliveIfBomb()) {
+				rec.clear();
+				rec.push_back(4);
+                return;
+			}
+		}
+        rec.clear();
+		rec.push_back(5);
+	}
+    return;
+}
 
-// 	map[_y][_x] = bbm::Entites::BOMB;
-// 	mem_map = d_map;
-// 	generateDMap();
-// 	map[_y][_x] = bbm::Entites::PLAYER_1;
-// 	defensive_mode();
-// 	if (f == 0){
-// 		rec.clear();
-// 		d_map = mem_map;
-// 		return (true);
-// 	}
-// 	if (f == 2){
-// 		sleep(10);
-// 		endwin();
-// 		for (int y = 0; y < map.size(); y++) {
-// 			for (int x = 0; x < map[0].size(); x++) {
-// 				std::cout << d_map[y][x];
-// 			}
-// 			std::cout << std::endl;
-// 		}
-// 		exit(0);
-// 	}
-// 	d_map = mem_map;
-// 	return (false);
-// }
+bool bbm::Ia::searchBonus()
+{
+    std::vector<std::vector<int>> mem;
+    mem = d_map;
+	d_map = generateBMap();
+    scaleBomb();
+	rec.clear();
+	defensive_mode();
+    if (f == 0){
+        d_map = mem;
+        move_to_rec();
+        getBonus();
+        return (true);
+	}
+    d_map = mem;
+	return(false);
+}
 
-// void bbm::Ia::changeDMapToBMap()
-// {
-// 	for (int j = 0; j < map.size(); j++){
-// 		for (int i = 0; i < map[0].size(); i++){
-// 			if (d_map[j][i] == 0){
-// 				if (!checkAllBreakable(i, j, i)) {
-// 					d_map[j][i] = 4;
-// 				}
-// 			}
-// 		}
-// 	}
-// 	defensive_mode();
-// }
+std::vector<std::vector<int>> bbm::Ia::generateBMap()
+{
+	std::vector<std::vector<int>> newMap;
+	std::vector<int> tmp;
+	int entities;
 
-// void	bbm::Ia::active_mode()
-// {
-// 	rec.clear();
-// 	for (int j = 0; j < map.size(); j++){
-// 		for (int i = 0; i < map[0].size(); i++){
-// 			if (map[j][i] == bbm::Entites::BOMB) {
-// 				rec.push_back(5);
-// 				printw("stop ");
-// 				return;
-// 			}
-// 		}
-// 	}
-// 	printw("active ");
-// 	for (int i = 0; i < 4; i++){
-// 		if (checkAllBreakable(i, _y, _x) && aliveIfBomb()) {
-// 			rec.push_back(4);
-// 			return;
-// 		}
-// 	}
-// 	changeDMapToBMap();
-// }
+	for (int y = 0; y < _match.getMap().getHeight(); y++) {
+		for (int x = 0; x < _match.getMap().getWidth(); x++) {
+			entities = _match.getMap().getEntitiesFromPos(y, x);
+			if ((entities & BREAKABLE_BLOCK) ||
+				(entities & UNBREAKABLE_BLOCK) ||
+                    (entities & EXPLOSION) ||
+                    (entities & BOMB))
+				tmp.push_back(1);
+			else if ((entities & BONUS))
+				tmp.push_back(0);
+			else
+				tmp.push_back(2);
+		}
+		newMap.push_back(tmp);
+		tmp.clear();
+	}
+	return newMap;
+}
+
+bool bbm::Ia::checkAllBreakable(int dir, int y, int x)
+{
+    std::cout << "dir = " << dir << std::endl;
+    if (dir == 0){
+ 		if (_match.getMap().getEntitiesFromPos(y - 1, x) & BREAKABLE_BLOCK)
+ 			return (true);
+ 		return (false);
+ 	}
+ 	if (dir == 1){
+ 		if (_match.getMap().getEntitiesFromPos(y, x + 1) & BREAKABLE_BLOCK)
+ 			return (true);
+        return (false);
+ 	}
+ 	if (dir == 2){
+ 		if (_match.getMap().getEntitiesFromPos(y + 1, x) & BREAKABLE_BLOCK)
+ 			return (true);
+ 		return (false);
+ 	}
+ 	if (dir == 3){
+ 		if (_match.getMap().getEntitiesFromPos(y, x - 1) & BREAKABLE_BLOCK)
+ 			return (true);
+ 		return (false);
+ 	}
+}
+
+bool bbm::Ia::aliveIfBomb()
+{
+    std::vector<int> tmp;
+ 	std::vector<std::vector<int>> mem_map;
+
+    mem_map = d_map;
+    d_map[std::floor(_z)][std::floor(_x)] = 2;
+    fill_dangerosity( _power + 1,std::floor(_z), std::floor(_x));
+    defensive_mode();
+ 	if (f == 0 && objectif < 8){
+ 		rec.clear();
+ 		d_map = mem_map;
+ 		return (true);
+ 	}
+ 	d_map = mem_map;
+ 	return (false);
+}

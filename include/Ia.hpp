@@ -27,21 +27,22 @@ namespace bbm {
 		void scaleBomb();
 		void move_to_rec();
 		void move_to_center();
-		// void active_mode();
+		void active_mode();
 		void defensive_mode();
 		// void affDmap();
 		void moveAllDefensive(int dir);
 		void pathFindingDefensive();
 		bool checkAllDefensive(int dir);
 		bool seeAllMoveDefensive(int dir);
-		// bool checkAllBreakable(int dir, int y, int x);
-		// bool aliveIfBomb();
+		bool checkAllBreakable(int dir, int y, int x);
+		bool aliveIfBomb();
+        bool searchBonus();
 		// void changeDMapToBMap();
-		std::vector<std::vector<int>> generateDMap();
-	private:
+		std::vector<std::vector<int>> generateBMap();
+        std::vector<std::vector<int>> generateDMap();
+    private:
 		// std::vector<std::vector<int> > _direction;
 		std::vector<std::vector<int>> d_map;
-		// std::vector<std::vector<int>> a_map;
 		// std::vector<std::vector<int>> f_map;
 		std::vector<int> rec;
 		int ym;

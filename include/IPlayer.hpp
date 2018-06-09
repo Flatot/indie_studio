@@ -38,9 +38,9 @@ namespace bbm {
 	private:
 		void getTexture();
 		bool checkCollision(int new_z, int new_x);
-		void get_bonus();
 		std::string _texture;
 	protected:
+        void getBonus();
 		void moveLeft();
 		void moveRight();
 		void moveTop();
