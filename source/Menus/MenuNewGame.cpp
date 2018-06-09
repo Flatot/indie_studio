@@ -112,10 +112,13 @@ bool	bbm::MenuNewGame::takeActions(irr::s32 id)
 
 void	bbm::MenuNewGame::startGame()
 {
-	std::cout << "start the fucking game !!!" << std::endl;
 	deactivate();
+	enableButtons(false);
 	_game.launchMatch(_attrs, _teams);
+	enableButtons(true);
 	activate();
+	_game.getGraphic().getGuienv()->setFocus(_btns[0]->getButton());
+	_focused = 0;
 }
 
 irr::video::ITexture	*bbm::MenuNewGame::getImageByAttr(bbm::AttrEntity attr)

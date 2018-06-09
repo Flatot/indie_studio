@@ -63,11 +63,11 @@ void	bbm::MenuMain::initLoadImages()
 	_loadImgs.push_back(_game.getGraphic().getDriver()->
 	getTexture(folder + "loadgamered.png"));
 	_loadImgs.push_back(_game.getGraphic().getDriver()->
-	getTexture(folder + "loadgray.png"));
+	getTexture(folder + "cannotloadgamegray.png"));
 	_loadImgs.push_back(_game.getGraphic().getDriver()->
-	getTexture(folder + "loadblue.png"));
+	getTexture(folder + "cannotloadgameblue.png"));
 	_loadImgs.push_back(_game.getGraphic().getDriver()->
-	getTexture(folder + "loadred.png"));
+	getTexture(folder + "cannotloadgamered.png"));
 }
 
 void	bbm::MenuMain::setupButtons(const irr::core::dimension2du& screenSize,

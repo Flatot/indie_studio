@@ -22,18 +22,27 @@ bbm::MenuVideo::MenuVideo(bbm::Game &Game, bool scene) :
 	getTexture("./assets/menus/background.jpg");
 	_white = _game.getGraphic().getDriver()->
 	getTexture("./assets/menus/white.png");
-	_resolutions.push_back(std::pair<std::pair<int, int>,
-	irr::video::ITexture *>(std::pair<int, int>(1280, 720), _game.
-	getGraphic().getDriver()->getTexture("./assets/menus/1280720.jpg")));
-	_resolutions.push_back(std::pair<std::pair<int, int>,
-	irr::video::ITexture *>(std::pair<int, int>(1920, 1080), _game.
-	getGraphic().getDriver()->getTexture("./assets/menus/19201080.jpeg")));
+	_resolutions.push_back(std::pair<int, int>(1280, 720));
+	_resolutions.push_back(std::pair<int, int>(1920, 1080));
 	setupResolution(screenSize);
 	_scene = scene;
+	lookForResolution();
 }
 
 bbm::MenuVideo::~MenuVideo()
 {
+}
+
+void	bbm::MenuVideo::lookForResolution()
+{
+	int	i = 0;
+
+	for (auto it = _resolutions.begin(); it != _resolutions.end(); ++it) {
+		if ((*it).first == _game.getConfig().getScreenWidth()
+		&& (*it).second == _game.getConfig().getScreenHeight())
+			_idxres = i;
+		i++;
+	}
 }
 
 void	bbm::MenuVideo::setupResolution(const irr::core::dimension2du&
@@ -91,10 +100,10 @@ void	bbm::MenuVideo::goBack()
 void	bbm::MenuVideo::updateResolution()
 {
 	std::cout << "update resolution" << std::endl;
-	_game.getGraphic().setWidth(_resolutions[_idxres].first.first);
-	_game.getGraphic().setHeight(_resolutions[_idxres].first.second);
-	_game.getConfig().setScreenWidth(_resolutions[_idxres].first.first);
-	_game.getConfig().setScreenHeight(_resolutions[_idxres].first.second);
+	_game.getGraphic().setWidth(_resolutions[_idxres].first);
+	_game.getGraphic().setHeight(_resolutions[_idxres].second);
+	_game.getConfig().setScreenWidth(_resolutions[_idxres].first);
+	_game.getConfig().setScreenHeight(_resolutions[_idxres].second);
 	_game.getConfig().saveConfig();
 }
 
@@ -189,22 +198,15 @@ void	bbm::MenuVideo::drawRes(const irr::core::dimension2du& screenSize)
 
 	corners = bbm::Corners::getCenteredAudio(screenSize, {1, 2, 0, 2},
 	imageSize);
-	swprintf(text, 100, L"%d * %d", _resolutions[_idxres].first.first,
-	_resolutions[_idxres].first.second);
-	// _game.getGraphic().getDriver()->enableMaterial2D();
-	// _game.getGraphic().getDriver()->draw2DImage(_resolutions[_idxres].
-	// second, irr::core::rect<irr::s32>(corners.startX,
-	// corners.startY, corners.endX, corners.endY),
-	// irr::core::rect<irr::s32>(0, 0, _resolutions[_idxres].second->
-	// getSize().Width, _resolutions[_idxres].second->getSize().Height));
-	// _game.getGraphic().getDriver()->enableMaterial2D(false);
+	swprintf(text, 100, L"%d * %d", _resolutions[_idxres].first,
+	_resolutions[_idxres].second);
 	_res->setText(text);
 }
 
 void	bbm::MenuVideo::drawSceneBackground(const irr::core::dimension2du&
 screenSize)
 {
-	// _game.getGraphic().getScene()->drawAll();
+	_game.getGraphic().getScene()->drawAll();
 	_game.getGraphic().getDriver()->draw2DRectangle(
 		irr::video::SColor(110, 150, 150, 150),
 		irr::core::rect<irr::s32>(0, 0, screenSize.Width,

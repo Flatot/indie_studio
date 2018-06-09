@@ -37,6 +37,7 @@ namespace bbm {
 	
 		bool launchInGameMenu();
 		bool launchMainMenu();
+		IMenu *getMenuInGame() const;
 	
 		// Save le match
 		void save();

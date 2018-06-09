@@ -26,7 +26,8 @@ bbm::Match::Match(Game &game) :
 	_map(*this),
 	_bombs(),
 	_players(),
-	_camera()
+	_camera(),
+	_menuReturn(false)
 {
 	_evManager->addEventReceiver(this);
 	// irr::SKeyMap keyMap[5];                    // re-assigne les commandes
@@ -84,9 +85,12 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 	IMyEventReceiver::OnEvent(event);
 	
 	std::cout << "[OnEvent - Match]" << std::endl;
-	if (isKeyPressed(irr::KEY_KEY_Q, NONE)) {
+	if (isKeyPressed(irr::KEY_ESCAPE, NONE)) {
 		deactivate();
-		resetKey(irr::KEY_KEY_Q, NONE);
+		resetKey(irr::KEY_ESCAPE, NONE);
+		_menuReturn = _game.getMenuInGame()->run();
+		if (_menuReturn)
+			activate();
 		return true;
 	}
 	return false;

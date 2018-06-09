@@ -54,7 +54,7 @@ namespace bbm {
 		Map _map;
 		std::vector<Bomb *> _bombs;
 		std::vector<IPlayer *> _players;
-		
 		irr::scene::ICameraSceneNode *_camera;
+		bool _menuReturn;
 	};
 }

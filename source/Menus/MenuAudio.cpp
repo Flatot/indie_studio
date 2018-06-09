@@ -192,7 +192,7 @@ void	bbm::MenuAudio::drawSounds(const irr::core::dimension2du& screenSize)
 void	bbm::MenuAudio::drawSceneBackground(const irr::core::dimension2du&
 screenSize)
 {
-	// _game.getGraphic().getScene()->drawAll();
+	_game.getGraphic().getScene()->drawAll();
 	_game.getGraphic().getDriver()->draw2DRectangle(
 		irr::video::SColor(110, 150, 150, 150),
 		irr::core::rect<irr::s32>(0, 0, screenSize.Width,

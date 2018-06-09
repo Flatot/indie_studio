@@ -40,6 +40,11 @@ bbm::Config &bbm::Game::getConfig() const
 	return _config;
 }
 
+bbm::IMenu *bbm::Game::getMenuInGame() const
+{
+	return _inGameMenu;
+}
+
 bool bbm::Game::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);

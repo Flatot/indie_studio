@@ -10,7 +10,8 @@
 
 bbm::MenuInGame::MenuInGame(bbm::Game &Game) :
 	IMenu(Game),
-	_settingsMenu(new bbm::MenuSettings(Game, true))
+	_settingsMenu(new bbm::MenuSettings(Game, true)),
+	_keepPlaying(true)
 {
 	const irr::core::dimension2du& screenSize = _game.getGraphic().
 	getDriver()->getScreenSize();
@@ -59,17 +60,21 @@ void	bbm::MenuInGame::setupButtons(
 
 void	bbm::MenuInGame::actionsClosing(irr::s32 id)
 {
-	if (id == bbm::GUI_BUTTON_RESUME)
+	if (id == bbm::GUI_BUTTON_RESUME) {
 		goBack();
+		_keepPlaying = true;
+	}
 	if (id == bbm::GUI_BUTTON_SAVEQUIT) {
 		std::cout << "Save and quit" << std::endl;
 		deactivate();
 		enableButtons(false);
+		_keepPlaying = false;
 	}
 	if (id == bbm::GUI_BUTTON_QUIT) {
 		std::cout << "QUIT" << std::endl;
 		deactivate();
 		enableButtons(false);
+		_keepPlaying = false;
 	}
 }
 
@@ -139,9 +144,20 @@ void	bbm::MenuInGame::enableButtons(bool enabled)
 	}
 }
 
+void	bbm::MenuInGame::drawSceneBackground(const irr::core::dimension2du&
+screenSize)
+{
+	_game.getGraphic().getScene()->drawAll();
+	_game.getGraphic().getDriver()->draw2DRectangle(
+		irr::video::SColor(110, 150, 150, 150),
+		irr::core::rect<irr::s32>(0, 0, screenSize.Width,
+		screenSize.Height));
+}
+
 bool	bbm::MenuInGame::run()
 {
 	activate();
+	_keepPlaying = true;
 	_game.getGraphic().getGuienv()->setFocus(_btns[0]->getButton());
 	_focused = 0;
 	enableButtons(true);
@@ -154,11 +170,15 @@ bool	bbm::MenuInGame::run()
 	}
 	deactivate();
 	enableButtons(false);
-	return true;
+	return _keepPlaying;
 }
 
 void	bbm::MenuInGame::draw()
 {
+	const irr::core::dimension2du& screenSize = _game.getGraphic().
+	getDriver()->getScreenSize();
+
+	drawSceneBackground(screenSize);
 	for(std::vector<bbm::Button *>::iterator it = _btns.
 	begin(); it != _btns.end(); ++it) {
 		if (_game.getGraphic().getGuienv()->

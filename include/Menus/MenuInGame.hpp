@@ -27,9 +27,11 @@ namespace bbm {
 			void	actionsClosing(irr::s32 id);
 			bool	keysHandling(const irr::SEvent &);
 			void	goBack();
-
+			void	drawSceneBackground(
+				const irr::core::dimension2du&);
 		protected:
 			IMenu *_settingsMenu;
+			bool _keepPlaying;
 		private:
 	};
 }

@@ -33,12 +33,12 @@ namespace bbm {
 			void	setupResolution(
 				const irr::core::dimension2du&);
 			void	goBack();
+			void	lookForResolution();
 
 		protected:
 		private:
 			int	_idxres;
-			std::vector<std::pair<std::pair<int, int>,
-			irr::video::ITexture *>>	_resolutions;
+			std::vector<std::pair<int, int>>	_resolutions;
 			irr::gui::IGUIStaticText	*_res;
 	};
 }
