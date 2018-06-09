@@ -57,7 +57,6 @@ bbm::Match::Match(Game &game) :
 void bbm::Match::init()
 {
 	std::cout << "begin init" << std::endl;
-	//auto config = _game.getConfig();
 	_map.loadMap(MapGenerator::generate("./assets/maps/map1"));
 	addPlayer(new Player(*this, 1.5, 1.5, PLAYER_1));
 	addPlayer(new Ia(*this, 11.5, 13.5, PLAYER_2));
@@ -69,8 +68,6 @@ void bbm::Match::init()
 	std::cout << _map << std::endl;
 	std::cout << "height: " << _map.getHeight() << std::endl;
 	std::cout << "width: " << _map.getWidth() << std::endl;
-
-	std::cout << "end init" << std::endl;
 }
 
 bool bbm::Match::OnEvent(const irr::SEvent &event)
@@ -83,7 +80,6 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 		resetKey(irr::KEY_KEY_Q, NONE);
 		return true;
 	}
-	std::cout << "end OnEvent Match" << std::endl;
 	return false;
 }
 
@@ -102,13 +98,9 @@ void bbm::Match::print_skybase()
 
 bool bbm::Match::run()
 {
-	std::cout << "begin run match" << std::endl;
-	std::cout << "1" << std::endl;
 	activate();
-	std::cout << "2" << std::endl;
 
 	print_skybase();
-	std::cout << "3" << std::endl;
 	while(_graphic.getDevice()->run() && isActive()) {
 		_graphic.setWindowCaption(_camera->getPosition(), L"Match loop");
 		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
@@ -118,12 +110,10 @@ bool bbm::Match::run()
 		_graphic.getDriver()->endScene();
 		update();
 	}
-	std::cout << "9" << std::endl;
 	_map.clear();
 	_players.clear();
 	_bombs.clear();
 	deactivate();
-	std::cout << "end run match" << std::endl;
 	return true;
 }
 

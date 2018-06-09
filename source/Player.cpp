@@ -15,13 +15,11 @@ bbm::Player::Player(Match &match, float z, float x, Entities playerNum) :
 	_passWall = true;
 	_power = 5;
 	_match.getEventManager()->addEventReceiver(this);
-	_match.getMap().addEntity(this);
 	activate();
 }
 
 bbm::PlayerConfig &bbm::Player::getPlayerConfig()
 {
-	std::cout << "IDENTITY PLAYER: " << _idEntity << std::endl;
 	switch (_idEntity) {
 	case PLAYER_2:
 		return _match.getGame().getConfig().getPlayerConfig(1);
@@ -80,9 +78,6 @@ bool bbm::Player::OnEvent(const irr::SEvent &event)
 	auto keyMap = _playerConfig.getMap();
 
 	std::cout << "[OnEvent - Player][" << _idEntity << "]" << std::endl;
-	for (int i = 0; i < 5; ++i)
-		std::cout << valuableControl[i] << ":" << keyMap[valuableControl[i]] << "[" << isKeyPressed(keyMap[valuableControl[i]], NONE) << "]" << std::endl;
-
 	_move = (isKeyPressed(keyMap["LEFT"], NONE)) ? 
 		_move | LEFT : _move & ~LEFT;
 	_move = (isKeyPressed(keyMap["UP"], NONE)) ? 
@@ -93,6 +88,5 @@ bool bbm::Player::OnEvent(const irr::SEvent &event)
 		_move | BOTTOM : _move & ~BOTTOM;
 	if (isKeyPressed(keyMap["PUT_BOMB"], NONE))
 		putBomb();
-	std::cout << "End OnEvent Player" << std::endl;
 	return ret;
 }

@@ -18,6 +18,7 @@ bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
 	_passWall(false)
 {
 	_idEntity = playerNum;
+	_match.getMap().addEntity(this);
 	getTexture();
 	std::cout << _texture << std::endl;
 	setCoefs(.15f, .15f, .15f);
@@ -214,10 +215,10 @@ void bbm::IPlayer::getTexture()
 {
 	if (_idEntity == bbm::Entities::PLAYER_1)
 		_texture = "assets/model3D/player/PLAYER_1.jpg";
-	if (_idEntity == bbm::Entities::PLAYER_2)
+	else if (_idEntity == bbm::Entities::PLAYER_2)
 		_texture = "assets/model3D/player/PLAYER_2.jpg";
-	if (_idEntity == bbm::Entities::PLAYER_3)
+	else if (_idEntity == bbm::Entities::PLAYER_3)
 		_texture = "assets/model3D/player/PLAYER_3.jpg";
-	if (_idEntity == bbm::Entities::PLAYER_4)
+	else if (_idEntity == bbm::Entities::PLAYER_4)
 		_texture = "assets/model3D/player/PLAYER_4.jpg";
 }
