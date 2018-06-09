@@ -20,7 +20,6 @@ bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
 	_idEntity = playerNum;
 	_match.getMap().addEntity(this);
 	getTexture();
-	std::cout << _texture << std::endl;
 	setCoefs(.15f, .15f, .15f);
 	auto position = irr::core::vector3df(_x, 0.5f, _z);
 	auto rotation = irr::core::vector3df(0, 0, 0);
@@ -40,14 +39,23 @@ bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
 		_match.getGraphic().getDriver()->getTexture(_texture.c_str()));
 	auto animatedMesh = static_cast<
 		irr::scene::IAnimatedMeshSceneNode *>(_mesh);
-	animatedMesh->setFrameLoop(0, 13);
 	animatedMesh->setAnimationSpeed(15);
+	animatedMesh->setFrameLoop(206, 250);
 }
 
 bbm::IPlayer::~IPlayer()
 {
 	_match.getMap().removeEntity(this);
 	_match.removePlayer(this);
+}
+
+void bbm::IPlayer::setFrameMyLoop(int begin, int end)
+{
+	auto animatedMesh = static_cast<
+		irr::scene::IAnimatedMeshSceneNode *>(_mesh);
+	if (animatedMesh->getStartFrame() != begin &&
+		animatedMesh->getEndFrame() != end)
+		animatedMesh->setFrameLoop(begin, end);
 }
 
 void bbm::IPlayer::analyseMap()
@@ -102,6 +110,7 @@ void bbm::IPlayer::move()
 			moveBottom();
 	}
 	get_bonus();
+	(_move == 0) ? setFrameMyLoop(206, 250) : setFrameMyLoop(0, 13);
 }
 
 void	bbm::IPlayer::moveLeft()
