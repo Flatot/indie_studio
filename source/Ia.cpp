@@ -217,7 +217,7 @@ void	bbm::Ia::defensive_mode()
 		rec.clear();
 		pathFindingDefensive();
 		objectif++;
-		if (objectif == 4) {
+		if (objectif == 12) {
 			f = 2;
 			rec.push_back(5);
 		}
@@ -243,17 +243,35 @@ void bbm::Ia::move_to_rec()
 		moveLeft();
 }
 
+void bbm::Ia::move_to_center()
+{
+	// std::cout << "_x ==> " << _x << "floor ==> " << std::floor(_x) << std::endl;
+	// std::cout << "_z ==> " << _z << "floor ==> " << std::floor(_z) << std::endl;
+	if (_z > std::floor(_z) + 0.5)
+		moveBottom();
+	if (_z < std::floor(_z) + 0.5)
+		moveTop();
+	if (_x > std::floor(_x) + 0.5)
+		moveLeft();
+	if (_x < std::floor(_x) + 0.5)
+		moveRight();
+}
+
 void bbm::Ia::analyseMap()
 {
 	d_map = generateDMap();
 	scaleBomb();
 
+	rec.push_back(4);
 	if (d_map[_z][_x] == 2 || d_map[_z][_x] == 4) {
+		rec.clear();
 		defensive_mode();
 		move_to_rec();
 		d_map.clear();
-		rec.clear();
     	}
+	else {
+		move_to_center();
+	}
 	// else {
 	// 	active_mode();
 	// }

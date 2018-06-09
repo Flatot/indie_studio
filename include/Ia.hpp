@@ -26,6 +26,7 @@ namespace bbm {
 		void fill_dangerosity(int bombLen, int y, int x);
 		void scaleBomb();
 		void move_to_rec();
+		void move_to_center();
 		// void active_mode();
 		void defensive_mode();
 		// void affDmap();
