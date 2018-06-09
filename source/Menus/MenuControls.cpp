@@ -259,14 +259,11 @@ void bbm::MenuControls::saveControls()
 
 void	bbm::MenuControls::initializeControls()
 {
-	_pctrl.push_back({irr::KEY_UP, irr::KEY_LEFT, irr::KEY_DOWN,
-			irr::KEY_RIGHT, irr::KEY_RCONTROL});
-	_pctrl.push_back({irr::KEY_KEY_Z, irr::KEY_KEY_Q, irr::KEY_KEY_S,
-			irr::KEY_KEY_D, irr::KEY_KEY_A});
-	_pctrl.push_back({irr::KEY_KEY_O, irr::KEY_KEY_K, irr::KEY_KEY_L,
-			irr::KEY_KEY_M, irr::KEY_KEY_I});
-	_pctrl.push_back({irr::KEY_KEY_Y, irr::KEY_KEY_G, irr::KEY_KEY_H,
-			irr::KEY_KEY_J, irr::KEY_KEY_T});
+	for (int i = 0; i < 4; ++i) {
+		auto &keyMap = _game.getConfig().getPlayerConfig(i).getMap();
+		_pctrl.push_back({keyMap["UP"], keyMap["LEFT"], keyMap["DOWN"], 
+				keyMap["RIGHT"], keyMap["PUT_BOMB"]});
+	}
 }
 
 void	bbm::MenuControls::setupControls(const irr::core::dimension2du&
