@@ -24,6 +24,7 @@ namespace bbm {
 	public:
 		PlayerConfig(bbm::Entities entity);
 		std::map<std::string, irr::EKEY_CODE> getMap() const;
+		std::map<std::string, irr::EKEY_CODE> &getMap();
 		std::string getName() const;
 		void loadConfig();
 		std::string codeToString(irr::EKEY_CODE code) const;

@@ -26,7 +26,9 @@ void	bbm::Graphic::clearDevice()
 
 void	bbm::Graphic::setupDevice()
 {
-	_device = irr::createDevice(_driverType, irr::core::dimension2d<irr::u32>(_width, _height), 32, _fullscreen, false, false, _evReceiver);
+	_device = irr::createDevice(_driverType, 
+			irr::core::dimension2d<irr::u32>(_width, _height), 32, 
+			_fullscreen, false, false, _evReceiver);
 	_device->setResizable(false);
 }
 

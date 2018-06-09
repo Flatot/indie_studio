@@ -84,7 +84,7 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 
 void bbm::Match::draw()
 {
-	return true;
+
 }
 
 void bbm::Match::print_skybase()
@@ -176,9 +176,4 @@ void bbm::Match::removePlayer(IPlayer *player)
 			_players.erase(it--);
 		}
 	}
-}
-
-bbm::EventManager *bbm::Match::getEventManager()
-{
-	return _evManager;
 }

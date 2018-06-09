@@ -11,40 +11,40 @@ bbm::PlayerConfig::PlayerConfig(bbm::Entities entity) :
 	_entity(entity)
 {
 	switch(entity) {
-		case bbm::Entities::PLAYER_1:
-			_name = "PLAYER_1";
-			_keys["PUT_BOMB"] = irr::KEY_SPACE;
-			_keys["UP"] = irr::KEY_UP;
-			_keys["DOWN"] = irr::KEY_DOWN;
-			_keys["RIGHT"] = irr::KEY_RIGHT;
-			_keys["LEFT"] = irr::KEY_LEFT;
-			break;
-		case bbm::Entities::PLAYER_2:
-			_name = "PLAYER_2";
-			_keys["PUT_BOMB"] = irr::KEY_KEY_E;
-			_keys["UP"] = irr::KEY_KEY_Z;
-			_keys["DOWN"] = irr::KEY_KEY_S;
-			_keys["RIGHT"] = irr::KEY_KEY_D;
-			_keys["LEFT"] = irr::KEY_KEY_Q;
-			break;
-		case bbm::Entities::PLAYER_3:
-			_name = "PLAYER_3";
-			_keys["PUT_BOMB"] = irr::KEY_KEY_P;
-			_keys["UP"] = irr::KEY_KEY_O;
-			_keys["DOWN"] = irr::KEY_KEY_L;
-			_keys["RIGHT"] = irr::KEY_KEY_M;
-			_keys["LEFT"] = irr::KEY_KEY_K;
-			break;
-		case bbm::Entities::PLAYER_4:
-			_name = "PLAYER_4";
-			_keys["PUT_BOMB"] = irr::KEY_KEY_U;
-			_keys["UP"] = irr::KEY_KEY_Y;
-			_keys["DOWN"] = irr::KEY_KEY_H;
-			_keys["RIGHT"] = irr::KEY_KEY_J;
-			_keys["LEFT"] = irr::KEY_KEY_G;
-			break;
-		default:
-			break;
+	case bbm::Entities::PLAYER_1:
+		_name = "PLAYER_1";
+		_keys["PUT_BOMB"] = irr::KEY_SPACE;
+		_keys["UP"] = irr::KEY_UP;
+		_keys["DOWN"] = irr::KEY_DOWN;
+		_keys["RIGHT"] = irr::KEY_RIGHT;
+		_keys["LEFT"] = irr::KEY_LEFT;
+		break;
+	case bbm::Entities::PLAYER_2:
+		_name = "PLAYER_2";
+		_keys["PUT_BOMB"] = irr::KEY_KEY_E;
+		_keys["UP"] = irr::KEY_KEY_Z;
+		_keys["DOWN"] = irr::KEY_KEY_S;
+		_keys["RIGHT"] = irr::KEY_KEY_D;
+		_keys["LEFT"] = irr::KEY_KEY_Q;
+		break;
+	case bbm::Entities::PLAYER_3:
+		_name = "PLAYER_3";
+		_keys["PUT_BOMB"] = irr::KEY_KEY_P;
+		_keys["UP"] = irr::KEY_KEY_O;
+		_keys["DOWN"] = irr::KEY_KEY_L;
+		_keys["RIGHT"] = irr::KEY_KEY_M;
+		_keys["LEFT"] = irr::KEY_KEY_K;
+		break;
+	case bbm::Entities::PLAYER_4:
+		_name = "PLAYER_4";
+		_keys["PUT_BOMB"] = irr::KEY_KEY_U;
+		_keys["UP"] = irr::KEY_KEY_Y;
+		_keys["DOWN"] = irr::KEY_KEY_H;
+		_keys["RIGHT"] = irr::KEY_KEY_J;
+		_keys["LEFT"] = irr::KEY_KEY_G;
+		break;
+	default:
+		break;
 	}
 }
 
@@ -88,6 +88,11 @@ bool bbm::PlayerConfig::isValuable(std::string str)
 }
 
 std::map<std::string, irr::EKEY_CODE> bbm::PlayerConfig::getMap() const
+{
+	return _keys;
+}
+
+std::map<std::string, irr::EKEY_CODE> &bbm::PlayerConfig::getMap()
 {
 	return _keys;
 }

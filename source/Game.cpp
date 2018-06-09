@@ -30,6 +30,11 @@ bbm::Graphic &bbm::Game::getGraphic()
 	return _graphic;
 }
 
+bbm::Config &bbm::Game::getConfig()
+{
+	return _config;
+}
+
 bbm::Config &bbm::Game::getConfig() const
 {
 	return _config;
@@ -60,7 +65,7 @@ bool bbm::Game::run()
 	bool	changed = true;
 
 	activate();
-	_graphic.getGuienv()->addStaticText(L"Hello Game! This is the Irrlicht Software renderer!",
+/*	_graphic.getGuienv()->addStaticText(L"Hello Game! This is the Irrlicht Software renderer!",
 			irr::core::rect<irr::s32>(10,10,260,22), false);
 	while(_graphic.getDevice()->run()) {
 		_graphic.setWindowCaption(L"Game loop");
@@ -75,7 +80,8 @@ bool bbm::Game::run()
 			changed = false;
 		}
 		launchMatch();
-	}
+	}*/
+	_mainMenu->run();
 	_graphic.getDevice()->drop();
 	deactivate();
 	return true;
@@ -83,13 +89,10 @@ bool bbm::Game::run()
 
 bool bbm::Game::launchMatch()
 {
-	if (_matchLaunched) {
-		deactivate();
-		_match.init();
-		_match.run();
-		activate();
-	}
-	_matchLaunched = false;
+	deactivate();
+	_match.init();
+	_match.run();
+	activate();
 	return true;
 }
 

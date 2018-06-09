@@ -28,6 +28,7 @@ namespace bbm {
 
 		Graphic &getGraphic();
 		Config &getConfig();
+		Config &getConfig() const;
 
 		virtual bool OnEvent(const irr::SEvent &event) override;
 		bool run();
@@ -40,7 +41,6 @@ namespace bbm {
 		void save();
 		// Save les playerConfig
 		void saveConfig();
-		bbm::Config	&getConfig() const;
 
 	private:
 		Config &_config;	

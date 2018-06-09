@@ -26,6 +26,15 @@ namespace bbm {
 		void setWindowCaption(const irr::core::vector3df &posCam);
 		void setWindowCaption(const wchar_t *str);
 		void setWindowCaption();
+		void clearDevice();
+		void setupDevice();
+		void setWidth(int width);
+		void setHeight(int height);
+		void setFullscreen(bool fullscreen);
+		void setDevice(irr::IrrlichtDevice *device);
+		irr::video::E_DRIVER_TYPE getDriverType() const;
+
+
 				
 	private:
 		int _width;

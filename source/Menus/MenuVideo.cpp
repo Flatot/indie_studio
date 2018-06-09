@@ -91,6 +91,7 @@ void	bbm::MenuVideo::updateResolution()
 	_game.getGraphic().setHeight(_resolutions[_idxres].first.second);
 	_game.getConfig().setScreenWidth(_resolutions[_idxres].first.first);
 	_game.getConfig().setScreenHeight(_resolutions[_idxres].first.second);
+	_game.getConfig().saveConfig();
 }
 
 bool	bbm::MenuVideo::changeResolution()

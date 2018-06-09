@@ -138,11 +138,6 @@ std::ostream& operator<< (std::ostream& stream, bbm::Config const& conf)
 	return stream;
 }
 
-int	bbm::Config::getVolumeGeneral() const
-{
-	return _volumeGeneral;
-}
-
 void	bbm::Config::setVolumeGeneral(int volume)
 {
 	if (volume <= 0)
@@ -151,11 +146,6 @@ void	bbm::Config::setVolumeGeneral(int volume)
 		_volumeGeneral = 100;
 	else
 		_volumeGeneral = volume;
-}
-
-int	bbm::Config::getVolumeEffect() const
-{
-	return _volumeEffect;
 }
 
 void	bbm::Config::setVolumeEffect(int volume)

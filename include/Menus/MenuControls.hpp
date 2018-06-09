@@ -18,6 +18,7 @@ namespace bbm {
 			virtual bool OnEvent(const irr::SEvent &) override;
 			virtual bool run();
 			virtual void draw();
+			void saveControls();
 			void	enableButtons(bool);
 			bool	takeActions(irr::s32);
 			void	setupButtons(
