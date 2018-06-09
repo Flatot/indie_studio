@@ -69,7 +69,7 @@ bool bbm::Game::run()
 {
 	bool	changed = true;
 
-	activate();
+	// activate();
 /*	_graphic.getGuienv()->addStaticText(L"Hello Game! This is the Irrlicht Software renderer!",
 			irr::core::rect<irr::s32>(10,10,260,22), false);
 	while(_graphic.getDevice()->run()) {
@@ -86,6 +86,7 @@ bool bbm::Game::run()
 		}
 		launchMatch();
 	}*/
+	deactivate();
 	_mainMenu->run();
 	_graphic.getDevice()->drop();
 	deactivate();
