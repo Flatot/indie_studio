@@ -25,7 +25,7 @@ void    bbm::Ia::spawn()
 
 void    bbm::Ia::die()
 {
-        
+	IPlayer::die();
 }
 
 void    bbm::Ia::update()
@@ -85,7 +85,7 @@ void	bbm::Ia::scaleBomb()
 
 	for (int y = 0; y < _match.getMap().getHeight(); y++) {
 		for (int x = 0; x < _match.getMap().getWidth(); x++) {
-			if (d_map[y][x] == 2) {
+			if (d_map[y][x] == 4) {
 				auto entites = _match.getMap().getFromPos(y, x);
 				for (int i = 0; i < entites.size(); ++i) {
 					if (entites[i]->is(BOMB)) {
@@ -111,9 +111,8 @@ std::vector<std::vector<int>> bbm::Ia::generateDMap()
 			if ((entities & BREAKABLE_BLOCK) ||
 				(entities & UNBREAKABLE_BLOCK))
 				tmp.push_back(1);
-			else if ((entities & BOMB)) {
-				tmp.push_back(2);
-			}
+			else if ((entities & BOMB))
+				tmp.push_back(4);
 			else
 				tmp.push_back(0);
 		}
@@ -148,21 +147,21 @@ bool bbm::Ia::checkAllDefensive(int dir)
 bool bbm::Ia::seeAllMoveDefensive(int dir)
 {
 	if (dir == 0) {
-		if (_match.getMap().getEntitiesFromPos(ym - 1, xm) & BLANK)
+		if (d_map[ym - 1][xm] != 1)
 			return (true);
 		return (false);
 	}
 	if (dir == 1) {
-		if (_match.getMap().getEntitiesFromPos(ym, xm + 1) & BLANK)
+		if (d_map[ym][xm + 1] != 1)
 			return (true);
 		return (false);
 	}
 	if (dir == 2) {
-		if (_match.getMap().getEntitiesFromPos(ym + 1, xm) & BLANK)
+		if (d_map[ym + 1][xm] != 1)
 			return (true);
 		return (false);
 	}
-	if (_match.getMap().getEntitiesFromPos(ym, xm - 1) & BLANK)
+	if (d_map[ym][xm - 1] != 1)
 		return (true);
 	return (false);
 }
@@ -218,7 +217,7 @@ void	bbm::Ia::defensive_mode()
 		rec.clear();
 		pathFindingDefensive();
 		objectif++;
-		if (objectif == 12) {
+		if (objectif == 4) {
 			f = 2;
 			rec.push_back(5);
 		}
@@ -227,6 +226,7 @@ void	bbm::Ia::defensive_mode()
 
 void bbm::Ia::move_to_rec()
 {
+	std::cerr << "rec[0] ==> " << rec[0] << std::endl;
 	if (rec[0] == 0) {
 		moveBottom();
 		return ;
@@ -247,8 +247,8 @@ void bbm::Ia::analyseMap()
 {
 	d_map = generateDMap();
 	scaleBomb();
-	
-	if (d_map[_z][_x] == 2) {
+
+	if (d_map[_z][_x] == 2 || d_map[_z][_x] == 4) {
 		defensive_mode();
 		move_to_rec();
 		d_map.clear();
