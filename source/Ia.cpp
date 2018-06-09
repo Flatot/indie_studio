@@ -11,7 +11,7 @@
 bbm::Ia::Ia(Match &match, float z, float x, Entities playerNum) : 
 	IPlayer(match, x, z, playerNum)
 {
-	std::cout << "IA constructed" << std::endl;
+
 }
 
 bbm::Ia::~Ia()
