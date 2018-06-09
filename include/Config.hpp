@@ -12,9 +12,15 @@ namespace bbm {
 	public:
 		Config();
 		void loadConfig();
-		int getScreenWidth();
-		int getScreenHeight();
+		int	getScreenWidth() const;
+		int	getScreenHeight() const;
+		void	setScreenWidth(int);
+		void	setScreenHeight(int);
 		bool getFullscreen();
+		int	getVolumeGeneral() const;
+		void	setVolumeGeneral(int);
+		int	getVolumeEffect() const;
+		void	setVolumeEffect(int);
 
 	private:
 		bool _fullscreen;

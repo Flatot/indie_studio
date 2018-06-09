@@ -39,6 +39,7 @@ namespace bbm {
 		void save();
 		// Save les playerConfig
 		void saveConfig();
+		bbm::Config	&getConfig() const;
 
 	private:
 		Config &_config;	
