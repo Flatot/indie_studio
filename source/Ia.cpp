@@ -147,8 +147,10 @@ bool bbm::Ia::checkAllDefensive(int dir)
 bool bbm::Ia::seeAllMoveDefensive(int dir)
 {
 	if (dir == 0) {
-		if (d_map[ym - 1][xm] != 1)
-			return (true);
+		if (d_map[ym - 1][xm] != 1) {
+            std::cout << "i allow to go to " << d_map[ym - 1][xm] << std::endl;
+            return (true);
+        }
 		return (false);
 	}
 	if (dir == 1) {
@@ -157,8 +159,10 @@ bool bbm::Ia::seeAllMoveDefensive(int dir)
 		return (false);
 	}
 	if (dir == 2) {
-		if (d_map[ym + 1][xm] != 1)
-			return (true);
+		if (d_map[ym + 1][xm] != 1) {
+            std::cout << "i allow to go to " << d_map[ym + 1][xm] << std::endl;
+            return (true);
+        }
 		return (false);
 	}
 	if (d_map[ym][xm - 1] != 1)
@@ -174,7 +178,8 @@ void bbm::Ia::moveAllDefensive(int dir)
 		xm++;
 	if (dir == 2)
 		ym++;
-	xm--;
+    if (dir == 3)
+        xm--;
 }
 
 void bbm::Ia::pathFindingDefensive()
@@ -183,6 +188,7 @@ void bbm::Ia::pathFindingDefensive()
 		for (int i = 0; i < 4; i++){
 			if (checkAllDefensive(i)) {
 				f = 0;
+                std::cout << "i found safe zone" << i << std::endl;
 				rec.push_back(i);
 				return;
 			}
@@ -192,15 +198,26 @@ void bbm::Ia::pathFindingDefensive()
     	else {
 		for (int i = 0; f != 0 && i < 4; i++){
 			if (seeAllMoveDefensive(i)){
-				moveAllDefensive(i);
-				rec.push_back(i);
-				ite++;
+ 				rec.push_back(i);
+                std::cout << "y : " << ym << " x:" << xm <<" i can move to " << i << " rec[0] =" << rec[0] << std::endl;
+                for (int j = 0; j < d_map.size(); j++){
+                    for (int i = 0; i < d_map[0].size(); i++){
+                        std::cout << d_map[j][i];
+                    }
+                    std::cout << std::endl;
+                }
+                moveAllDefensive(i);
+                std::cout << std::endl;
+                std::cout << d_map[ym][xm] << std::endl;
+                ite++;
 				pathFindingDefensive();
 				ite--;
 				moveAllDefensive((i + 2) % 4);
+                std::cout << "je suis revenu sur mes pas" << ((i + 2) % 4) << std::endl;
 				if (f != 0)
 					rec.pop_back();
 			}
+            std::cout << "reset" << std::endl;
 		}
     	}
     	return;
@@ -245,8 +262,6 @@ void bbm::Ia::move_to_rec()
 
 void bbm::Ia::move_to_center()
 {
-	// std::cout << "_x ==> " << _x << "floor ==> " << std::floor(_x) << std::endl;
-	// std::cout << "_z ==> " << _z << "floor ==> " << std::floor(_z) << std::endl;
 	if (_z > std::floor(_z) + 0.5)
 		moveBottom();
 	if (_z < std::floor(_z) + 0.5)
@@ -265,6 +280,8 @@ void bbm::Ia::analyseMap()
 	rec.push_back(4);
 	if (d_map[_z][_x] == 2 || d_map[_z][_x] == 4) {
 		rec.clear();
+        std::cout << "_x ==> " << _x << std::endl;
+        std::cout << "_z ==> " << _z << std::endl;
 		defensive_mode();
 		move_to_rec();
 		d_map.clear();
