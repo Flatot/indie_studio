@@ -111,12 +111,11 @@ std::vector<std::vector<int>> bbm::Ia::generateDMap()
 		for (int x = 0; x < _match.getMap().getWidth(); x++) {
 			entities = _match.getMap().getEntitiesFromPos(y, x);
 			if ((entities & BREAKABLE_BLOCK) ||
-				(entities & UNBREAKABLE_BLOCK))
+				(entities & UNBREAKABLE_BLOCK) ||
+				(entities & EXPLOSION))
 				tmp.push_back(1);
 			else if ((entities & BOMB))
 				tmp.push_back(2);
-			else if ((entities & EXPLOSION))
-				tmp.push_back(4);
 			else
 				tmp.push_back(0);
 		}
