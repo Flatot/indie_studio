@@ -32,7 +32,8 @@ namespace bbm {
 
 		virtual bool OnEvent(const irr::SEvent &event) override;
 		bool run();
-		bool launchMatch();
+		bool launchMatch(std::vector<bbm::AttrEntity> attrs,
+			std::vector<bbm::TeamColor> teams);
 	
 		bool launchInGameMenu();
 		bool launchMainMenu();

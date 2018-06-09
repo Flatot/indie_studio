@@ -31,9 +31,9 @@ bbm::MenuNewGame::~MenuNewGame()
 void	bbm::MenuNewGame::setupTeams()
 {
 	_teams.push_back(bbm::TEAM_BLUE);
-	_teams.push_back(bbm::TEAM_BLUE);
-	_teams.push_back(bbm::TEAM_BLUE);
-	_teams.push_back(bbm::TEAM_BLUE);
+	_teams.push_back(bbm::TEAM_RED);
+	_teams.push_back(bbm::TEAM_GREEN);
+	_teams.push_back(bbm::TEAM_PURPLE);
 }
 
 void	bbm::MenuNewGame::setupAttrs()
@@ -116,7 +116,7 @@ void	bbm::MenuNewGame::startGame()
 {
 	std::cout << "start the fucking game !!!" << std::endl;
 	deactivate();
-	_game.launchMatch();
+	_game.launchMatch(_attrs, _teams);
 	activate();
 }
 

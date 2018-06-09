@@ -87,10 +87,11 @@ bool bbm::Game::run()
 	return true;
 }
 
-bool bbm::Game::launchMatch()
+bool bbm::Game::launchMatch(std::vector<bbm::AttrEntity> attrs,
+	std::vector<bbm::TeamColor> teams)
 {
 	deactivate();
-	_match.init();
+	_match.init(attrs, teams);
 	_match.run();
 	activate();
 	return true;

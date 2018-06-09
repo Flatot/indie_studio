@@ -57,7 +57,6 @@ bool	bbm::MenuAudio::takeActions(irr::s32 id)
 	if (id == bbm::GUI_BUTTON_BACK) {
 		deactivate();
 		enableButtons(false);
-		_game.getConfig().saveConfig();
 	}
 	return true;
 }
@@ -140,6 +139,7 @@ bool	bbm::MenuAudio::run()
 	}
 	deactivate();
 	enableButtons(false);
+	_game.getConfig().saveConfig();
 	return true;
 }
 

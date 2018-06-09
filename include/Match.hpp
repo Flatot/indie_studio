@@ -22,6 +22,7 @@
 #include "UnbreakableBlock.hpp"
 #include "IBonus.hpp"
 #include "Bomb.hpp"
+#include "Definer.hpp"
 
 namespace bbm {
 	class Game;
@@ -29,7 +30,8 @@ namespace bbm {
 	class Match : public IMyEventReceiver {
 	public:
 		Match(Game &game);
-		void init();
+		void init(std::vector<bbm::AttrEntity> attrs,
+			std::vector<bbm::TeamColor> teams);
 		virtual bool OnEvent(const irr::SEvent &event);
 		virtual void draw();
 		virtual bool run();

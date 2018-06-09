@@ -168,6 +168,7 @@ bool	bbm::MenuVideo::run()
 	}
 	deactivate();
 	enableButtons(false);
+	updateResolution();
 	return true;
 }
 
