@@ -68,7 +68,7 @@ void bbm::IPlayer::die()
 	delete this;
 }
 
-void bbm::IPlayer::get_bonus()
+void bbm::IPlayer::getBonus()
 {
 	auto entity = _match.getMap().getEntity(_z, _x, BONUS);
 
@@ -109,7 +109,7 @@ void bbm::IPlayer::move()
 		if (_move & BOTTOM)
 			moveBottom();
 	}
-	get_bonus();
+	getBonus();
 	(_move == 0) ? setFrameMyLoop(206, 250) : setFrameMyLoop(0, 13);
 }
 
