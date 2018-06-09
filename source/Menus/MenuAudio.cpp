@@ -156,14 +156,14 @@ void	bbm::MenuAudio::drawScaleSound(bbm::ButtonInfos &corners, int volume)
 	corners.startX + (corners.endX - corners.startX) * (static_cast
 	<float>(volume) / static_cast
 	<float>(100)), corners.endY),
-	0, irr::video::SColor(255, 60, 210, 100), true);
+	0, irr::video::SColor(255, 60, 140, 100), true);
 	_game.getGraphic().getDriver()->draw2DImage(_white,
 	irr::core::dimension2d<irr::s32>(corners.startX - 20 + (corners.
 	endX - corners.startX) * (static_cast<float>(volume) / static_cast
 	<float>(100)), corners.startY - 20),
 	irr::core::rect<irr::s32>(0, corners.startY,
 	40, corners.endY + 40),
-	0, irr::video::SColor(255, 10, 10, 230), true);
+	0, irr::video::SColor(255, 210, 210, 230), true);
 }
 
 void	bbm::MenuAudio::drawSounds(const irr::core::dimension2du& screenSize)
