@@ -85,7 +85,8 @@ void	bbm::Ia::scaleBomb()
 
 	for (int y = 0; y < _match.getMap().getHeight(); y++) {
 		for (int x = 0; x < _match.getMap().getWidth(); x++) {
-			if (d_map[y][x] == 4) {
+			auto ent = _match.getMap().getEntitiesFromPos(y, x);
+			if (d_map[y][x] == 2) {
 				auto entites = _match.getMap().getFromPos(y, x);
 				for (int i = 0; i < entites.size(); ++i) {
 					if (entites[i]->is(BOMB)) {
@@ -112,6 +113,8 @@ std::vector<std::vector<int>> bbm::Ia::generateDMap()
 				(entities & UNBREAKABLE_BLOCK))
 				tmp.push_back(1);
 			else if ((entities & BOMB))
+				tmp.push_back(2);
+			else if ((entities & EXPLOSION))
 				tmp.push_back(4);
 			else
 				tmp.push_back(0);
@@ -178,8 +181,8 @@ void bbm::Ia::moveAllDefensive(int dir)
 		xm++;
 	if (dir == 2)
 		ym++;
-    if (dir == 3)
-        xm--;
+	if (dir == 3)
+		xm--;
 }
 
 void bbm::Ia::pathFindingDefensive()
@@ -188,7 +191,6 @@ void bbm::Ia::pathFindingDefensive()
 		for (int i = 0; i < 4; i++){
 			if (checkAllDefensive(i)) {
 				f = 0;
-                std::cout << "i found safe zone" << i << std::endl;
 				rec.push_back(i);
 				return;
 			}
@@ -196,28 +198,17 @@ void bbm::Ia::pathFindingDefensive()
         	return;
 	}
     	else {
-		for (int i = 0; f != 0 && i < 4; i++){
-			if (seeAllMoveDefensive(i)){
+		for (int i = 0; f != 0 && i < 4; i++) {
+			if (seeAllMoveDefensive(i)) {
  				rec.push_back(i);
-                std::cout << "y : " << ym << " x:" << xm <<" i can move to " << i << " rec[0] =" << rec[0] << std::endl;
-                for (int j = 0; j < d_map.size(); j++){
-                    for (int i = 0; i < d_map[0].size(); i++){
-                        std::cout << d_map[j][i];
-                    }
-                    std::cout << std::endl;
-                }
-                moveAllDefensive(i);
-                std::cout << std::endl;
-                std::cout << d_map[ym][xm] << std::endl;
-                ite++;
+				moveAllDefensive(i);
+				ite++;
 				pathFindingDefensive();
 				ite--;
 				moveAllDefensive((i + 2) % 4);
-                std::cout << "je suis revenu sur mes pas" << ((i + 2) % 4) << std::endl;
 				if (f != 0)
 					rec.pop_back();
 			}
-            std::cout << "reset" << std::endl;
 		}
     	}
     	return;
@@ -280,8 +271,6 @@ void bbm::Ia::analyseMap()
 	rec.push_back(4);
 	if (d_map[_z][_x] == 2 || d_map[_z][_x] == 4) {
 		rec.clear();
-        std::cout << "_x ==> " << _x << std::endl;
-        std::cout << "_z ==> " << _z << std::endl;
 		defensive_mode();
 		move_to_rec();
 		d_map.clear();
