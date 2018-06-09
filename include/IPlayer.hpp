@@ -45,6 +45,7 @@ namespace bbm {
 		void moveRight();
 		void moveTop();
 		void moveBottom();
+		void setFrameMyLoop(int begin, int end);
 		int _move;
 		std::chrono::steady_clock::time_point _timePoint;
 		int _speed;
