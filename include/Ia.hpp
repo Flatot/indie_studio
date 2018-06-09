@@ -14,6 +14,12 @@
 
 namespace bbm {
 	class Ia : public IPlayer {
+        enum Zone {
+            NOGO = 1,
+            DANGER = 2,
+            GOAL = 0,
+            BOOM = 4
+        };
 	public:
 		Ia(Match &match, float z, float x, Entities playerNum);
 		~Ia();
@@ -35,11 +41,19 @@ namespace bbm {
 		bool checkAllDefensive(int dir);
 		bool seeAllMoveDefensive(int dir);
 		bool checkAllBreakable(int dir, int y, int x);
-		bool aliveIfBomb();
+		bool aliveIfBomb(int distance);
         bool searchBonus();
+        int wallCount();
 		// void changeDMapToBMap();
 		std::vector<std::vector<int>> generateBMap();
         std::vector<std::vector<int>> generateDMap();
+        std::vector<std::vector<int>> generateMMap();
+        std::vector<std::vector<int>> generateFMap();
+        void findBreakable();
+        void timeToFight();
+        void changeBoomTo(int zone);
+        void changeAllBreakableGoal(int j, int i);
+        bool checkAllNogo(int y, int x);
     private:
 		// std::vector<std::vector<int> > _direction;
 		std::vector<std::vector<int>> d_map;
@@ -50,5 +64,6 @@ namespace bbm {
 		int f;
 		int objectif;
 		int ite;
+        int bombtype;
 	};
 }

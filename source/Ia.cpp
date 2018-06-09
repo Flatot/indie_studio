@@ -46,7 +46,7 @@ void	bbm::Ia::fill_dangerosity_bis(int bombLen, int y, int x)
 		if (n < 0 || (entities & BREAKABLE_BLOCK) || 
 			(entities & UNBREAKABLE_BLOCK))
 			break ;
-		d_map[n][x] = 2;
+		d_map[n][x] = BOOM;
 	}
 	for (int n = y; n < (y + bombLen); n++) {
 		entities = _match.getMap().getEntitiesFromPos(n, x);
@@ -54,7 +54,7 @@ void	bbm::Ia::fill_dangerosity_bis(int bombLen, int y, int x)
 			(entities & BREAKABLE_BLOCK) || 
 			(entities & UNBREAKABLE_BLOCK))
 			break ;
-		d_map[n][x] = 2;
+		d_map[n][x] = BOOM;
 	}
 }
 
@@ -68,14 +68,14 @@ void	bbm::Ia::fill_dangerosity(int bombLen, int y, int x)
 			(entities & BREAKABLE_BLOCK) || 
 			(entities & UNBREAKABLE_BLOCK))
 			break ;
-		d_map[y][n] = 2;
+		d_map[y][n] = BOOM;
 	}
 	for (int n = x; n > (x - bombLen); n--) {
 		entities = _match.getMap().getEntitiesFromPos(y, n);
 		if (n < 0 || (entities & BREAKABLE_BLOCK) || 
 			(entities & UNBREAKABLE_BLOCK))
 			break ;
-		d_map[y][n] = 2;
+		d_map[y][n] = BOOM;
 	}
 	fill_dangerosity_bis(bombLen, y, x);
 }
@@ -87,7 +87,7 @@ void	bbm::Ia::scaleBomb()
 	for (int y = 0; y < _match.getMap().getHeight(); y++) {
 		for (int x = 0; x < _match.getMap().getWidth(); x++) {
 			auto ent = _match.getMap().getEntitiesFromPos(y, x);
-			if (d_map[y][x] == 2) {
+			if (d_map[y][x] == BOOM) {
 				auto entites = _match.getMap().getFromPos(y, x);
 				for (int i = 0; i < entites.size(); ++i) {
 					if (entites[i]->is(BOMB)) {
@@ -113,11 +113,11 @@ std::vector<std::vector<int>> bbm::Ia::generateDMap()
 			if ((entities & BREAKABLE_BLOCK) ||
 				(entities & UNBREAKABLE_BLOCK) ||
 				(entities & EXPLOSION))
-				tmp.push_back(1);
+				tmp.push_back(NOGO);
 			else if ((entities & BOMB))
-				tmp.push_back(2);
+				tmp.push_back(BOOM);
 			else
-				tmp.push_back(0);
+				tmp.push_back(GOAL);
 		}
 		newMap.push_back(tmp);
 		tmp.clear();
@@ -128,21 +128,21 @@ std::vector<std::vector<int>> bbm::Ia::generateDMap()
 bool bbm::Ia::checkAllDefensive(int dir)
 {
 	if (dir == 0) {
-		if (d_map[ym - 1][xm] == 0)
+		if (d_map[ym - 1][xm] == GOAL)
 			return (true);
 		return (false);
 	}
 	if (dir == 1) {
-		if (d_map[ym][xm + 1] == 0)
+		if (d_map[ym][xm + 1] == GOAL)
 			return (true);
 		return (false);
 	}
 	if (dir == 2) {
-		if (d_map[ym + 1][xm] == 0)
+		if (d_map[ym + 1][xm] == GOAL)
 			return (true);
 		return (false);
 	}
-	if (d_map[ym][xm - 1] == 0)
+	if (d_map[ym][xm - 1] == GOAL)
 		return (true);
 	return (false);
 }
@@ -150,23 +150,23 @@ bool bbm::Ia::checkAllDefensive(int dir)
 bool bbm::Ia::seeAllMoveDefensive(int dir)
 {
 	if (dir == 0) {
-		if (d_map[ym - 1][xm] != 1) {
+		if (d_map[ym - 1][xm] != NOGO) {
             return (true);
         }
 		return (false);
 	}
 	if (dir == 1) {
-		if (d_map[ym][xm + 1] != 1)
+		if (d_map[ym][xm + 1] != NOGO)
 			return (true);
 		return (false);
 	}
 	if (dir == 2) {
-		if (d_map[ym + 1][xm] != 1) {
+		if (d_map[ym + 1][xm] != NOGO) {
            return (true);
         }
 		return (false);
 	}
-	if (d_map[ym][xm - 1] != 1)
+	if (d_map[ym][xm - 1] != NOGO)
 		return (true);
 	return (false);
 }
@@ -252,7 +252,6 @@ void bbm::Ia::move_to_rec()
     if (rec[0] == 4){
         putBomb();
         return;
-
     }
 	return;
 }
@@ -269,13 +268,23 @@ void bbm::Ia::move_to_center()
 		moveRight();
 }
 
+void bbm::Ia::changeBoomTo(int zone)
+{
+    for(int j = 0; j < d_map.size(); j++){
+        for (int i = 0; i < d_map[0].size(); i++){
+            if (d_map[j][i] == BOOM)
+                d_map[j][i] = zone;
+        }
+    }
+}
+
 void bbm::Ia::analyseMap()
 {
 	d_map = generateDMap();
 	scaleBomb();
-
+    changeBoomTo(DANGER);
 	rec.push_back(4);
-	if (d_map[_z][_x] == 2 || d_map[_z][_x] == 4) {
+	if (d_map[_z][_x] == DANGER || d_map[_z][_x] == 4) {
 		rec.clear();
 		defensive_mode();
 		move_to_rec();
@@ -283,10 +292,12 @@ void bbm::Ia::analyseMap()
         d_map.clear();
     }
 	else {
-        active_mode();
-        move_to_rec();
         std::cout << "active" << std::endl;
-		//move_to_center();
+        active_mode();
+        if (rec[0] == 5)
+            move_to_center();
+        move_to_rec();
+        getBonus();
 	}
 }
 
@@ -296,22 +307,135 @@ void	bbm::Ia::active_mode()
 
     d_map = generateDMap();
     scaleBomb();
+    changeBoomTo(NOGO);
     if (searchBonus()) {
+        std::cout << "search bonus" << std::endl;
         return;
     }
 	else {
-
 		for (int i = 0; i < 4; i++) {
-			if (checkAllBreakable(i, std::floor(_z), std::floor(_x)) && aliveIfBomb()) {
+			if (checkAllBreakable(i, std::floor(_z), std::floor(_x)) && aliveIfBomb(4) && _bombCount != 0) {
 				rec.clear();
 				rec.push_back(4);
+                std::cout << "bomb puting" << std::endl;
                 return;
 			}
 		}
-        rec.clear();
-		rec.push_back(5);
-	}
+        if (wallCount() > 10) {
+            findBreakable();
+            std::cout << "searching something to break" << std::endl;
+        }
+        else {
+            timeToFight();
+            std::cout << "fighting" << std::endl;
+        }
+    }
     return;
+}
+
+void bbm::Ia::timeToFight()
+{
+    d_map = generateFMap();
+    scaleBomb();
+    changeBoomTo(1);
+    srand(NULL);
+    if (rand() % 20 != 0){
+        defensive_mode();
+        return;
+    }
+    rec.clear();
+    rec.push_back(4);
+}
+
+std::vector<std::vector<int>> bbm::Ia::generateFMap()
+{
+    std::vector<std::vector<int>> newMap;
+    std::vector<int> tmp;
+    int entities;
+
+    for (int y = 0; y < _match.getMap().getHeight(); y++) {
+        for (int x = 0; x < _match.getMap().getWidth(); x++) {
+            entities = _match.getMap().getEntitiesFromPos(y, x);
+            if ((entities & BREAKABLE_BLOCK) ||
+                (entities & UNBREAKABLE_BLOCK) ||
+                (entities & EXPLOSION))
+                tmp.push_back(NOGO);
+            else if ((entities & BOMB))
+                tmp.push_back(BOOM);
+            else
+                tmp.push_back(GOAL);
+        }
+        newMap.push_back(tmp);
+        tmp.clear();
+    }
+    return newMap;
+}
+
+int bbm::Ia::wallCount()
+{
+    int count = 0;
+
+    for (int y = 0; y < _match.getMap().getHeight(); y++) {
+        for (int x = 0; x < _match.getMap().getWidth(); x++) {
+            if (_match.getMap().getEntitiesFromPos(y, x) & BREAKABLE_BLOCK)
+                count++;
+        }
+    }
+    return (count);
+}
+
+void bbm::Ia::findBreakable()
+{
+    d_map = generateMMap();
+    scaleBomb();
+    changeBoomTo(NOGO);
+    for (int j = 0; j < d_map.size(); j++){
+        for (int i = 0; i < d_map[0].size(); i++){
+            if (d_map[j][i] == 3)
+                changeAllBreakableGoal(j, i);
+        }
+    }
+    for (int j = 0; j < d_map.size(); j++){
+        for (int i = 0; i < d_map[0].size(); i++){
+            if (j == std::floor(_z) && i == std::floor(_x))
+                std::cout << "P";
+            else
+                std::cout << d_map[j][i];
+        }
+        std::cout << std::endl;
+    }
+    if (checkAllNogo(std::floor(_z), std::floor(_x))){
+        rec.clear();
+        rec[0] = 5;
+    }
+
+    if (d_map[std::floor(_z)][std::floor(_x)] != 0) {
+        defensive_mode();
+        if (f != 0)
+            rec[0] = 5;
+    }
+}
+
+bool bbm::Ia::checkAllNogo(int y, int x)
+{
+    if (d_map[y - 1][x] == NOGO &&
+            d_map[y + 1][x] == NOGO &&
+            d_map[y][x - 1] == NOGO &&
+            d_map[y][x + 1] == NOGO)
+        return (true);
+    return (false);
+}
+
+void bbm::Ia::changeAllBreakableGoal(int y, int x) {
+    if (d_map[y - 1][x] == 2)
+        d_map[y - 1][x] = GOAL;
+    if (d_map[y + 1][x] == 2)
+        d_map[y + 1][x] = GOAL;
+    if (d_map[y][x - 1] == 2)
+        d_map[y][x - 1] = GOAL;
+    if (d_map[y][x + 1] == 2)
+        d_map[y][x + 1] = GOAL;
+    d_map[y][x] = NOGO;
 }
 
 bool bbm::Ia::searchBonus()
@@ -320,12 +444,11 @@ bool bbm::Ia::searchBonus()
     mem = d_map;
 	d_map = generateBMap();
     scaleBomb();
+    changeBoomTo(NOGO);
 	rec.clear();
 	defensive_mode();
     if (f == 0){
         d_map = mem;
-        move_to_rec();
-        getBonus();
         return (true);
 	}
     d_map = mem;
@@ -343,18 +466,44 @@ std::vector<std::vector<int>> bbm::Ia::generateBMap()
 			entities = _match.getMap().getEntitiesFromPos(y, x);
 			if ((entities & BREAKABLE_BLOCK) ||
 				(entities & UNBREAKABLE_BLOCK) ||
-                    (entities & EXPLOSION) ||
-                    (entities & BOMB))
-				tmp.push_back(1);
+                    (entities & EXPLOSION))
+                tmp.push_back(NOGO);
 			else if ((entities & BONUS))
-				tmp.push_back(0);
+				tmp.push_back(GOAL);
+            else if ((entities & BOMB))
+                tmp.push_back(BOOM);
 			else
-				tmp.push_back(2);
+				tmp.push_back(DANGER);
 		}
 		newMap.push_back(tmp);
 		tmp.clear();
 	}
 	return newMap;
+}
+
+std::vector<std::vector<int>> bbm::Ia::generateMMap()
+{
+    std::vector<std::vector<int>> newMap;
+    std::vector<int> tmp;
+    int entities;
+
+    for (int y = 0; y < _match.getMap().getHeight(); y++) {
+        for (int x = 0; x < _match.getMap().getWidth(); x++) {
+            entities = _match.getMap().getEntitiesFromPos(y, x);
+            if ((entities & UNBREAKABLE_BLOCK) ||
+                (entities & EXPLOSION))
+                tmp.push_back(1);
+            else if ((entities & BREAKABLE_BLOCK))
+                tmp.push_back(3);
+            else if ((entities & BOMB))
+                tmp.push_back(BOOM);
+            else
+                tmp.push_back(2);
+        }
+        newMap.push_back(tmp);
+        tmp.clear();
+    }
+    return newMap;
 }
 
 bool bbm::Ia::checkAllBreakable(int dir, int y, int x)
@@ -382,7 +531,7 @@ bool bbm::Ia::checkAllBreakable(int dir, int y, int x)
  	}
 }
 
-bool bbm::Ia::aliveIfBomb()
+bool bbm::Ia::aliveIfBomb(int distance)
 {
     std::vector<int> tmp;
  	std::vector<std::vector<int>> mem_map;
@@ -391,7 +540,7 @@ bool bbm::Ia::aliveIfBomb()
     d_map[std::floor(_z)][std::floor(_x)] = 2;
     fill_dangerosity( _power + 1,std::floor(_z), std::floor(_x));
     defensive_mode();
- 	if (f == 0 && objectif < 8){
+ 	if (f == 0 && objectif < distance){
  		rec.clear();
  		d_map = mem_map;
  		return (true);
