@@ -19,7 +19,7 @@ add_dependencies(irrlicht build_irrlicht)
 # GIVE LIB AND INCLUDE FOLDERS
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
-include_directories(${INCLUDE_DIR} ${INCLUDE_DIR}/irrlicht)
+include_directories(${INCLUDE_DIR} ${INCLUDE_DIR}/irrlicht ${INCLUDE_DIR}/Menus)
 
 
 # SOURCES FILES
@@ -48,7 +48,18 @@ set(SRCS 	source/main.cpp
 		source/Config.cpp
 		source/Bomb.cpp
 		source/Explosion.cpp
-		source/PlayerConfig.cpp)
+		source/PlayerConfig.cpp
+		source/Config.cpp
+		source/Menus/MenuMain.cpp
+		source/Menus/MenuInGame.cpp
+		source/Menus/MenuSettings.cpp
+		source/Menus/MenuAudio.cpp
+		source/Menus/MenuVideo.cpp
+		source/Menus/MenuNewGame.cpp
+		source/Menus/MenuControls.cpp
+		source/Menus/Corners.cpp
+		source/Menus/Button.cpp
+		)
 
 # CREATE THE BINARY
 add_executable(${BINARY_NAME} ${SRCS})

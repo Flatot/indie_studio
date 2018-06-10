@@ -9,6 +9,7 @@
 
 #include "irrlicht.h"
 #include "IMyEventReceiver.hpp"
+#include "driverChoice.h"
 
 namespace bbm {
 	class Graphic {
@@ -25,16 +26,22 @@ namespace bbm {
 		void setWindowCaption(const irr::core::vector3df &posCam);
 		void setWindowCaption(const wchar_t *str);
 		void setWindowCaption();
-				
+		void clearDevice();
+		void setupDevice();
+		void setWidth(int width);
+		void setHeight(int height);
+		void setFullscreen(bool fullscreen);
+		void setDevice(irr::IrrlichtDevice *device);
+		irr::video::E_DRIVER_TYPE getDriverType() const;
 
+
+				
 	private:
 		int _width;
 		int _height;
 		bool _fullscreen;
 		irr::IrrlichtDevice *_device;
-		irr::video::IVideoDriver *_driver;
-		irr::scene::ISceneManager *_scene;
-		irr::gui::IGUIEnvironment *_guienv;
-
+		irr::video::E_DRIVER_TYPE _driverType;
+		IMyEventReceiver *_evReceiver;
 	};
 }

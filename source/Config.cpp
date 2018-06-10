@@ -8,12 +8,11 @@
 #include "Config.hpp"
 
 bbm::Config::Config() :
-
 	_fullscreen(false),
 	_screenWidth(1280),
 	_screenHeight(720),
 	_volumeGeneral(50),
-	_volumeEffect(50)
+	_volumeEffect(90)
 {
 	_playerConfig.push_back(PlayerConfig(bbm::Entities::PLAYER_1));
 	_playerConfig.push_back(PlayerConfig(bbm::Entities::PLAYER_2));
@@ -114,6 +113,16 @@ bool bbm::Config::getFullscreen() const
 	return _fullscreen;
 }
 
+void bbm::Config::setScreenWidth(int width)
+{
+	_screenWidth = width;
+}
+
+void bbm::Config::setScreenHeight(int height)
+{
+	_screenHeight = height;
+}
+
 std::ostream& operator<< (std::ostream& stream, bbm::Config const& conf)
 {
 	stream << "Config" << std::endl;
@@ -127,4 +136,24 @@ std::ostream& operator<< (std::ostream& stream, bbm::Config const& conf)
 	stream << conf.getPlayerConfig(2);
 	stream << conf.getPlayerConfig(3);
 	return stream;
+}
+
+void	bbm::Config::setVolumeGeneral(int volume)
+{
+	if (volume <= 0)
+		_volumeGeneral = 0;
+	else if (volume >= 100)
+		_volumeGeneral = 100;
+	else
+		_volumeGeneral = volume;
+}
+
+void	bbm::Config::setVolumeEffect(int volume)
+{
+	if (volume <= 0)
+		_volumeEffect = 0;
+	else if (volume >= 100)
+		_volumeEffect = 100;
+	else
+		_volumeEffect = volume;
 }

@@ -16,6 +16,9 @@
 #include "Graphic.hpp"
 #include "IMenu.hpp"
 #include "Match.hpp"
+#include "MenuMain.hpp"
+#include "MenuInGame.hpp"
+#include "MenuSettings.hpp"
 // #include "PlayerConfig.hpp"
 
 namespace bbm {
@@ -25,10 +28,12 @@ namespace bbm {
 
 		Graphic &getGraphic();
 		Config &getConfig();
+		Config &getConfig() const;
 
 		virtual bool OnEvent(const irr::SEvent &event) override;
 		bool run();
-		bool launchMatch();
+		bool launchMatch(std::vector<bbm::AttrEntity> attrs,
+			std::vector<bbm::TeamColor> teams);
 	
 		bool launchInGameMenu();
 		bool launchMainMenu();

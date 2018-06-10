@@ -13,16 +13,16 @@ bbm::Game::Game(Config &config) :
 	_evManager(new EventManager()),
 	_graphic(config.getScreenWidth(), config.getScreenHeight(), 
 			config.getFullscreen(), _evManager),
-	_mainMenu(nullptr),
-	_inGameMenu(nullptr),
+	_mainMenu(new bbm::MenuMain(*this)),
+	_inGameMenu(new bbm::MenuInGame(*this)),
 	_match(*this),
 	_matchLaunched(false)
 {
 	_evManager->setRoot(true);
 	_evManager->addEventReceiver(this);
 	_evManager->addEventReceiver(_match.getEventManager());
-	//_evManager->addEventReceiver(_mainMenu->getEventManager());
-	//_evManager->addEventReceiver(_inGameMenu->getEventManager());
+	_evManager->addEventReceiver(_mainMenu->getEventManager());
+	_evManager->addEventReceiver(_inGameMenu->getEventManager());
 }
 
 bbm::Graphic &bbm::Game::getGraphic()
@@ -31,6 +31,11 @@ bbm::Graphic &bbm::Game::getGraphic()
 }
 
 bbm::Config &bbm::Game::getConfig()
+{
+	return _config;
+}
+
+bbm::Config &bbm::Game::getConfig() const
 {
 	return _config;
 }
@@ -57,32 +62,38 @@ bool bbm::Game::OnEvent(const irr::SEvent &event)
 
 bool bbm::Game::run()
 {
+	bool	changed = true;
+
 	activate();
-	
-	_graphic.getGuienv()->addStaticText(L"Hello Game! This is the Irrlicht Software renderer!",
+/*	_graphic.getGuienv()->addStaticText(L"Hello Game! This is the Irrlicht Software renderer!",
 			irr::core::rect<irr::s32>(10,10,260,22), false);
 	while(_graphic.getDevice()->run()) {
 		_graphic.setWindowCaption(L"Game loop");
 		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
-		
 		_graphic.getGuienv()->drawAll();
 		_graphic.getDriver()->endScene();
+		if (changed) {
+			deactivate();
+			// _inGameMenu->run();
+			_mainMenu->run();
+			activate();
+			changed = false;
+		}
 		launchMatch();
-	}
+	}*/
+	_mainMenu->run();
 	_graphic.getDevice()->drop();
 	deactivate();
 	return true;
 }
 
-bool bbm::Game::launchMatch()
+bool bbm::Game::launchMatch(std::vector<bbm::AttrEntity> attrs,
+	std::vector<bbm::TeamColor> teams)
 {
-	if (_matchLaunched) {
-		deactivate();
-		_match.init();
-		_match.run();
-		activate();
-	}
-	_matchLaunched = false;
+	deactivate();
+	_match.init(attrs, teams);
+	_match.run();
+	activate();
 	return true;
 }
 
@@ -105,4 +116,3 @@ void bbm::Game::saveConfig()
 {
 
 }
-
