@@ -40,5 +40,6 @@ namespace bbm {
 			int	_idxres;
 			std::vector<std::pair<int, int>>	_resolutions;
 			irr::gui::IGUIStaticText	*_res;
+			irr::gui::IGUIStaticText	*_full;
 	};
 }

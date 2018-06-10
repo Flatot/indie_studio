@@ -27,6 +27,7 @@ namespace bbm {
 		void setVolumeEffect(int);
 		bbm::PlayerConfig getPlayerConfig(int idx) const;
 		bbm::PlayerConfig &getPlayerConfig(int idx);
+		void setFullscreen(bool);
 
 	private:
 		bool _fullscreen;

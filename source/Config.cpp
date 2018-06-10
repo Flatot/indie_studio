@@ -113,6 +113,11 @@ bool bbm::Config::getFullscreen() const
 	return _fullscreen;
 }
 
+void bbm::Config::setFullscreen(bool fullscreen)
+{
+	_fullscreen = fullscreen;
+}
+
 void bbm::Config::setScreenWidth(int width)
 {
 	_screenWidth = width;

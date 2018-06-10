@@ -49,7 +49,7 @@ void	bbm::MenuVideo::setupResolution(const irr::core::dimension2du&
 screenSize)
 {
 	bbm::ButtonInfos corners = bbm::Corners::getCenteredAudio(
-	screenSize, {1, 2, 0, 2}, {300, 80});
+	screenSize, {1, 2, 0, 3}, {300, 80});
 	irr::gui::IGUIFont *font = _game.getGraphic().
 	getGuienv()->getFont("./assets/menus/font/font_indie.xml");
 
@@ -59,6 +59,15 @@ screenSize)
 	_res->setOverrideFont(font);
 	_res->setVisible(false);
 	_res->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
+	corners = bbm::Corners::getCenteredAudio(
+	screenSize, {1, 2, 1, 3}, {300, 80});
+	_full = _game.getGraphic().getGuienv()->addStaticText(L"OFF",
+	irr::core::rect<irr::s32>(corners.startX, corners.startY,
+	corners.endX, corners.endY), false, true, 0, -1, true);
+	_full->setOverrideFont(font);
+	_full->setVisible(false);
+	_full->setTextAlignment(irr::gui::EGUIA_CENTER,
+	irr::gui::EGUIA_CENTER);
 }
 
 void	bbm::MenuVideo::setupButtons(
@@ -70,13 +79,19 @@ void	bbm::MenuVideo::setupButtons(
 	"./assets/menus/buttons/screenblue.png",
 	"./assets/menus/buttons/screenred.png",
 	bbm::GUI_BUTTON_RESOLUTION, bbm::Corners::getCenteredAudio(screenSize,
-	{0, 2, 0, 2}, buttonSize), _game));
+	{0, 2, 0, 3}, buttonSize), _game));
+	_btns.push_back(new bbm::Button(
+	"./assets/menus/buttons/leavegray.png",
+	"./assets/menus/buttons/leaveblue.png",
+	"./assets/menus/buttons/leavered.png",
+	bbm::GUI_BUTTON_FULLSCREEN, bbm::Corners::getCenteredAudio(screenSize,
+	{0, 2, 1, 3}, buttonSize), _game));
 	_btns.push_back(new bbm::Button(
 	"./assets/menus/buttons/backgray.png",
 	"./assets/menus/buttons/backblue.png",
 	"./assets/menus/buttons/backred.png",
 	bbm::GUI_BUTTON_BACK, bbm::Corners::getCenteredAudio(screenSize,
-	{1, 3, 1, 2}, buttonSize), _game));
+	{1, 3, 2, 3}, buttonSize), _game));
 	enableButtons(false);
 }
 
@@ -87,6 +102,10 @@ bool	bbm::MenuVideo::takeActions(irr::s32 id)
 	if (id == bbm::GUI_BUTTON_RESOLUTION) {
 		updateResolution();
 	}
+	if (id == bbm::GUI_BUTTON_FULLSCREEN) {
+		_game.getConfig().setFullscreen(
+			!_game.getConfig().getFullscreen());
+	}
 	return true;
 }
 
@@ -95,6 +114,7 @@ void	bbm::MenuVideo::goBack()
 	deactivate();
 	enableButtons(false);
 	_res->setVisible(false);
+	_full->setVisible(false);
 }
 
 void	bbm::MenuVideo::updateResolution()
@@ -177,6 +197,7 @@ bool	bbm::MenuVideo::run()
 	_focused = 0;
 	enableButtons(true);
 	_res->setVisible(true);
+	_full->setVisible(true);
 	std::cout << "Menu video run" << std::endl;
 	while(_graphic.getDevice()->run() && isActive()) {
 		_graphic.getDriver()->beginScene(true, true,
@@ -192,15 +213,12 @@ bool	bbm::MenuVideo::run()
 
 void	bbm::MenuVideo::drawRes(const irr::core::dimension2du& screenSize)
 {
-	bbm::ButtonInfos	corners;
-	const irr::core::dimension2du& imageSize = {200, 60};
 	wchar_t	text[100];
 
-	corners = bbm::Corners::getCenteredAudio(screenSize, {1, 2, 0, 2},
-	imageSize);
 	swprintf(text, 100, L"%d * %d", _resolutions[_idxres].first,
 	_resolutions[_idxres].second);
 	_res->setText(text);
+	_full->setText(_game.getConfig().getFullscreen() ? L"ON" : L"OFF");
 }
 
 void	bbm::MenuVideo::drawSceneBackground(const irr::core::dimension2du&

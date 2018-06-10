@@ -136,6 +136,11 @@ bool	bbm::MenuControls::takeActions(irr::s32 id)
 				id == bbm::GUI_BUTTON_RIGHT ||
 				id == bbm::GUI_BUTTON_BOMB))
 		_changing = true;
+	if (id == bbm::GUI_BUTTON_PLAYER) {
+		_player = _player + 1 >= _pimg.size() / 3 ? 0 :
+			_player + 1;
+		setupPlayerButton();
+	}
 	return true;
 }
 
