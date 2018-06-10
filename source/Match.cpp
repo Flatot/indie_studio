@@ -437,11 +437,11 @@ irr::video::ITexture	*bbm::Match::getCurrentCounter(
 
 	if (count > 0)
 		ret = list[0];
-	if (count >= 1)
+	if (count >= 750)
 		ret = list[1];
-	if (count >= 2)
+	if (count >= 1500)
 		ret = list[2];
-	if (count >= 3)
+	if (count >= 2250)
 		ret = list[3];
 	return ret;
 }
@@ -473,15 +473,15 @@ void bbm::Match::drawStarter()
 	auto list = createCounter();
 	auto cTime = std::chrono::steady_clock::now();
 	auto nTime = std::chrono::steady_clock::now();
-	auto diff = std::chrono::duration_cast<std::chrono::seconds>
+	auto diff = std::chrono::duration_cast<std::chrono::milliseconds>
 	(nTime - cTime);
 	irr::video::ITexture *background = list[0];
 
 	print_skybase();
 	_graphic.getDriver()->enableMaterial2D();
-	while (diff.count() < 4) {
+	while (_graphic.getDevice()->run() && diff.count() < 3000) {
 		nTime = std::chrono::steady_clock::now();
-		diff = std::chrono::duration_cast<std::chrono::seconds>
+		diff = std::chrono::duration_cast<std::chrono::milliseconds>
 		(nTime - cTime);
 		background = getCurrentCounter(list, diff.count());
 		drawImageBack(screenSize, background);

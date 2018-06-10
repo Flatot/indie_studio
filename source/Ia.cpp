@@ -233,40 +233,53 @@ void	bbm::Ia::defensive_mode()
 
 void bbm::Ia::move_to_rec()
 {
-    std::cout << rec[0] << std::endl;
+	std::cout << rec[0] << std::endl;
 	if (rec[0] == 0) {
 		moveBottom();
+		setFrameMyLoop(0, 13);
 		return ;
 	}
 	if (rec[0] == 1) {
 		moveRight();
+		setFrameMyLoop(0, 13);
 		return ;
 	}
 	if (rec[0] == 2) {
 		moveTop();
+		setFrameMyLoop(0, 13);
 		return ;
 	}
 	if (rec[0] == 3) {
-        moveLeft();
-        return;
-    }
-    if (rec[0] == 4){
-        putBomb();
-        return;
-    }
+		moveLeft();
+		setFrameMyLoop(0, 13);
+		return;
+	}
+	if (rec[0] == 4){
+		putBomb();
+		setFrameMyLoop(206, 250);
+		return;
+	}
 	return;
 }
 
 void bbm::Ia::move_to_center()
 {
-	if (_z > std::floor(_z) + 0.5)
+	if (_z > std::floor(_z) + 0.5) {
 		moveBottom();
-	if (_z < std::floor(_z) + 0.5)
+		setFrameMyLoop(0, 13);
+	}
+	if (_z < std::floor(_z) + 0.5) {
 		moveTop();
-	if (_x > std::floor(_x) + 0.5)
+		setFrameMyLoop(0, 13);
+	}
+	if (_x > std::floor(_x) + 0.5) {
 		moveLeft();
-	if (_x < std::floor(_x) + 0.5)
+		setFrameMyLoop(0, 13);
+	}
+	if (_x < std::floor(_x) + 0.5) {
 		moveRight();
+		setFrameMyLoop(0, 13);
+	}
 }
 
 void bbm::Ia::changeBoomTo(int zone)
@@ -324,6 +337,7 @@ void	bbm::Ia::active_mode()
 		}
         if (wallCount() > 10) {
             findBreakable();
+		setFrameMyLoop(206, 250);
             std::cout << "searching something to break" << std::endl;
         }
         else {
@@ -363,6 +377,7 @@ void bbm::Ia::timeToFight()
     else {
         rec.clear();
         rec.push_back(5);
+	setFrameMyLoop(206, 250);
         std::cout << "idle" << std::endl;
     }
 }
