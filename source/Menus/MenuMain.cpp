@@ -119,6 +119,7 @@ bool	bbm::MenuMain::takeActions(irr::s32 id)
 void	bbm::MenuMain::continueGame()
 {
 	_gameToLoad = _game.hasSave();
+	setupLoadButton();
 	if (_gameToLoad) {
 		deactivate();
 		enableButtons(false);
@@ -199,6 +200,7 @@ void	bbm::MenuMain::runNewGame(void)
 	deactivate();
 	_newGameMenu->run();
 	_gameToLoad = _game.hasSave();
+	setupLoadButton();
 	activate();
 	enableButtons(true);
 }

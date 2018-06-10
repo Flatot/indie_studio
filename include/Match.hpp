@@ -49,10 +49,9 @@ namespace bbm {
 		void addPlayer(IPlayer *player);
 		void removePlayer(IPlayer *player);
 		void drawStarter();
-		void drawStarterRec(irr::video::ITexture *);
 		std::vector<irr::video::ITexture *>	createCounter();
 		irr::video::ITexture	*getCurrentCounter(
-			std::vector<irr::video::ITexture *> list, int count);
+			std::vector<irr::video::ITexture *> list, float count);
 		void drawImageBack(const irr::core::dimension2du& screenSize,
 			irr::video::ITexture *img);
 		TeamColor getWinner();
@@ -78,6 +77,7 @@ namespace bbm {
 		std::vector<IPlayer *> _players;
 		irr::scene::ICameraSceneNode *_camera;
 		bool _menuReturn;
+		bool _counting;
 	};
 }
 

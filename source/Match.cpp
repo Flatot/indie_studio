@@ -27,7 +27,8 @@ bbm::Match::Match(Game &game) :
 	_map(*this),
 	_bombs(),
 	_players(),
-	_camera()
+	_camera(),
+	_counting(false)
 {
 	_evManager->addEventReceiver(this);
 	// irr::SKeyMap keyMap[5];                    // re-assigne les commandes
@@ -85,10 +86,11 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 	IMyEventReceiver::OnEvent(event);
 
 	std::cout << "[OnEvent - Match]" << std::endl;
-	if (isKeyPressed(irr::KEY_ESCAPE, NONE)) {
+	if (isKeyPressed(irr::KEY_ESCAPE, NONE) && !_counting) {
 		deactivate();
 		resetKey(irr::KEY_ESCAPE, NONE);
 		_menuReturn = _game.getMenuInGame()->run();
+		resetKey(irr::KEY_ESCAPE, NONE);
 		if (_menuReturn) {
 			drawStarter();
 			activate();
@@ -111,11 +113,6 @@ void bbm::Match::print_skybase()
 			texture, texture, texture, texture, texture);
 }
 
-void bbm::Match::drawStarterRec(irr::video::ITexture *background)
-{
-	
-}
-
 std::vector<irr::video::ITexture *>	bbm::Match::createCounter()
 {
 	std::vector<irr::video::ITexture *>	ret;
@@ -132,17 +129,17 @@ std::vector<irr::video::ITexture *>	bbm::Match::createCounter()
 }
 
 irr::video::ITexture	*bbm::Match::getCurrentCounter(
-	std::vector<irr::video::ITexture *> list, int count)
+	std::vector<irr::video::ITexture *> list, float count)
 {
 	irr::video::ITexture	*ret = list[0];
 
 	if (count > 0)
 		ret = list[0];
-	if (count >= 1)
+	if (count >= 500)
 		ret = list[1];
-	if (count >= 2)
+	if (count >= 1000)
 		ret = list[2];
-	if (count >= 3)
+	if (count >= 1500)
 		ret = list[3];
 	return ret;
 }
@@ -174,21 +171,21 @@ void bbm::Match::drawStarter()
 	auto list = createCounter();
 	auto cTime = std::chrono::steady_clock::now();
 	auto nTime = std::chrono::steady_clock::now();
-	auto diff = std::chrono::duration_cast<std::chrono::seconds>
+	auto diff = std::chrono::duration_cast<std::chrono::milliseconds>
 	(nTime - cTime);
-	irr::video::ITexture *background = list[0];
 
+	_counting = true;
 	print_skybase();
 	_graphic.getDriver()->enableMaterial2D();
-	while (diff.count() < 4) {
+	while (_graphic.getDevice()->run() && diff.count() < 2000) {
 		nTime = std::chrono::steady_clock::now();
-		diff = std::chrono::duration_cast<std::chrono::seconds>
+		diff = std::chrono::duration_cast<std::chrono::milliseconds>
 		(nTime - cTime);
-		background = getCurrentCounter(list, diff.count());
-		drawImageBack(screenSize, background);
-
+		drawImageBack(screenSize,
+			getCurrentCounter(list, diff.count()));
 	}
 	_graphic.getDriver()->enableMaterial2D(false);
+	_counting = false;
 }
 
 bool bbm::Match::isFinished()
