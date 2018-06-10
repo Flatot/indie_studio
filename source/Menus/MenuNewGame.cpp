@@ -8,7 +8,8 @@
 #include "MenuNewGame.hpp"
 #include "Corners.hpp"
 
-bbm::MenuNewGame::MenuNewGame(bbm::Game &Game) : IMenu(Game)
+bbm::MenuNewGame::MenuNewGame(bbm::Game &Game) : IMenu(Game),
+	_lobby(new bbm::MenuLobby(Game))
 {
 	const irr::core::dimension2du& screenSize = _game.getGraphic().
 		getDriver()->getScreenSize();
@@ -114,11 +115,12 @@ void	bbm::MenuNewGame::startGame()
 {
 	deactivate();
 	enableButtons(false);
+	_lobby->setVisible(false);
 	_game.launchMatch(_attrs, _teams);
 	enableButtons(true);
 	activate();
-	_game.getGraphic().getGuienv()->setFocus(_btns[0]->getButton());
-	_focused = 0;
+	_game.getGraphic().getGuienv()->setFocus(_btns[4]->getButton());
+	_focused = 4;
 }
 
 irr::video::ITexture	*bbm::MenuNewGame::getImageByAttr(bbm::AttrEntity attr)
@@ -313,6 +315,7 @@ void	bbm::MenuNewGame::draw()
 		getDriver()->getScreenSize();
 
 	drawBackground(screenSize);
+	_lobby->draw(_attrs, _teams);
 	drawAttr(screenSize);
 	for(std::vector<bbm::Button *>::iterator it = _btns.
 			begin(); it != _btns.end(); ++it) {

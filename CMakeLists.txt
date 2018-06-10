@@ -55,6 +55,7 @@ set(SRCS 	source/main.cpp
 		source/Menus/MenuVideo.cpp
 		source/Menus/MenuNewGame.cpp
 		source/Menus/MenuControls.cpp
+		source/Menus/MenuLobby.cpp
 		source/Menus/Corners.cpp
 		source/Menus/Button.cpp
 		source/Audio.cpp

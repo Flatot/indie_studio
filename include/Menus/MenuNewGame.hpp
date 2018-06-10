@@ -9,6 +9,7 @@
 
 #include "Game.hpp"
 #include "IMenu.hpp"
+#include "MenuLobby.hpp"
 
 namespace bbm {
 	class MenuNewGame : public IMenu {
@@ -45,6 +46,7 @@ namespace bbm {
 			std::vector<bbm::TeamColor>	_teams;
 			std::vector<std::pair<bbm::AttrEntity,
 			irr::video::ITexture *>>	_attrimgs;
+			MenuLobby	*_lobby;
 		private:
 	};
 }
