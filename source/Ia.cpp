@@ -326,7 +326,7 @@ void	bbm::Ia::active_mode()
                 return;
 			}
 		}
-        if (wallCount() > 10) {
+        if (wallCount() > 10 && _bombCount != 0) {
             std::cout << "start wallcount" << std::endl;
             findBreakable();
 		setFrameMyLoop(206, 250);
