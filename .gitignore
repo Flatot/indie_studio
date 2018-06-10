@@ -10,3 +10,5 @@ cmake-build-debug/
 Config.cfg
 vgcore*
 .vscode
+MapSave.txt
+PlayerMatch.cfg
