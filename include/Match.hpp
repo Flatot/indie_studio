@@ -51,7 +51,7 @@ namespace bbm {
 		void drawStarter();
 		std::vector<irr::video::ITexture *>	createCounter();
 		irr::video::ITexture	*getCurrentCounter(
-			std::vector<irr::video::ITexture *> list, float count);
+			std::vector<irr::video::ITexture *> list, float);
 		void drawImageBack(const irr::core::dimension2du& screenSize,
 			irr::video::ITexture *img);
 		TeamColor getWinner();
@@ -60,11 +60,14 @@ namespace bbm {
 		void drawWinnerRec(const irr::core::dimension2du& screenSize,
 			irr::video::ITexture *img);
 		bool isFinished();
+		void runAudio();
+		void stopAudio();
 
 	private:
 		bool handleLine(std::string line, int i, IPlayer **player);
 		bool isValuable(std::string str);
-		void doWithTokens(std::string tok1, std::string tok2, bbm::IPlayer **player);
+		void doWithTokens(std::string tok1, std::string tok2,
+			bbm::IPlayer **player);
 		IPlayer *loadIPlayer(int nbPlayer);
 		IPlayer *createPlayer(std::string line);
 		bbm::TeamColor strToTeamColor(std::string str);

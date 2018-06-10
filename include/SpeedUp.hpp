@@ -12,7 +12,7 @@
 
 namespace bbm {
 	class SpeedUp : public IBonus {
-	public: 
+	public:
 		SpeedUp(Match &match, float z, float x, bool isTraversable);
 		virtual void spawn() override;
 		virtual void die() override;

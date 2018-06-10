@@ -33,7 +33,6 @@ namespace bbm {
 		EventManager *_evManager;
 		Graphic &_graphic;
 		std::map<std::wstring, IMenu *> _menus;
-		// std::vector<irr::gui::IGUIButton *>	_buttons;
 		int	_focused;
 		irr::video::ITexture	*_background;
 		std::vector<bbm::Button *>	_btns;

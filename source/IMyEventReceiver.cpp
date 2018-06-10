@@ -18,7 +18,7 @@ bbm::IMyEventReceiver::IMyEventReceiver() :
 
 bool bbm::IMyEventReceiver::OnEvent(const irr::SEvent &event)
 {
-	if (event.EventType == irr::EET_KEY_INPUT_EVENT && 
+	if (event.EventType == irr::EET_KEY_INPUT_EVENT &&
 			event.KeyInput.PressedDown) {
 		if (event.KeyInput.Control)
 			_keysCtrl[event.KeyInput.Key] = true;
@@ -52,7 +52,8 @@ void bbm::IMyEventReceiver::deactivate()
 	_isActive = false;
 }
 
-bool bbm::IMyEventReceiver::isKeyPressed(irr::EKEY_CODE key, SPECIALKEY specialKey)
+bool bbm::IMyEventReceiver::isKeyPressed(irr::EKEY_CODE key,
+	SPECIALKEY specialKey)
 {
 	switch (specialKey) {
 	case NONE:
@@ -65,7 +66,8 @@ bool bbm::IMyEventReceiver::isKeyPressed(irr::EKEY_CODE key, SPECIALKEY specialK
 	return false;
 }
 
-void bbm::IMyEventReceiver::resetKey(irr::EKEY_CODE key, SPECIALKEY specialKey)
+void bbm::IMyEventReceiver::resetKey(irr::EKEY_CODE key,
+	SPECIALKEY specialKey)
 {
 	switch (specialKey) {
 	case NONE:

@@ -24,12 +24,10 @@ bbm::MenuInGame::MenuInGame(bbm::Game &Game) :
 	getTexture("./assets/menus/background.jpg");
 	_white = _game.getGraphic().getDriver()->
 	getTexture("./assets/menus/white.png");
-	std::cout << "Menu In game constructor" << std::endl;
 }
 
 bbm::MenuInGame::~MenuInGame()
 {
-	std::cout << "Menu In game destructor" << std::endl;
 }
 
 void	bbm::MenuInGame::setupButtons(
@@ -66,13 +64,11 @@ void	bbm::MenuInGame::actionsClosing(irr::s32 id)
 	}
 	if (id == bbm::GUI_BUTTON_SAVEQUIT) {
 		_game.getMatch().save();
-		std::cout << "Save and quit" << std::endl;
 		deactivate();
 		enableButtons(false);
 		_keepPlaying = false;
 	}
 	if (id == bbm::GUI_BUTTON_QUIT) {
-		std::cout << "QUIT" << std::endl;
 		deactivate();
 		enableButtons(false);
 		_keepPlaying = false;
@@ -124,7 +120,6 @@ bool	bbm::MenuInGame::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);
 
-	std::cout << "[OnEvent - MenuInGame]" << std::endl;
 	if (event.EventType == irr::EET_GUI_EVENT) {
 		irr::s32 id = event.GUIEvent.Caller->getID();
 		if (event.GUIEvent.EventType == irr::gui::EGET_BUTTON_CLICKED)
@@ -162,7 +157,6 @@ bool	bbm::MenuInGame::run()
 	_game.getGraphic().getGuienv()->setFocus(_btns[0]->getButton());
 	_focused = 0;
 	enableButtons(true);
-	std::cout << "Menu In game run" << std::endl;
 	while(_graphic.getDevice()->run() && isActive()) {
 		_graphic.getDriver()->beginScene(true, true,
 		irr::video::SColor(255, 100, 101, 140));

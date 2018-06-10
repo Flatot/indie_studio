@@ -9,8 +9,8 @@
 #include "MapGenerator.hpp"
 #include "IEntity.hpp"
 
-std::vector<std::vector<int>> bbm::MapGenerator::_map = 
-					std::vector<std::vector<int>>(); 
+std::vector<std::vector<int>> bbm::MapGenerator::_map =
+					std::vector<std::vector<int>>();
 
 std::vector<std::vector<int>> bbm::MapGenerator::generate(std::string path)
 {
@@ -30,7 +30,7 @@ void bbm::MapGenerator::getMapFromFile(std::string path)
 	fs.open(path, std::fstream::in);
 	while (getline(fs, stock)) {
 		if (isFirstLine) {
-			_map.push_back(getVectorUnbreakableBlock(stock.size()));
+			_map.push_back(getVecUnbreakableBlock(stock.size()));
 			isFirstLine = false;
 		}
 		tmp.push_back(bbm::Entities::UNBREAKABLE_BLOCK);
@@ -44,11 +44,11 @@ void bbm::MapGenerator::getMapFromFile(std::string path)
 	fs.close();
 }
 
-std::vector<int> bbm::MapGenerator::getVectorUnbreakableBlock(
+std::vector<int> bbm::MapGenerator::getVecUnbreakableBlock(
 		unsigned long size)
 {
 	std::vector<int> tmp;
-	
+
 	for (unsigned long i = 0; i != size + 2; ++i)
 		tmp.push_back(bbm::Entities::UNBREAKABLE_BLOCK);
 	return (tmp);
@@ -75,7 +75,7 @@ void bbm::MapGenerator::createBreakable()
 	while (j != _map.size()) {
 		while (i != _map[j].size()) {
 			r = rand() % 10;
-			if (_map[j][i] == bbm::Entities::BLANK && 
+			if (_map[j][i] == bbm::Entities::BLANK &&
 					(r != 1 & r != 2 & r != 3))
 				_map[j][i] = bbm::Entities::BREAKABLE_BLOCK;
 			i++;

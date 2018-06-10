@@ -131,11 +131,16 @@ void bbm::Config::setScreenHeight(int height)
 std::ostream& operator<< (std::ostream& stream, bbm::Config const& conf)
 {
 	stream << "Config" << std::endl;
-	stream << "FULLSCREEN:" << std::boolalpha << conf.getFullscreen() << std::endl;
-	stream << "SCREEN_WIDTH:" << std::to_string(conf.getScreenWidth()) << std::endl;
-	stream << "SCREEN_HEIGHT:" << std::to_string(conf.getScreenHeight()) << std::endl;
-	stream << "VOLUME_GENERAL:" << std::to_string(conf.getVolumeGeneral()) << std::endl;
-	stream << "VOLUME_EFFECT:" << std::to_string(conf.getVolumeEffect()) << std::endl;
+	stream << "FULLSCREEN:" << std::boolalpha << conf.getFullscreen()
+		<< std::endl;
+	stream << "SCREEN_WIDTH:" << std::to_string(conf.getScreenWidth())
+		<< std::endl;
+	stream << "SCREEN_HEIGHT:" << std::to_string(conf.getScreenHeight())
+		<< std::endl;
+	stream << "VOLUME_GENERAL:" << std::to_string(conf.getVolumeGeneral())
+		<< std::endl;
+	stream << "VOLUME_EFFECT:" << std::to_string(conf.getVolumeEffect())
+		<< std::endl;
 	stream << conf.getPlayerConfig(0);
 	stream << conf.getPlayerConfig(1);
 	stream << conf.getPlayerConfig(2);

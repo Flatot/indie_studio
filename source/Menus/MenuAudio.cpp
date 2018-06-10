@@ -59,6 +59,27 @@ bool	bbm::MenuAudio::takeActions(irr::s32 id)
 	return true;
 }
 
+bool	bbm::MenuAudio::changeVolumeLeft()
+{
+	if (isKeyPressed(irr::KEY_LEFT, NONE) && _game.getGraphic().
+	getGuienv()->hasFocus(_btns[_focused]->getButton())) {
+		if (_btns[_focused]->getId() == bbm::GUI_BUTTON_SOUNDS) {
+			_game.getConfig().setVolumeGeneral(_game.getConfig().
+			getVolumeGeneral() - 1);
+			_game.getAudio().setGeneralVolume(
+					_game.getConfig().getVolumeGeneral());
+		} else if (_btns[_focused]->getId() ==
+		bbm::GUI_BUTTON_EFFECTS) {
+			_game.getConfig().setVolumeEffect(_game.getConfig().
+			getVolumeEffect() - 1);
+			_game.getAudio().setEffectVolume(
+					_game.getConfig().getVolumeEffect());
+		}
+		return true;
+	}
+	return false;
+}
+
 bool	bbm::MenuAudio::changeVolume()
 {
 	if (isKeyPressed(irr::KEY_RIGHT, NONE) && _game.getGraphic().
@@ -76,22 +97,8 @@ bool	bbm::MenuAudio::changeVolume()
 					_game.getConfig().getVolumeEffect());
 		}
 		return true;
-	} else if (isKeyPressed(irr::KEY_LEFT, NONE) && _game.getGraphic().
-	getGuienv()->hasFocus(_btns[_focused]->getButton())) {
-		if (_btns[_focused]->getId() == bbm::GUI_BUTTON_SOUNDS) {
-			_game.getConfig().setVolumeGeneral(_game.getConfig().
-			getVolumeGeneral() - 1);
-			_game.getAudio().setGeneralVolume(
-					_game.getConfig().getVolumeGeneral());
-		} else if (_btns[_focused]->getId() == bbm::GUI_BUTTON_EFFECTS) {
-			_game.getConfig().setVolumeEffect(_game.getConfig().
-			getVolumeEffect() - 1);	
-			_game.getAudio().setEffectVolume(
-					_game.getConfig().getVolumeEffect());
-		}
-		return true;
-	}
-	return false;
+	} else
+		return changeVolumeLeft();
 }
 
 void	bbm::MenuAudio::goBack()
@@ -123,7 +130,6 @@ bool	bbm::MenuAudio::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);
 
-	std::cout << "[OnEvent - MenuAudio]" << std::endl;
 	if (event.EventType == irr::EET_GUI_EVENT) {
 		irr::s32 id = event.GUIEvent.Caller->getID();
 		if (event.GUIEvent.EventType == irr::gui::EGET_BUTTON_CLICKED)
@@ -150,7 +156,6 @@ bool	bbm::MenuAudio::run()
 	_game.getGraphic().getGuienv()->setFocus(_btns[0]->getButton());
 	_focused = 0;
 	enableButtons(true);
-	std::cout << "Menu audio run" << std::endl;
 	while(_graphic.getDevice()->run() && isActive()) {
 		_graphic.getDriver()->beginScene(true, true,
 		irr::video::SColor(255, 100, 101, 140));

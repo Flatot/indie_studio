@@ -23,7 +23,7 @@ namespace bbm {
         };
 
 	public:
-		Ia(Match &match, float z, float x, Entities playerNum, 
+		Ia(Match &match, float z, float x, Entities playerNum,
 				TeamColor team);
 		~Ia();
 		virtual void spawn() override;
@@ -38,35 +38,32 @@ namespace bbm {
 		void move_to_center();
 		void active_mode();
 		void defensive_mode();
-		// void affDmap();
 		void moveAllDefensive(int dir);
 		void pathFindingDefensive();
 		bool checkAllDefensive(int dir);
 		bool seeAllMoveDefensive(int dir);
 		bool checkAllBreakable(int dir, int y, int x);
 		bool aliveIfBomb(int distance);
-        bool searchBonus();
-        int wallCount();
-		// void changeDMapToBMap();
+		bool searchBonus();
+		int wallCount();
 		std::vector<std::vector<int>> generateBMap();
-        std::vector<std::vector<int>> generateDMap();
-        std::vector<std::vector<int>> generateMMap();
-        std::vector<std::vector<int>> generateFMap();
-        void findBreakable();
-        void timeToFight();
-        void changeBoomTo(int zone);
-        void changeAllBreakableGoal(int j, int i);
-        bool checkAllNogo(int y, int x);
-    private:
-		// std::vector<std::vector<int> > _direction;
+		std::vector<std::vector<int>> generateDMap();
+		std::vector<std::vector<int>> generateMMap();
+		std::vector<std::vector<int>> generateFMap();
+		void findBreakable();
+		void timeToFight();
+		void changeBoomTo(int zone);
+		void changeAllBreakableGoal(int j, int i);
+		bool checkAllNogo(int y, int x);
+
+	private:
 		std::vector<std::vector<int>> d_map;
-		// std::vector<std::vector<int>> f_map;
 		std::vector<int> rec;
 		int ym;
 		int xm;
 		int f;
 		int objectif;
 		int ite;
-        int bombtype;
+        	int bombtype;
 	};
 }

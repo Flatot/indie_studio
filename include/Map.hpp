@@ -27,12 +27,12 @@ namespace bbm {
 		IEntity *getEntity(int y, int x, Entities entity);
 		void clear();
 		void addEntity(IEntity *entity);
-		std::pair<std::vector<IEntity *>::iterator, 
-			std::vector<IEntity *>::iterator> 
+		std::pair<std::vector<IEntity *>::iterator,
+			std::vector<IEntity *>::iterator>
 				getItEntity(IEntity *entity);
 		void removeEntity(IEntity *entity);
 	private:
-		std::vector<int> getVecFromLine(std::string line, 
+		std::vector<int> getVecFromLine(std::string line,
 				std::string delimiter) const;
 
 		Match &_match;

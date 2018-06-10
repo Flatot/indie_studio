@@ -38,19 +38,11 @@ void bbm::Map::loadMap(std::vector<std::vector<int>> map)
 		for (int x = 0; x < _width; ++x) {
 			_map[y].push_back(std::vector<IEntity *>());
 			if (map[y][x] & UNBREAKABLE_BLOCK)
-				_map[y][x].push_back(new UnbreakableBlock(_match, 
-							y, x));
+				_map[y][x].push_back(
+					new UnbreakableBlock(_match, y, x));
 			if (map[y][x] & BREAKABLE_BLOCK)
-				_map[y][x].push_back(new BreakableBlock(_match,
-							y, x));
-/*			if (map[y][x] & PLAYER_1)
-				_map[y][x].push_back(new Player(_match, y, x, PLAYER_1));
-			if (map[y][x] & PLAYER_2)
-				_map[y][x].push_back(new Player(_match, y, x, PLAYER_2));
-			if (map[y][x] & PLAYER_3)
-				_map[y][x].push_back(new Player(_match, y, x, PLAYER_3));
-			if (map[y][x] & PLAYER_4)
-				_map[y][x].push_back(new Player(_match, y, x, PLAYER_4));*/
+				_map[y][x].push_back(
+					new BreakableBlock(_match, y, x));
 		}
 	}
 }
@@ -73,7 +65,7 @@ std::vector<bbm::IEntity *> &bbm::Map::getFromPos(int y, int x)
 int bbm::Map::getEntitiesFromPos(int y, int x) const
 {
 	int values = 0;
-	
+
 	for (int i = 0; i < _map[y][x].size(); ++i)
 		values += _map[y][x][i]->getIdEntity();
 	return values;
@@ -89,7 +81,7 @@ bbm::IEntity *bbm::Map::getEntity(int y, int x, Entities entity)
 	return nullptr;
 }
 
-std::ostream& operator<< (std::ostream& stream, bbm::Map const& map) 
+std::ostream& operator<< (std::ostream& stream, bbm::Map const& map)
 {
 	for (int j = 0; j < map.getHeight(); j++) {
 		for (int i = 0; i < map.getWidth(); i++) {
@@ -125,8 +117,8 @@ void bbm::Map::load()
 	loadMap(finalMap);
 }
 
-std::vector<int> bbm::Map::getVecFromLine(std::string line, 
-		std::string delimiter) const 
+std::vector<int> bbm::Map::getVecFromLine(std::string line,
+		std::string delimiter) const
 {
 	std::vector<int> tmp;
 	size_t pos = 0;
@@ -163,12 +155,12 @@ void bbm::Map::addEntity(IEntity *entity)
 void bbm::Map::removeEntity(IEntity *entity)
 {
 	auto &vec = _map[entity->getPosZ()][entity->getPosX()];
-	
+
 	vec.erase(std::remove(vec.begin(), vec.end(), entity), vec.end());
 }
 
-std::pair<std::vector<bbm::IEntity *>::iterator, 
-	std::vector<bbm::IEntity *>::iterator> 
+std::pair<std::vector<bbm::IEntity *>::iterator,
+	std::vector<bbm::IEntity *>::iterator>
 	bbm::Map::getItEntity(IEntity *entity)
 {
 	auto vec = _map[entity->getPosZ()][entity->getPosX()];

@@ -8,7 +8,7 @@
 #include "Player.hpp"
 #include "Game.hpp"
 
-bbm::Player::Player(Match &match, float z, float x, Entities playerNum, 
+bbm::Player::Player(Match &match, float z, float x, Entities playerNum,
 		TeamColor team) :
 	bbm::IPlayer(match, x, z, playerNum, team),
 	_playerConfig(getPlayerConfig())
@@ -30,10 +30,6 @@ bbm::PlayerConfig &bbm::Player::getPlayerConfig()
 	default:
 		return _match.getGame().getConfig().getPlayerConfig(0);
 	}
-	std::cout << _playerConfig << std::endl;
-	auto keyMap = _playerConfig.getMap();
-	for (int i = 0; i < 5; ++i)
-		std::cout << valuableControl[i] << keyMap[valuableControl[i]] << std::endl;
 }
 
 bbm::Player::~Player()
@@ -79,13 +75,13 @@ bool bbm::Player::OnEvent(const irr::SEvent &event)
 
 	if (!_match.getGame().getMenuInGame()->isActive()) {
 		std::cout << "[OnEvent - Player][" << _idEntity << "]" << std::endl;
-		_move = (isKeyPressed(keyMap["LEFT"], NONE)) ? 
+		_move = (isKeyPressed(keyMap["LEFT"], NONE)) ?
 			_move | LEFT : _move & ~LEFT;
-		_move = (isKeyPressed(keyMap["UP"], NONE)) ? 
+		_move = (isKeyPressed(keyMap["UP"], NONE)) ?
 			_move | TOP : _move & ~TOP;
-		_move = (isKeyPressed(keyMap["RIGHT"], NONE)) ? 
+		_move = (isKeyPressed(keyMap["RIGHT"], NONE)) ?
 			_move | RIGHT : _move & ~RIGHT;
-		_move = (isKeyPressed(keyMap["DOWN"], NONE)) ? 
+		_move = (isKeyPressed(keyMap["DOWN"], NONE)) ?
 			_move | BOTTOM : _move & ~BOTTOM;
 		if (isKeyPressed(keyMap["PUT_BOMB"], NONE))
 			putBomb();
