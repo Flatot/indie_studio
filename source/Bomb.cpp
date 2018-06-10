@@ -40,6 +40,8 @@ bbm::Bomb::Bomb(Match &match, float z, float x, IPlayer *owner) :
 
 bbm::Bomb::~Bomb()
 {
+	if (_p)
+		_p->remove();
 	std::cout << "bomb destructor" << std::endl;
 }
 
@@ -77,6 +79,7 @@ void bbm::Bomb::die()
 	_mesh = nullptr;
 	_owner->incBombCount();
 	_p->remove();
+	_p = nullptr;
 	explode();
 	_exploded = true;
 	_timePoint = std::chrono::steady_clock::now(); 
