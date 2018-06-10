@@ -35,7 +35,8 @@ bbm::Explosion::Explosion(Match &match, float z, float x, Bomb *owner) :
 
 bbm::Explosion::~Explosion()
 {
-
+	if (_p)
+		_p->remove();
 }
 
 void bbm::Explosion::particlesImplementation(int x, int z)
@@ -105,6 +106,7 @@ void bbm::Explosion::die()
 		}
 	}
 	_p->remove();
+	_p = nullptr;
 	delete this;
 }
 

@@ -338,7 +338,7 @@ void bbm::Ia::timeToFight()
     d_map = generateFMap();
     scaleBomb();
     changeBoomTo(1);
-    srand(NULL);
+    srand(time(NULL));
     if (rand() % 20 != 0){
         defensive_mode();
         return;
@@ -529,6 +529,7 @@ bool bbm::Ia::checkAllBreakable(int dir, int y, int x)
  			return (true);
  		return (false);
  	}
+ 	return (false);
 }
 
 bool bbm::Ia::aliveIfBomb(int distance)

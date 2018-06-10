@@ -86,7 +86,12 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 	std::cout << "[OnEvent - Match]" << std::endl;
 	if (isKeyPressed(irr::KEY_KEY_Q, NONE)) {
 		deactivate();
-		resetKey(irr::KEY_KEY_Q, NONE);
+		resetKey(irr::KEY_ESCAPE, NONE);
+		_menuReturn = _game.getMenuInGame()->run();
+		if (_menuReturn) {
+			drawStarter();
+			activate();
+		}
 		return true;
 	}
 	return false;
@@ -105,8 +110,89 @@ void bbm::Match::print_skybase()
 			texture, texture, texture, texture, texture);
 }
 
+void bbm::Match::drawStarterRec(irr::video::ITexture *background)
+{
+	
+}
+
+std::vector<irr::video::ITexture *>	bbm::Match::createCounter()
+{
+	std::vector<irr::video::ITexture *>	ret;
+
+	ret.push_back(_game.getGraphic().getDriver()->
+	getTexture("./assets/gameplay/3.png"));
+	ret.push_back(_game.getGraphic().getDriver()->
+	getTexture("./assets/gameplay/2.png"));
+	ret.push_back(_game.getGraphic().getDriver()->
+	getTexture("./assets/gameplay/1.png"));
+	ret.push_back(_game.getGraphic().getDriver()->
+	getTexture("./assets/gameplay/fight.png"));
+	return ret;
+}
+
+irr::video::ITexture	*bbm::Match::getCurrentCounter(
+	std::vector<irr::video::ITexture *> list, int count)
+{
+	irr::video::ITexture	*ret = list[0];
+
+	if (count > 0)
+		ret = list[0];
+	if (count >= 1)
+		ret = list[1];
+	if (count >= 2)
+		ret = list[2];
+	if (count >= 3)
+		ret = list[3];
+	return ret;
+}
+
+void bbm::Match::drawImageBack(const irr::core::dimension2du& screenSize,
+	irr::video::ITexture *img)
+{
+	_graphic.getDriver()->beginScene(true, true,
+	irr::video::SColor(255, 100, 101, 140));
+	_graphic.getScene()->drawAll();
+	_graphic.getDriver()->draw2DImage(img,
+	irr::core::rect<irr::s32>(screenSize.Width / 5 * 2,
+	screenSize.Height / 5 * 2, screenSize.Width / 5 * 3,
+	screenSize.Height / 5 * 3),
+	irr::core::rect<irr::s32>(0, 0, img->
+	getSize().Width, img->getSize().Height), 0, 0, true);
+	_graphic.getDriver()->draw2DRectangle(
+	irr::video::SColor(110, 150, 150, 150),
+	irr::core::rect<irr::s32>(0, 0, screenSize.Width,
+	screenSize.Height));
+	_graphic.getGuienv()->drawAll();
+	_graphic.getDriver()->endScene();
+}
+
+void bbm::Match::drawStarter()
+{
+	const irr::core::dimension2du& screenSize = _graphic.
+		getDriver()->getScreenSize();
+	auto list = createCounter();
+	auto cTime = std::chrono::steady_clock::now();
+	auto nTime = std::chrono::steady_clock::now();
+	auto diff = std::chrono::duration_cast<std::chrono::seconds>
+	(nTime - cTime);
+	irr::video::ITexture *background = list[0];
+
+	print_skybase();
+	_graphic.getDriver()->enableMaterial2D();
+	while (diff.count() < 4) {
+		nTime = std::chrono::steady_clock::now();
+		diff = std::chrono::duration_cast<std::chrono::seconds>
+		(nTime - cTime);
+		background = getCurrentCounter(list, diff.count());
+		drawImageBack(screenSize, background);
+
+	}
+	_graphic.getDriver()->enableMaterial2D(false);
+}
+
 bool bbm::Match::run()
 {
+	drawStarter();
 	activate();
 
 	print_skybase();
