@@ -12,7 +12,7 @@
 
 namespace bbm {
 	class WallPass : public IBonus {
-	public: 
+	public:
 		WallPass(Match &match, float z, float x, bool isTraversable);
 		virtual void spawn() override;
 		virtual void die() override;
