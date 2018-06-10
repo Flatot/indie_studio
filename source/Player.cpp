@@ -77,16 +77,18 @@ bool bbm::Player::OnEvent(const irr::SEvent &event)
 	bool ret = IMyEventReceiver::OnEvent(event);
 	auto keyMap = _playerConfig.getMap();
 
-	std::cout << "[OnEvent - Player][" << _idEntity << "]" << std::endl;
-	_move = (isKeyPressed(keyMap["LEFT"], NONE)) ? 
-		_move | LEFT : _move & ~LEFT;
-	_move = (isKeyPressed(keyMap["UP"], NONE)) ? 
-		_move | TOP : _move & ~TOP;
-	_move = (isKeyPressed(keyMap["RIGHT"], NONE)) ? 
-		_move | RIGHT : _move & ~RIGHT;
-	_move = (isKeyPressed(keyMap["DOWN"], NONE)) ? 
-		_move | BOTTOM : _move & ~BOTTOM;
-	if (isKeyPressed(keyMap["PUT_BOMB"], NONE))
-		putBomb();
+	if (!_match.getGame().getMenuInGame()->isActive()) {
+		std::cout << "[OnEvent - Player][" << _idEntity << "]" << std::endl;
+		_move = (isKeyPressed(keyMap["LEFT"], NONE)) ? 
+			_move | LEFT : _move & ~LEFT;
+		_move = (isKeyPressed(keyMap["UP"], NONE)) ? 
+			_move | TOP : _move & ~TOP;
+		_move = (isKeyPressed(keyMap["RIGHT"], NONE)) ? 
+			_move | RIGHT : _move & ~RIGHT;
+		_move = (isKeyPressed(keyMap["DOWN"], NONE)) ? 
+			_move | BOTTOM : _move & ~BOTTOM;
+		if (isKeyPressed(keyMap["PUT_BOMB"], NONE))
+			putBomb();
+	}
 	return ret;
 }
