@@ -64,7 +64,7 @@ namespace bbm {
 		void doWithTokens(std::string tok1, std::string tok2, bbm::IPlayer **player);
 		IPlayer *loadIPlayer(int nbPlayer);
 		IPlayer *createPlayer(std::string line);
-
+		bbm::TeamColor strToTeamColor(std::string str);
 		Game &_game;
 		Graphic &_graphic;
 		EventManager *_evManager;

@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Match.hpp"
 #include "Game.hpp"
+#include "Definer.hpp"
 #include "MapGenerator.hpp"
 #include "Player.hpp"
 #include "Ia.hpp"
@@ -319,26 +320,37 @@ void bbm::Match::save()
 bbm::IPlayer *bbm::Match::createPlayer(std::string line)
 {
 	size_t pos = 0;
-	std::string type;
-	std::string x;
-	std::string z;
-	std::string number;
 	std::string delimiter = ":";
 	std::string::size_type sz;
 
 	pos = line.find(delimiter);
-	number = line.substr(0, pos);
+	std::string number = line.substr(0, pos);
 	line.erase(0, pos + delimiter.length());
 	pos = line.find(delimiter);
-	type = line.substr(0, pos);
+	std::string type = line.substr(0, pos);
 	line.erase(0, pos + delimiter.length());
 	pos = line.find(delimiter);
-	x = line.substr(0, pos);
+	std::string x = line.substr(0, pos);
 	line.erase(0, pos + delimiter.length());
-	z = line;
+	pos = line.find(delimiter);
+	std::string z = line.substr(0, pos);
+	std::string color = line;
 	if (type.compare("IA") == 0)
-		return (new Ia(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)]));
-	return (new Player(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)]));
+		return (new Ia(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)], strToTeamColor(color)));
+	return (new Player(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)], strToTeamColor(color)));
+}
+
+bbm::TeamColor bbm::Match::strToTeamColor(std::string str)
+{
+	if (str.compare("TEAM_RED") == 0)
+		return TEAM_RED;
+	if (str.compare("TEAM_GREEN") == 0)
+		return TEAM_GREEN;
+	if (str.compare("TEAM_PURPLE") == 0)
+		return TEAM_PURPLE;
+	if (str.compare("TEAM_BLUE") == 0)
+		return TEAM_BLUE;
+	return TEAM_RED;
 }
 
 void bbm::Match::handleLine(std::string line, int i, bbm::IPlayer **player)

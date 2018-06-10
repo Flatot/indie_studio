@@ -311,6 +311,22 @@ std::string bbm::IPlayer::entitiesToInt()
 	}
 }
 
+std::string bbm::IPlayer::teamToStr()
+{
+	switch(this->getTeam()) {
+	case TEAM_BLUE:
+		return "TEAM_BLUE";
+	case TEAM_GREEN:
+		return "TEAM_GREEN";
+	case TEAM_PURPLE:
+		return "TEAM_PURPLE";
+	case TEAM_RED:
+		return "TEAM_RED";
+	default:
+		return "TEAM_RED";
+	}
+}
+
 void bbm::IPlayer::getTexture()
 {
 	switch (_team) {
@@ -332,7 +348,7 @@ void bbm::IPlayer::getTexture()
 std::ostream& operator<< (std::ostream& stream, bbm::IPlayer *player)
 {
 	stream << player->entitiesToInt() << ":" << player->typeToStr() << ":";
-	stream << player->getPosX() << ":" << player->getPosZ() << std::endl;
+	stream << player->getPosX() << ":" << player->getPosZ() << ":" << player->teamToStr() << std::endl;
 	stream << "SPEED:" << std::to_string(player->getSpeed()) << std::endl;
 	stream << "POWER:" << std::to_string(player->getPower()) << std::endl;
 	stream << "BOMB_COUNT:" << std::to_string(player->getBombCount()) << std::endl;

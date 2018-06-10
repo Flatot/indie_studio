@@ -57,6 +57,7 @@ namespace bbm {
 		std::string typeToStr();
 		std::string entitiesToInt();
 		TeamColor getTeam();
+		std::string teamToStr();
 
 	private:
 		void getTexture();
