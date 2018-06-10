@@ -331,16 +331,16 @@ void bbm::IPlayer::getTexture()
 {
 	switch (_team) {
 	case TeamColor::TEAM_BLUE:
-		_texture = "assets/model3D/player/PLAYER_1.jpg";
+		_texture = "assets/model3D/player/blue.jpg";
 		break;
 	case TeamColor::TEAM_RED:
-		_texture = "assets/model3D/player/PLAYER_2.jpg";
+		_texture = "assets/model3D/player/red.jpg";
 		break;
 	case TeamColor::TEAM_GREEN:
-		_texture = "assets/model3D/player/PLAYER_3.jpg";
+		_texture = "assets/model3D/player/green.jpg";
 		break;
 	case TeamColor::TEAM_PURPLE:
-		_texture = "assets/model3D/player/PLAYER_4.jpg";
+		_texture = "assets/model3D/player/purple.jpg";
 		break;
 	}
 }

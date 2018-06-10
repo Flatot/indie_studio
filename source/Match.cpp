@@ -210,6 +210,77 @@ bbm::TeamColor bbm::Match::getWinner()
 		_players[0]->getTeam();
 }
 
+irr::video::ITexture *bbm::Match::getWinnerColor(TeamColor color)
+{
+	irr::video::ITexture	*ret;
+
+	switch (color) {
+		case TEAM_NONE :
+			ret = _game.getGraphic().getDriver()->
+				getTexture("./assets/gameplay/draw.png");
+			break;
+		case TEAM_RED :
+			ret = _game.getGraphic().getDriver()->
+				getTexture("./assets/gameplay/red_win.png");
+			break;
+		case TEAM_BLUE :
+			ret = _game.getGraphic().getDriver()->
+				getTexture("./assets/gameplay/blue_win.png");
+			break;
+		case TEAM_GREEN :
+			ret = _game.getGraphic().getDriver()->
+				getTexture("./assets/gameplay/green_win.png");
+			break;
+		case TEAM_PURPLE :
+			ret = _game.getGraphic().getDriver()->
+				getTexture("./assets/gameplay/purple_win.png");
+			break;
+	}
+	return ret;
+}
+
+void bbm::Match::drawWinnerRec(const irr::core::dimension2du& screenSize,
+	irr::video::ITexture *img)
+{
+	_graphic.getDriver()->beginScene(true, true,
+	irr::video::SColor(255, 100, 101, 140));
+	_graphic.getScene()->drawAll();
+	_graphic.getDriver()->draw2DRectangle(
+	irr::video::SColor(110, 150, 150, 150),
+	irr::core::rect<irr::s32>(0, 0, screenSize.Width,
+	screenSize.Height));
+	_graphic.getDriver()->draw2DImage(img,
+	irr::core::rect<irr::s32>(screenSize.Width / 5 * 2,
+	screenSize.Height / 5 * 2, screenSize.Width / 5 * 3,
+	screenSize.Height / 5 * 3),
+	irr::core::rect<irr::s32>(0, 0, img->
+	getSize().Width, img->getSize().Height), 0, 0, true);
+	_graphic.getGuienv()->drawAll();
+	_graphic.getDriver()->endScene();
+}
+
+void bbm::Match::drawWinner()
+{
+	const irr::core::dimension2du& screenSize = _graphic.
+		getDriver()->getScreenSize();
+	auto winner = getWinner();
+	auto color = getWinnerColor(winner);
+	auto cTime = std::chrono::steady_clock::now();
+	auto nTime = std::chrono::steady_clock::now();
+	auto diff = std::chrono::duration_cast<std::chrono::seconds>
+	(nTime - cTime);
+
+	// print_skybase();
+	_graphic.getDriver()->enableMaterial2D();
+	while (diff.count() < 3) {
+		nTime = std::chrono::steady_clock::now();
+		diff = std::chrono::duration_cast<std::chrono::seconds>
+		(nTime - cTime);
+		drawWinnerRec(screenSize, color);
+	}
+	_graphic.getDriver()->enableMaterial2D(false);
+}
+
 bool bbm::Match::run()
 {
 	drawStarter();
@@ -227,7 +298,7 @@ bool bbm::Match::run()
 	}
 	if (isFinished()) {
 		// print Winner
-		getWinner();
+		drawWinner();
 	}
 	_map.clear();
 	_players.clear();

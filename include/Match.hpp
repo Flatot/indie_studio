@@ -56,6 +56,10 @@ namespace bbm {
 		void drawImageBack(const irr::core::dimension2du& screenSize,
 			irr::video::ITexture *img);
 		TeamColor getWinner();
+		void drawWinner();
+		irr::video::ITexture *getWinnerColor(TeamColor color);
+		void drawWinnerRec(const irr::core::dimension2du& screenSize,
+			irr::video::ITexture *img);
 		bool isFinished();
 
 	private:
