@@ -8,8 +8,9 @@
 #include "Ia.hpp"
 #include "Bomb.hpp"
 
-bbm::Ia::Ia(Match &match, float z, float x, Entities playerNum) : 
-	IPlayer(match, x, z, playerNum)
+bbm::Ia::Ia(Match &match, float z, float x, Entities playerNum, 
+		TeamColor team) : 
+	IPlayer(match, x, z, playerNum, team)
 {
 	_type = PlayerType::AI;
 }

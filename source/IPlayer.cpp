@@ -8,14 +8,16 @@
 #include "IPlayer.hpp"
 #include "Match.hpp"
 
-bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
+bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum, 
+		TeamColor team) :
 	IEntity(match, x, z, true),
 	_move(0),
 	_timePoint(std::chrono::steady_clock::now()),
 	_speed(0),
 	_power(1),
 	_bombCount(1),
-	_passWall(false)
+	_passWall(false),
+	_team(team)
 {
 	_idEntity = playerNum;
 	_match.getMap().addEntity(this);
@@ -270,6 +272,11 @@ bbm::PlayerType bbm::IPlayer::getType() const
 	return _type;
 }
 
+bbm::TeamColor bbm::IPlayer::getTeam()
+{
+	return _team;
+}
+
 bool bbm::IPlayer::checkCollision(int new_z, int new_x)
 {
 	int entities = _match.getMap().getEntitiesFromPos(new_z, new_x);
@@ -306,14 +313,20 @@ std::string bbm::IPlayer::entitiesToInt()
 
 void bbm::IPlayer::getTexture()
 {
-	if (_idEntity == bbm::Entities::PLAYER_1)
+	switch (_team) {
+	case TeamColor::TEAM_BLUE:
 		_texture = "assets/model3D/player/PLAYER_1.jpg";
-	else if (_idEntity == bbm::Entities::PLAYER_2)
+		break;
+	case TeamColor::TEAM_RED:
 		_texture = "assets/model3D/player/PLAYER_2.jpg";
-	else if (_idEntity == bbm::Entities::PLAYER_3)
+		break;
+	case TeamColor::TEAM_GREEN:
 		_texture = "assets/model3D/player/PLAYER_3.jpg";
-	else if (_idEntity == bbm::Entities::PLAYER_4)
+		break;
+	case TeamColor::TEAM_PURPLE:
 		_texture = "assets/model3D/player/PLAYER_4.jpg";
+		break;
+	}
 }
 
 std::ostream& operator<< (std::ostream& stream, bbm::IPlayer *player)

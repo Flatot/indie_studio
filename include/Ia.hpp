@@ -14,14 +14,17 @@
 
 namespace bbm {
 	class Ia : public IPlayer {
+
         enum Zone {
             NOGO = 1,
             DANGER = 2,
             GOAL = 0,
             BOOM = 4
         };
+
 	public:
-		Ia(Match &match, float z, float x, Entities playerNum);
+		Ia(Match &match, float z, float x, Entities playerNum, 
+				TeamColor team);
 		~Ia();
 		virtual void spawn() override;
 		virtual void die() override;

@@ -8,8 +8,9 @@
 #include "Player.hpp"
 #include "Game.hpp"
 
-bbm::Player::Player(Match &match, float z, float x, Entities playerNum) :
-	bbm::IPlayer(match, x, z, playerNum),
+bbm::Player::Player(Match &match, float z, float x, Entities playerNum, 
+		TeamColor color) :
+	bbm::IPlayer(match, x, z, playerNum, team),
 	_playerConfig(getPlayerConfig())
 {
 	_type = PlayerType::PLAYER;

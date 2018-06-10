@@ -59,21 +59,21 @@ void bbm::Match::init(std::vector<bbm::AttrEntity> attrs,
 	std::cout << "begin init" << std::endl;
 	_map.loadMap(MapGenerator::generate("./assets/maps/map1"));
 	if (attrs[0] == bbm::ATTR_PLAYER)
-		addPlayer(new Player(*this, 1.5, 1.5, PLAYER_1));
+		addPlayer(new Player(*this, 1.5, 1.5, PLAYER_1, teams[0]));
 	else if (attrs[0] == bbm::ATTR_AI)
-		addPlayer(new Ia(*this, 1.5, 1.5, PLAYER_1));
+		addPlayer(new Ia(*this, 1.5, 1.5, PLAYER_1, teams[0]));
 	if (attrs[1] == bbm::ATTR_PLAYER)
-		addPlayer(new Player(*this, 11.5, 13.5, PLAYER_2));
+		addPlayer(new Player(*this, 11.5, 13.5, PLAYER_2, teams[1]));
 	else if (attrs[1] == bbm::ATTR_AI)
-		addPlayer(new Ia(*this, 11.5, 13.5, PLAYER_2));
+		addPlayer(new Ia(*this, 11.5, 13.5, PLAYER_2, teams[1]));
 	if (attrs[2] == bbm::ATTR_PLAYER)
-		addPlayer(new Player(*this, 1.5, 13.5, PLAYER_3));
+		addPlayer(new Player(*this, 1.5, 13.5, PLAYER_3, teams[2]));
 	else if (attrs[2] == bbm::ATTR_AI)
-		addPlayer(new Ia(*this, 1.5, 13.5, PLAYER_3));
+		addPlayer(new Ia(*this, 1.5, 13.5, PLAYER_3, teams[2]));
 	if (attrs[3] == bbm::ATTR_PLAYER)
-		addPlayer(new Player(*this, 11.5, 1.5, PLAYER_4));
+		addPlayer(new Player(*this, 11.5, 1.5, PLAYER_4, teams[3]));
 	else if (attrs[3] == bbm::ATTR_AI)
-		addPlayer(new Ia(*this, 11.5, 1.5, PLAYER_4));
+		addPlayer(new Ia(*this, 11.5, 1.5, PLAYER_4, teams[3]));
 	std::cout << _map << std::endl;
 	std::cout << "height: " << _map.getHeight() << std::endl;
 	std::cout << "width: " << _map.getWidth() << std::endl;
