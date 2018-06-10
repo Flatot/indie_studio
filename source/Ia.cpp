@@ -11,7 +11,7 @@
 bbm::Ia::Ia(Match &match, float z, float x, Entities playerNum) : 
 	IPlayer(match, x, z, playerNum)
 {
-
+	_type = PlayerType::AI;
 }
 
 bbm::Ia::~Ia()

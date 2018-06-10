@@ -41,12 +41,20 @@ namespace bbm {
 		Game &getGame();
 		Graphic &getGraphic();
 		Map &getMap();
+		void save();
+		void load();
 		void addBomb(Bomb *bomb);
 		void removeBomb(Bomb *bomb);
 		void addPlayer(IPlayer *player);
 		void removePlayer(IPlayer *player);
 
 	private:
+		void handleLine(std::string line, int i, IPlayer *player);
+		bool isValuable(std::string str);
+		void doWithTokens(std::string tok1, std::string tok2, bbm::IPlayer *player);
+		IPlayer *loadIplayer(int nbPlayer);
+		IPlayer *createPlayer(std::string line);
+
 		Game &_game;
 		Graphic &_graphic;
 		EventManager *_evManager;
@@ -54,7 +62,20 @@ namespace bbm {
 		Map _map;
 		std::vector<Bomb *> _bombs;
 		std::vector<IPlayer *> _players;
-		
 		irr::scene::ICameraSceneNode *_camera;
 	};
 }
+
+static std::string valuable[4] = {
+	"0",
+	"1",
+	"2",
+	"3"
+};
+
+static bbm::Entities entities[4] = {
+	bbm::PLAYER_1,
+	bbm::PLAYER_2,
+	bbm::PLAYER_3,
+	bbm::PLAYER_4
+};
