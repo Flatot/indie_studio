@@ -70,7 +70,6 @@ void	bbm::MenuLobby::initNinjas()
 		_ninjas[i]->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		_ninjas[i]->setVisible(false);
 	}
-
 }
 
 void	bbm::MenuLobby::initPilars()

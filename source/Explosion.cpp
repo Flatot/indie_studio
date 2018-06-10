@@ -64,7 +64,7 @@ void bbm::Explosion::particlesImplementation(int x, int z)
 
 void bbm::Explosion::spawn()
 {
-	
+
 }
 
 void bbm::Explosion::random_bonus(int random)
@@ -81,8 +81,8 @@ void bbm::Explosion::random_bonus(int random)
 		auto *bonus = new BombUp(_match, _z, _x, true);
 		_match.getMap().addEntity(bonus);
 	}
-	if (random >= 66 && random <= 100) { //56
-		auto *bonus = new FireUp(_match, _z, _x, true);
+	if (random >= 66 && random <= 100) {
+		auto *bonus = new SpeedUp(_match, _z, _x, true);
 		_match.getMap().addEntity(bonus);
 	}
 }
