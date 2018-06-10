@@ -86,8 +86,8 @@ bool	bbm::MenuAudio::changeVolume()
 		} else if (_btns[_focused]->getId() == bbm::GUI_BUTTON_EFFECTS) {
 			_game.getConfig().setVolumeEffect(_game.getConfig().
 			getVolumeEffect() - 1);	
-			_game.getAudio().setGeneralVolume(
-					_game.getConfig().getVolumeGeneral());
+			_game.getAudio().setEffectVolume(
+					_game.getConfig().getVolumeEffect());
 		}
 		return true;
 	}
