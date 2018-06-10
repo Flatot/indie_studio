@@ -17,7 +17,7 @@ bbm::BreakableBlock::BreakableBlock(Match &match, float z, float x) :
 	_texturePath = "./assets/model3D/Cube/breakable.jpg";
 	setCoefs(1.f, 1.f, 1.f);
 	auto position = irr::core::vector3df(x * _coefX, _coefY, z * _coefZ);
-	auto rotation = irr::core::vector3df(0, 0, 0);
+	auto rotation = irr::core::vector3df(0, 90, 0);
 	auto scale = irr::core::vector3df(_coefX, _coefY, _coefZ);
 	auto scene = _match.getGraphic().getScene();
 	auto driver = _match.getGraphic().getDriver();

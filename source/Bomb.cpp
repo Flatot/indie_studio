@@ -34,12 +34,36 @@ bbm::Bomb::Bomb(Match &match, float z, float x, IPlayer *owner) :
 
 	_mesh = scene->addAnimatedMeshSceneNode(mesh, 0, -1, position, rotation, scale);
 	_mesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	_mesh->setMaterialTexture(0, driver->getTexture(_texturePath.c_str()));;
+	_mesh->setMaterialTexture(0, driver->getTexture(_texturePath.c_str()));
+	particlesImplementation(x, z);
 }
 
 bbm::Bomb::~Bomb()
 {
 	std::cout << "bomb destructor" << std::endl;
+}
+
+void bbm::Bomb::particlesImplementation(int x, int z)
+{
+	_p = _match.getGraphic().getScene()->addParticleSystemSceneNode(false);	
+	irr::scene::IParticleEmitter* emitter = _p->createBoxEmitter(
+	irr::core::aabbox3d<irr::f32>(x - 0.2, 0, z - 0.2, x, 1, z),
+	irr::core::vector3df(0.0f,0.006f,0.0f),
+	80,100,	irr::video::SColor(0,0,0,0),
+	irr::video::SColor(0,255,255,255), 90, 90, 0,
+	irr::core::dimension2df(0.1f,0.1f),
+	irr::core::dimension2df(0.5f,0.5f));
+	_p->setEmitter(emitter);
+	emitter->drop();
+	_p->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	_p->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
+	_p->setMaterialTexture(0, _match.getGraphic().getDriver()->
+		getTexture("assets/model3D/spec_effect/smoke2.bmp"));
+	_p->setMaterialType(irr::video::EMT_SOLID);
+	irr::scene::IParticleAffector* affector =
+	_p->createFadeOutParticleAffector(
+	irr::video::SColor(0,0,0,0),3);
+	_p->addAffector(affector);
 }
 
 void bbm::Bomb::spawn()
@@ -52,6 +76,7 @@ void bbm::Bomb::die()
 	_mesh->remove();
 	_mesh = nullptr;
 	_owner->incBombCount();
+	_p->remove();
 	explode();
 	_exploded = true;
 	_timePoint = std::chrono::steady_clock::now(); 
