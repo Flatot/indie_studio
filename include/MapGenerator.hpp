@@ -13,12 +13,12 @@
 namespace bbm {
 	class MapGenerator {
 	public:
-		static std::vector<std::vector<int>> generate(std::string path);
+		static std::vector<std::vector<int>> generate(std::string);
 	private:
 		static void getMapFromFile(std::string path);
 		static void createBreakable();
 		static int translate(char c);
-		static std::vector<int> getVectorUnbreakableBlock(
+		static std::vector<int> getVecUnbreakableBlock(
 				unsigned long size);
 		static void myStarts();
 		static void cleanStart(int y, int x);
@@ -33,6 +33,6 @@ namespace bbm {
 		static void changeAllBlank(int y, int x, int dir);
 
 
-		static std::vector<std::vector<int>> _map; 
+		static std::vector<std::vector<int>> _map;
 	};
 }

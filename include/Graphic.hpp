@@ -14,14 +14,14 @@
 namespace bbm {
 	class Graphic {
 	public:
-		Graphic(int width, int height, bool fullscreen, 
+		Graphic(int width, int height, bool fullscreen,
 				IMyEventReceiver *evReceiver);
 		irr::IrrlichtDevice *getDevice();
 		irr::video::IVideoDriver *getDriver();
 		irr::scene::ISceneManager *getScene();
 		irr::gui::IGUIEnvironment *getGuienv();
 		irr::ILogger *getLogger();
-		void setWindowCaption(const irr::core::vector3df &posCam, 
+		void setWindowCaption(const irr::core::vector3df &posCam,
 				const wchar_t *str);
 		void setWindowCaption(const irr::core::vector3df &posCam);
 		void setWindowCaption(const wchar_t *str);
@@ -34,8 +34,6 @@ namespace bbm {
 		void setDevice(irr::IrrlichtDevice *device);
 		irr::video::E_DRIVER_TYPE getDriverType() const;
 
-
-				
 	private:
 		int _width;
 		int _height;

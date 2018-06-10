@@ -29,7 +29,7 @@ namespace bbm {
 
 	class IPlayer : public IEntity {
 	public:
-		IPlayer(Match &match, float z, float x, Entities playerNum, 
+		IPlayer(Match &match, float z, float x, Entities playerNum,
 				TeamColor team);
 		virtual ~IPlayer();
 		virtual void spawn() = 0;

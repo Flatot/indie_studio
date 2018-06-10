@@ -8,7 +8,7 @@
 #include "IPlayer.hpp"
 #include "Match.hpp"
 
-bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum, 
+bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum,
 		TeamColor team) :
 	IEntity(match, x, z, true),
 	_move(0),
@@ -36,8 +36,8 @@ bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum,
 	_mesh = scene->addAnimatedMeshSceneNode(mesh, 0, -1, position,
 			rotation, scale);
 	_mesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	_mesh->setMaterialTexture(0,
-		_match.getGraphic().getDriver()->getTexture(_texture.c_str()));
+	_mesh->setMaterialTexture(0, _match.getGraphic()
+		.getDriver()->getTexture(_texture.c_str()));
 }
 
 bbm::IPlayer::~IPlayer()
@@ -124,7 +124,6 @@ void	bbm::IPlayer::moveLeft()
 		map.addEntity(this);
 	} else
 		_x = new_x;
-	std::cout << map << std::endl;
 }
 
 void	bbm::IPlayer::moveRight()
@@ -141,7 +140,6 @@ void	bbm::IPlayer::moveRight()
 		map.addEntity(this);
 	} else
 		_x = new_x;
-	std::cout << map << std::endl;
 }
 
 void	bbm::IPlayer::moveTop()
@@ -158,7 +156,6 @@ void	bbm::IPlayer::moveTop()
 		map.addEntity(this);
 	} else
 		_z = new_z;
-	std::cout << map << std::endl;
 }
 
 void	bbm::IPlayer::moveBottom()
@@ -175,14 +172,13 @@ void	bbm::IPlayer::moveBottom()
 		map.addEntity(this);
 	} else
 		_z = new_z;
-	std::cout << map << std::endl;
 }
 
 void	bbm::IPlayer::putBomb()
 {
 	int idEntities = _match.getMap().getEntitiesFromPos(_z, _x);
 
-	if (_bombCount <= 0 || (idEntities & BOMB) || 
+	if (_bombCount <= 0 || (idEntities & BOMB) ||
 			(idEntities & BREAKABLE_BLOCK))
 		return;
 	decBombCount();
@@ -342,11 +338,15 @@ void bbm::IPlayer::getTexture()
 
 std::ostream& operator<< (std::ostream& stream, bbm::IPlayer *player)
 {
-	stream << player->entitiesToInt() << ":" << player->typeToStr() << ":";
-	stream << player->getPosX() << ":" << player->getPosZ() << ":" << player->teamToStr() << std::endl;
+	stream << player->entitiesToInt() << ":"
+		<< player->typeToStr() << ":";
+	stream << player->getPosX() << ":" << player->getPosZ()
+		<< ":" << player->teamToStr() << std::endl;
 	stream << "SPEED:" << std::to_string(player->getSpeed()) << std::endl;
 	stream << "POWER:" << std::to_string(player->getPower()) << std::endl;
-	stream << "BOMB_COUNT:" << std::to_string(player->getBombCount()) << std::endl;
-	stream << "WALLPASS:" << std::boolalpha << player->getWallPass() << std::endl;
+	stream << "BOMB_COUNT:" << std::to_string(player->getBombCount())
+		<< std::endl;
+	stream << "WALLPASS:" << std::boolalpha << player->getWallPass()
+		<< std::endl;
 	return stream;
 }

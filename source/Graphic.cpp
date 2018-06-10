@@ -8,7 +8,7 @@
 #include <iostream>
 #include "Graphic.hpp"
 
-bbm::Graphic::Graphic(int width, int height, bool fullscreen, 
+bbm::Graphic::Graphic(int width, int height, bool fullscreen,
 		IMyEventReceiver *evReceiver) :
 	_width(width),
 	_height(height),
@@ -26,8 +26,8 @@ void	bbm::Graphic::clearDevice()
 
 void	bbm::Graphic::setupDevice()
 {
-	_device = irr::createDevice(_driverType, 
-			irr::core::dimension2d<irr::u32>(_width, _height), 32, 
+	_device = irr::createDevice(_driverType,
+			irr::core::dimension2d<irr::u32>(_width, _height), 32,
 			_fullscreen, false, false, _evReceiver);
 	_device->setResizable(false);
 }
@@ -51,13 +51,13 @@ irr::gui::IGUIEnvironment *bbm::Graphic::getGuienv()
 {
 	return _device->getGUIEnvironment();
 }
-	
+
 irr::ILogger *bbm::Graphic::getLogger()
 {
 	return _device->getLogger();
 }
 
-void bbm::Graphic::setWindowCaption(const irr::core::vector3df &posCam, 
+void bbm::Graphic::setWindowCaption(const irr::core::vector3df &posCam,
 		const wchar_t *str)
 {
 	wchar_t title[256] = {0};
@@ -66,7 +66,7 @@ void bbm::Graphic::setWindowCaption(const irr::core::vector3df &posCam,
 
 	if (lastFps != fps)
 		lastFps = fps;
-	swprintf(title, 256, L"[%ls] X: [%f] Y: [%f] Z: [%f] FPS: [%d]", str, 
+	swprintf(title, 256, L"[%ls] X: [%f] Y: [%f] Z: [%f] FPS: [%d]", str,
 			posCam.X, posCam.Y, posCam.Z, fps);
 	_device->setWindowCaption(title);
 }

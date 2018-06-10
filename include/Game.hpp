@@ -34,19 +34,17 @@ namespace bbm {
 		bool run();
 		bool launchMatch(std::vector<bbm::AttrEntity> attrs,
 			std::vector<bbm::TeamColor> teams);
-	
+
 		bool launchInGameMenu();
 		bool launchMainMenu();
 		IMenu *getMenuInGame() const;
 		bool hasSave();
-	
-		// Save le match
+
 		void save();
-		// Save les playerConfig
 		void saveConfig();
 
 	private:
-		Config &_config;	
+		Config &_config;
 		EventManager *_evManager;
 		Graphic _graphic;
 		IMenu *_mainMenu;
