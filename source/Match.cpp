@@ -190,13 +190,32 @@ void bbm::Match::drawStarter()
 	_graphic.getDriver()->enableMaterial2D(false);
 }
 
+bool bbm::Match::isFinished()
+{
+	TeamColor team;
+
+	if (!_players.size())
+		return true;
+	team = _players[0]->getTeam();
+	for (int i = 0; i < _players.size(); ++i)
+		if (team != _players[i]->getTeam())
+			return false;
+	return true;
+}
+
+bbm::TeamColor bbm::Match::getWinner()
+{
+	return (!_players.size()) ? TeamColor::TEAM_NONE : 
+		_players[0]->getTeam();
+}
+
 bool bbm::Match::run()
 {
 	drawStarter();
 	activate();
 
 	print_skybase();
-	while(_graphic.getDevice()->run() && isActive()) {
+	while(_graphic.getDevice()->run() && isActive() && isFinished()) {
 		_graphic.setWindowCaption(_camera->getPosition(), L"Match loop");
 		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
 		// auto lala = _camera->getTarget();
@@ -204,6 +223,10 @@ bool bbm::Match::run()
 		_graphic.getScene()->drawAll();
 		_graphic.getDriver()->endScene();
 		update();
+	}
+	if (isFinished()) {
+		// print Winner
+		getWinner();
 	}
 	_map.clear();
 	_players.clear();

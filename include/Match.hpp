@@ -55,6 +55,8 @@ namespace bbm {
 			std::vector<irr::video::ITexture *> list, int count);
 		void drawImageBack(const irr::core::dimension2du& screenSize,
 			irr::video::ITexture *img);
+		TeamColor getWinner();
+		bool isFinished();
 
 	private:
 		void handleLine(std::string line, int i, IPlayer **player);
