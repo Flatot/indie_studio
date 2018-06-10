@@ -5,7 +5,6 @@ set(BINARY_NAME bomberman)
 
 set(CMAKE_CXX_STANDARD 17)
 add_compile_options(-ggdb)
-set_source_files_properties(PlayerConfig.cpp Config.cpp PROPERTIES COMPILE_FLAGS -W -Wall -Wextra)
 
 # CREATE IRRLICHT STATIC LIB FOR LINUX
 set(IRRLICHT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Irrlicht)
@@ -66,3 +65,8 @@ add_executable(${BINARY_NAME} ${SRCS})
 
 # GIVE THE LIBRARIES DEPENDENCIES TO THE BINARY
 target_link_libraries(${BINARY_NAME} Irrlicht GL X11 Xxf86vm)
+
+install(TARGETS ${BINARY_NAME}
+	RUNTIME DESTINATION .)
+install(DIRECTORY assets
+	DESTINATION .)
