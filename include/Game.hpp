@@ -29,6 +29,7 @@ namespace bbm {
 		Graphic &getGraphic();
 		Config &getConfig();
 		Config &getConfig() const;
+		Match &getMatch();
 
 		virtual bool OnEvent(const irr::SEvent &event) override;
 		bool run();
@@ -37,6 +38,7 @@ namespace bbm {
 	
 		bool launchInGameMenu();
 		bool launchMainMenu();
+		bool hasSave();
 	
 		// Save le match
 		void save();

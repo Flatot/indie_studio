@@ -41,7 +41,6 @@ namespace bbm {
 		Game &getGame();
 		Graphic &getGraphic();
 		Map &getMap();
-		bool hasSave();
 		void save();
 		void load();
 		void addBomb(Bomb *bomb);

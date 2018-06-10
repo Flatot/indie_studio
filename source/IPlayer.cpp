@@ -291,14 +291,16 @@ std::string bbm::IPlayer::typeToStr()
 std::string bbm::IPlayer::entitiesToInt()
 {
 	switch(this->getIdEntity()) {
-		case 4:
+	case 4:
 		return "0";
-		case 8:
+	case 8:
 		return "1";
-		case 16:
+	case 16:
 		return "2";
-		case 32:
+	case 32:
 		return "3";
+	default:
+		return "0";
 	}
 }
 

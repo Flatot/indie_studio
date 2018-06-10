@@ -40,6 +40,11 @@ bbm::Config &bbm::Game::getConfig() const
 	return _config;
 }
 
+bbm::Match &bbm::Game::getMatch()
+{
+	return _match;
+}
+
 bool bbm::Game::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);
@@ -56,7 +61,6 @@ bool bbm::Game::OnEvent(const irr::SEvent &event)
 		resetKey(irr::KEY_KEY_T, NONE);
 		return true;
 	}
-
 	return false;
 }
 
@@ -104,6 +108,16 @@ bool bbm::Game::launchInGameMenu()
 
 bool bbm::Game::launchMainMenu()
 {
+	return true;
+}
+
+bool bbm::Game::hasSave()
+{
+	std::ifstream file("PlayerMatch.cfg");
+
+	if (!file)
+		return false;
+	file.close();
 	return true;
 }
 
