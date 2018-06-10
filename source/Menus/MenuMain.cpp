@@ -118,8 +118,10 @@ bool	bbm::MenuMain::takeActions(irr::s32 id)
 
 void	bbm::MenuMain::continueGame()
 {
+	_gameToLoad = _game.hasSave();
 	if (_gameToLoad) {
-		std::cout << "LOAD THE FUCKING GAME !!!" << std::endl;
+		_game.getMatch().load();
+		_game.getMatch().run();
 	} else {
 		std::cout << "IL N'Y A PAS DE GAME A LOAD {{lancer un son}}" << std::endl;
 	}
@@ -189,6 +191,7 @@ void	bbm::MenuMain::runNewGame(void)
 	enableButtons(false);
 	deactivate();
 	_newGameMenu->run();
+	_gameToLoad = _game.hasSave();
 	activate();
 	enableButtons(true);
 }
@@ -203,6 +206,7 @@ bool	bbm::MenuMain::run()
 	activate();
 	_game.getGraphic().getGuienv()->setFocus(_btns[0]->getButton());
 	_focused = 0;
+	_gameToLoad = _game.hasSave();
 	setupLoadButton();
 	enableButtons(true);
 	std::cout << "Menu MAIN run" << std::endl;

@@ -12,6 +12,7 @@ bbm::Player::Player(Match &match, float z, float x, Entities playerNum) :
 	bbm::IPlayer(match, x, z, playerNum),
 	_playerConfig(getPlayerConfig())
 {
+	_type = PlayerType::PLAYER;
 	_passWall = true;
 	_power = 5;
 	_match.getEventManager()->addEventReceiver(this);

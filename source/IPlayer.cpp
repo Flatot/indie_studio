@@ -199,6 +199,32 @@ int bbm::IPlayer::getPower()
 	return _power;
 }
 
+void bbm::IPlayer::setPower(int power)
+{
+	_power = power;
+}
+
+void bbm::IPlayer::incPower()
+{
+	++_power;
+}
+
+void bbm::IPlayer::decPower()
+{
+	--_power;
+}
+
+int bbm::IPlayer::getBombCount() const
+{
+	return _bombCount;
+}
+
+void bbm::IPlayer::setBombCount(int bombCount)
+{
+	_bombCount = bombCount;
+}
+
+
 void bbm::IPlayer::incBombCount()
 {
 	++_bombCount;
@@ -207,6 +233,41 @@ void bbm::IPlayer::incBombCount()
 void bbm::IPlayer::decBombCount()
 {
 	--_bombCount;
+}
+
+int bbm::IPlayer::getSpeed() const
+{
+	return _speed;
+}
+
+void bbm::IPlayer::setSpeed(int speed)
+{
+	_speed = speed;
+}
+
+void bbm::IPlayer::incSpeed()
+{
+	++_speed;
+}
+
+void bbm::IPlayer::decSpeed()
+{
+	--_speed;
+}
+
+bool bbm::IPlayer::getWallPass() const
+{
+	return _speed;
+}
+
+void bbm::IPlayer::setWallPass(bool wallPass)
+{
+	_passWall = wallPass;
+}
+
+bbm::PlayerType bbm::IPlayer::getType() const
+{
+	return _type;
 }
 
 bool bbm::IPlayer::checkCollision(int new_z, int new_x)
@@ -220,6 +281,29 @@ bool bbm::IPlayer::checkCollision(int new_z, int new_x)
 	return true;
 }
 
+std::string bbm::IPlayer::typeToStr()
+{
+	if (_type == PlayerType::AI)
+		return "IA";
+	return "PLAYER";
+}
+
+std::string bbm::IPlayer::entitiesToInt()
+{
+	switch(this->getIdEntity()) {
+	case 4:
+		return "0";
+	case 8:
+		return "1";
+	case 16:
+		return "2";
+	case 32:
+		return "3";
+	default:
+		return "0";
+	}
+}
+
 void bbm::IPlayer::getTexture()
 {
 	if (_idEntity == bbm::Entities::PLAYER_1)
@@ -230,4 +314,15 @@ void bbm::IPlayer::getTexture()
 		_texture = "assets/model3D/player/PLAYER_3.jpg";
 	else if (_idEntity == bbm::Entities::PLAYER_4)
 		_texture = "assets/model3D/player/PLAYER_4.jpg";
+}
+
+std::ostream& operator<< (std::ostream& stream, bbm::IPlayer *player)
+{
+	stream << player->entitiesToInt() << ":" << player->typeToStr() << ":";
+	stream << player->getPosX() << ":" << player->getPosZ() << std::endl;
+	stream << "SPEED:" << std::to_string(player->getSpeed()) << std::endl;
+	stream << "POWER:" << std::to_string(player->getPower()) << std::endl;
+	stream << "BOMB_COUNT:" << std::to_string(player->getBombCount()) << std::endl;
+	stream << "WALLPASS:" << std::boolalpha << player->getWallPass() << std::endl;
+	return stream;
 }

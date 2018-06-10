@@ -83,7 +83,7 @@ void bbm::Match::init(std::vector<bbm::AttrEntity> attrs,
 bool bbm::Match::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);
-	
+
 	std::cout << "[OnEvent - Match]" << std::endl;
 	if (isKeyPressed(irr::KEY_ESCAPE, NONE)) {
 		deactivate();
@@ -144,6 +144,8 @@ void bbm::Match::update()
 			--i;
 		}
 	}
+	std::cout << "BONJOUR FDP" << std::endl;
+	save();
 }
 
 bbm::EventManager *bbm::Match::getEventManager()
@@ -189,5 +191,106 @@ void bbm::Match::removePlayer(IPlayer *player)
 		if (*it == player) {
 			_players.erase(it--);
 		}
+	}
+}
+
+void bbm::Match::save()
+{
+	std::ofstream myfile;
+
+	_map.save();
+	myfile.open("PlayerMatch.cfg");
+	if (myfile.is_open() == false)
+		return;
+	for(unsigned int i = 0; i < _players.size(); i++) {
+		myfile << _players[i] << std::endl;
+	}
+	myfile.close();
+}
+
+bbm::IPlayer *bbm::Match::createPlayer(std::string line)
+{
+	size_t pos = 0;
+	std::string type;
+	std::string x;
+	std::string z;
+	std::string number;
+	std::string delimiter = ":";
+	std::string::size_type sz;
+
+	pos = line.find(delimiter);
+	number = line.substr(0, pos);
+	line.erase(0, pos + delimiter.length());
+	pos = line.find(delimiter);
+	type = line.substr(0, pos);
+	line.erase(0, pos + delimiter.length());
+	pos = line.find(delimiter);
+	x = line.substr(0, pos);
+	line.erase(0, pos + delimiter.length());
+	z = line;
+	if (type.compare("IA") == 0)
+		return (new Ia(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)]));
+	return (new Player(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)]));
+}
+
+void bbm::Match::handleLine(std::string line, int i, bbm::IPlayer *player)
+{
+	size_t pos = 0;
+	std::string firstTok;
+	std::string delimiter = ":";
+	std::string token;
+	std::string::size_type sz;
+
+	pos = line.find(delimiter);
+	token = line.substr(0, pos);
+	firstTok = token;
+	if (this->isValuable(firstTok) && firstTok.compare(valuable[i]) == 0)
+		player = this->createPlayer(line);
+	else if (this->isValuable(firstTok))
+		return;
+	line.erase(0, pos + delimiter.length());
+	doWithTokens(firstTok, line, player);
+}
+
+bool bbm::Match::isValuable(std::string str)
+{
+	for (int i = 0; i < 4; i++)
+		if (valuable[i].compare(str) == 0)
+			return true;
+	return false;
+}
+
+void bbm::Match::doWithTokens(std::string tok1, std::string tok2, bbm::IPlayer *player)
+{
+	std::string::size_type sz;
+
+	if (tok1.compare("WALLPASS") == 0 && player)
+		player->setWallPass(tok2.compare("false"));
+	if (tok1.compare("SPEED") == 0 && player)
+		player->setSpeed(std::stoi(tok2, &sz));
+	if (tok1.compare("BOMB_COUNT") == 0 && player)
+		player->setBombCount(std::stoi(tok2, &sz));
+	if (tok1.compare("POWER") == 0 && player)
+		player->setPower(std::stoi(tok2, &sz));
+}
+
+bbm::IPlayer *bbm::Match::loadIPlayer(int nbPlayer)
+{
+	std::ifstream file("PlayerMatch.cfg");
+	std::string line;
+	bbm::IPlayer *player = NULL;
+
+	if (!file)
+		return NULL;
+	while (std::getline(file, line))
+		this->handleLine(line, nbPlayer, player);
+	return player;
+}
+
+void bbm::Match::load()
+{
+	_map.load();
+	for(int i = 0; i < 4; i++) {
+		this->addPlayer(this->loadIPlayer(i));
 	}
 }

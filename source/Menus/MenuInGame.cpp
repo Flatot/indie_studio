@@ -65,6 +65,7 @@ void	bbm::MenuInGame::actionsClosing(irr::s32 id)
 		_keepPlaying = true;
 	}
 	if (id == bbm::GUI_BUTTON_SAVEQUIT) {
+		_game.getMatch().save();
 		std::cout << "Save and quit" << std::endl;
 		deactivate();
 		enableButtons(false);
