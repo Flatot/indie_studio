@@ -7,7 +7,7 @@
 
 #include "PlayerConfig.hpp"
 
-bbm::PlayerConfig::PlayerConfig(bbm::Entities entity) : 
+bbm::PlayerConfig::PlayerConfig(bbm::Entities entity) :
 	_entity(entity)
 {
 	switch(entity) {
@@ -59,7 +59,7 @@ void bbm::PlayerConfig::loadConfig()
 		start = this->handleLine(line, delimiter, start);
 }
 
-bool bbm::PlayerConfig::handleLine(std::string line, std::string delimiter, 
+bool bbm::PlayerConfig::handleLine(std::string line, std::string delimiter,
 		bool start)
 {
 	size_t pos = 0;
@@ -118,13 +118,13 @@ std::string bbm::PlayerConfig::codeToString(irr::EKEY_CODE code) const
 	return "NULL";
 }
 
-std::ostream& operator<< (std::ostream& stream, 
-		bbm::PlayerConfig const& playerConf) 
+std::ostream& operator<< (std::ostream& stream,
+		bbm::PlayerConfig const& playerConf)
 {
 	auto confMap = playerConf.getMap();
 	stream << playerConf.getName() << ":" << std::endl;
 	for (const auto& elem : confMap)
-		stream << elem.first << ":" << 
+		stream << elem.first << ":" <<
 			playerConf.codeToString(elem.second) << std::endl;
 	return stream;
 }
