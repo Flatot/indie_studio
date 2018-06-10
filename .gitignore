@@ -1,7 +1,7 @@
 build/
 *.o
 command
-*.a
+libIrrlicht.a
 *.d
 bomberman
 .idea/
@@ -10,3 +10,5 @@ cmake-build-debug/
 Config.cfg
 vgcore*
 .vscode
+MapSave.txt
+PlayerMatch.cfg

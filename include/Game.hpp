@@ -9,7 +9,6 @@
 
 #include <iostream>
 
-#include "IMyEventReceiver.hpp"
 #include "EventManager.hpp"
 
 #include "Config.hpp"
@@ -19,10 +18,10 @@
 #include "MenuMain.hpp"
 #include "MenuInGame.hpp"
 #include "MenuSettings.hpp"
-// #include "PlayerConfig.hpp"
+#include "Audio.hpp"
 
 namespace bbm {
-	class Game : public IMyEventReceiver {
+	class Game {
 	public:
 		Game(Config &config);
 
@@ -30,8 +29,8 @@ namespace bbm {
 		Config &getConfig();
 		Config &getConfig() const;
 		Match &getMatch();
+		Audio &getAudio();
 
-		virtual bool OnEvent(const irr::SEvent &event) override;
 		bool run();
 		bool launchMatch(std::vector<bbm::AttrEntity> attrs,
 			std::vector<bbm::TeamColor> teams);
@@ -54,5 +53,6 @@ namespace bbm {
 		IMenu *_inGameMenu;
 		Match _match;
 		bool _matchLaunched;
+		Audio _audio;
 	};
 }
