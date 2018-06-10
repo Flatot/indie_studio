@@ -26,7 +26,8 @@ bbm::Match::Match(Game &game) :
 	_map(*this),
 	_bombs(),
 	_players(),
-	_camera()
+	_camera(),
+	_counting(false)
 {
 	_evManager->addEventReceiver(this);
 	// irr::SKeyMap keyMap[5];                    // re-assigne les commandes
@@ -84,10 +85,11 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 	IMyEventReceiver::OnEvent(event);
 
 	std::cout << "[OnEvent - Match]" << std::endl;
-	if (isKeyPressed(irr::KEY_ESCAPE, NONE)) {
+	if (isKeyPressed(irr::KEY_ESCAPE, NONE) && !_counting) {
 		deactivate();
 		resetKey(irr::KEY_ESCAPE, NONE);
 		_menuReturn = _game.getMenuInGame()->run();
+		resetKey(irr::KEY_ESCAPE, NONE);
 		if (_menuReturn) {
 			drawStarter();
 			activate();
@@ -175,19 +177,19 @@ void bbm::Match::drawStarter()
 	auto nTime = std::chrono::steady_clock::now();
 	auto diff = std::chrono::duration_cast<std::chrono::seconds>
 	(nTime - cTime);
-	irr::video::ITexture *background = list[0];
 
+	_counting = true;
 	print_skybase();
 	_graphic.getDriver()->enableMaterial2D();
-	while (diff.count() < 4) {
+	while (_graphic.getDevice()->run() && diff.count() < 4) {
 		nTime = std::chrono::steady_clock::now();
 		diff = std::chrono::duration_cast<std::chrono::seconds>
 		(nTime - cTime);
-		background = getCurrentCounter(list, diff.count());
-		drawImageBack(screenSize, background);
-
+		drawImageBack(screenSize,
+			getCurrentCounter(list, diff.count()));
 	}
 	_graphic.getDriver()->enableMaterial2D(false);
+	_counting = false;
 }
 
 bool bbm::Match::run()

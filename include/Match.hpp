@@ -72,6 +72,7 @@ namespace bbm {
 		std::vector<IPlayer *> _players;
 		irr::scene::ICameraSceneNode *_camera;
 		bool _menuReturn;
+		bool _counting;
 	};
 }
 
