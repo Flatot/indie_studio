@@ -77,8 +77,6 @@ void bbm::Match::init(std::vector<bbm::AttrEntity> attrs,
 	else if (attrs[3] == bbm::ATTR_AI)
 		addPlayer(new Ia(*this, 11.5, 1.5, PLAYER_4, teams[3]));
 	std::cout << _map << std::endl;
-	std::cout << "height: " << _map.getHeight() << std::endl;
-	std::cout << "width: " << _map.getWidth() << std::endl;
 }
 
 bool bbm::Match::OnEvent(const irr::SEvent &event)
@@ -114,26 +112,26 @@ irr::video::ITexture *bbm::Match::getWinnerColor(TeamColor color)
 	irr::video::ITexture	*ret;
 
 	switch (color) {
-		case TEAM_NONE :
-			ret = _game.getGraphic().getDriver()->
-				getTexture("./assets/gameplay/draw.png");
-			break;
-		case TEAM_RED :
-			ret = _game.getGraphic().getDriver()->
-				getTexture("./assets/gameplay/red_win.png");
-			break;
-		case TEAM_BLUE :
-			ret = _game.getGraphic().getDriver()->
-				getTexture("./assets/gameplay/blue_win.png");
-			break;
-		case TEAM_GREEN :
-			ret = _game.getGraphic().getDriver()->
-				getTexture("./assets/gameplay/green_win.png");
-			break;
-		case TEAM_PURPLE :
-			ret = _game.getGraphic().getDriver()->
-				getTexture("./assets/gameplay/purple_win.png");
-			break;
+	case TEAM_NONE :
+		ret = _game.getGraphic().getDriver()->
+			getTexture("./assets/gameplay/draw.png");
+		break;
+	case TEAM_RED :
+		ret = _game.getGraphic().getDriver()->
+			getTexture("./assets/gameplay/red_win.png");
+		break;
+	case TEAM_BLUE :
+		ret = _game.getGraphic().getDriver()->
+			getTexture("./assets/gameplay/blue_win.png");
+		break;
+	case TEAM_GREEN :
+		ret = _game.getGraphic().getDriver()->
+			getTexture("./assets/gameplay/green_win.png");
+		break;
+	case TEAM_PURPLE :
+		ret = _game.getGraphic().getDriver()->
+			getTexture("./assets/gameplay/purple_win.png");
+		break;
 	}
 	return ret;
 }
@@ -169,7 +167,6 @@ void bbm::Match::drawWinner()
 	auto diff = std::chrono::duration_cast<std::chrono::seconds>
 	(nTime - cTime);
 
-	// print_skybase();
 	_graphic.getDriver()->enableMaterial2D();
 	while (diff.count() < 3) {
 		nTime = std::chrono::steady_clock::now();
@@ -186,21 +183,18 @@ bool bbm::Match::run()
 	_game.getAudio().playInGameMusic();
 	drawStarter();
 	activate();
-
 	print_skybase();
 	while(_graphic.getDevice()->run() && isActive() && !isFinished()) {
-		_graphic.setWindowCaption(_camera->getPosition(), L"Match loop");
-		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
-		// auto lala = _camera->getTarget();
-		// std::cout << "x : " << lala.X << " y : " << lala.Y << " z : " << lala.Z << std::endl;
+		_graphic.setWindowCaption(_camera->getPosition(),
+			L"Match loop");
+		_graphic.getDriver()->beginScene(true, true,
+			irr::video::SColor(255, 100, 101, 140));
 		_graphic.getScene()->drawAll();
 		_graphic.getDriver()->endScene();
 		update();
 	}
-	if (isFinished()) {
-		// print Winner
+	if (isFinished())
 		drawWinner();
-	}
 	_map.clear();
 	_players.clear();
 	_bombs.clear();
@@ -272,11 +266,9 @@ void bbm::Match::addPlayer(IPlayer *player)
 
 void bbm::Match::removePlayer(IPlayer *player)
 {
-	for (auto it = _players.begin(); it != _players.end(); ++it) {
-		if (*it == player) {
+	for (auto it = _players.begin(); it != _players.end(); ++it)
+		if (*it == player)
 			_players.erase(it--);
-		}
-	}
 }
 
 void bbm::Match::save()
@@ -295,26 +287,26 @@ void bbm::Match::save()
 
 bbm::IPlayer *bbm::Match::createPlayer(std::string line)
 {
-	size_t pos = 0;
-	std::string delimiter = ":";
 	std::string::size_type sz;
 
-	pos = line.find(delimiter);
+	size_t pos = line.find(":");
 	std::string number = line.substr(0, pos);
-	line.erase(0, pos + delimiter.length());
-	pos = line.find(delimiter);
+	line.erase(0, pos + 1);
+	pos = line.find(":");
 	std::string type = line.substr(0, pos);
-	line.erase(0, pos + delimiter.length());
-	pos = line.find(delimiter);
+	line.erase(0, pos + 1);
+	pos = line.find(":");
 	std::string x = line.substr(0, pos);
-	line.erase(0, pos + delimiter.length());
-	pos = line.find(delimiter);
+	line.erase(0, pos + 1);
+	pos = line.find(":");
 	std::string z = line.substr(0, pos);
-	line.erase(0, pos + delimiter.length());
+	line.erase(0, pos + 1);
 	std::string color = line;
 	if (type.compare("IA") == 0)
-		return (new Ia(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)], strToTeamColor(color)));
-	return (new Player(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)], strToTeamColor(color)));
+		return (new Ia(*this, stoi(z, &sz), stoi(x, &sz),
+			entities[stoi(number, &sz)], strToTeamColor(color)));
+	return (new Player(*this, stoi(z, &sz), stoi(x, &sz),
+		entities[stoi(number, &sz)], strToTeamColor(color)));
 }
 
 bbm::TeamColor bbm::Match::strToTeamColor(std::string str)
@@ -341,9 +333,8 @@ bool bbm::Match::handleLine(std::string line, int i, bbm::IPlayer **player)
 	pos = line.find(delimiter);
 	token = line.substr(0, pos);
 	firstTok = token;
-	if (this->isValuable(firstTok) && firstTok.compare(valuable[i]) == 0) {
+	if (isValuable(firstTok) && firstTok.compare(valuable[i]) == 0)
 		*player = this->createPlayer(line);
-	}
 	else if (this->isValuable(firstTok) && *player)
 		return false;
 	line.erase(0, pos + delimiter.length());
@@ -360,22 +351,22 @@ bool bbm::Match::isValuable(std::string str)
 	return false;
 }
 
-void bbm::Match::doWithTokens(std::string tok1, std::string tok2, bbm::IPlayer **player)
+void bbm::Match::doWithTokens(std::string t1, std::string t2,
+	bbm::IPlayer **p)
 {
 	std::string::size_type sz;
 
-	if (tok1.compare("WALLPASS") == 0 && *player) {
-		(*player)->setWallPass(tok2.compare("false"));
+	if (t1.compare("WALLPASS") == 0 && *p)
+		(*p)->setWallPass(t2.compare("false"));
+	if (t1.compare("SPEED") == 0 && (*p))
+		(*p)->setSpeed(std::stoi(t2, &sz));
+	if (t1.compare("BOMB_COUNT") == 0 && (*p)) {
+		(*p)->setBombCount(std::stoi(t2, &sz));
+		if (std::stoi(t2, &sz) <= 0)
+			(*p)->setBombCount(1);
 	}
-	if (tok1.compare("SPEED") == 0 && (*player))
-		(*player)->setSpeed(std::stoi(tok2, &sz));
-	if (tok1.compare("BOMB_COUNT") == 0 && (*player)) {
-		(*player)->setBombCount(std::stoi(tok2, &sz));
-		if (std::stoi(tok2, &sz) <= 0)
-			(*player)->setBombCount(1);
-	}
-	if (tok1.compare("POWER") == 0 && (*player))
-		(*player)->setPower(std::stoi(tok2, &sz));
+	if (t1.compare("POWER") == 0 && (*p))
+		(*p)->setPower(std::stoi(t2, &sz));
 }
 
 bool bbm::Match::hasSave()
@@ -403,28 +394,21 @@ bbm::IPlayer *bbm::Match::loadIPlayer(int nbPlayer)
 	while (std::getline(file, line) && check == true) {
 		check = this->handleLine(line, nbPlayer, &player);
 	}
-	if (player)
-	{
-		std::cout << "FINAL PLAYER" << std::endl;
-		std::cout << player << std::endl;
-		std::cout << "FINAL PLAYER FIN" << std::endl;
-	}
 	return player;
 }
 
 void bbm::Match::load()
 {
 	_map.load();
-	for(int i = 0; i < 4; i++) {
+	for(int i = 0; i < 4; i++)
 		this->addPlayer(this->loadIPlayer(i));
-	}
 }
 
 void bbm::Match::print_skybase()
 {
 	std::string path = "assets/model3D/Sky/brouillard.jpg";
 	auto texture = _graphic.getDriver()->getTexture(path.c_str());
-	auto skybase = _graphic.getScene()->addSkyBoxSceneNode(texture, 
+	auto skybase = _graphic.getScene()->addSkyBoxSceneNode(texture,
 			texture, texture, texture, texture, texture);
 }
 
@@ -517,6 +501,6 @@ bool bbm::Match::isFinished()
 
 bbm::TeamColor bbm::Match::getWinner()
 {
-	return (!_players.size()) ? TeamColor::TEAM_NONE : 
+	return (!_players.size()) ? TeamColor::TEAM_NONE :
 		_players[0]->getTeam();
 }
