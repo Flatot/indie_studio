@@ -270,7 +270,18 @@ void bbm::Match::doWithTokens(std::string tok1, std::string tok2, bbm::IPlayer *
 		player->setPower(std::stoi(tok2, &sz));
 }
 
-bbm::IPlayer *bbm::Match::loadIplayer(int nbPlayer)
+bool bbm::Match::hasSave()
+{
+	std::ifstream file("PlayerMatch.cfg");
+
+	if (!file)
+		return false;
+	file.close();
+	return true;
+}
+
+
+bbm::IPlayer *bbm::Match::loadIPlayer(int nbPlayer)
 {
 	std::ifstream file("PlayerMatch.cfg");
 	std::string line;
@@ -287,6 +298,6 @@ void bbm::Match::load()
 {
 	_map.load();
 	for(int i = 0; i < 4; i++) {
-		this->addPlayer(this->loadIplayer(i));
+		this->addPlayer(this->loadIPlayer(i));
 	}
 }

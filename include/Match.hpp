@@ -41,6 +41,7 @@ namespace bbm {
 		Game &getGame();
 		Graphic &getGraphic();
 		Map &getMap();
+		bool hasSave();
 		void save();
 		void load();
 		void addBomb(Bomb *bomb);
@@ -52,7 +53,7 @@ namespace bbm {
 		void handleLine(std::string line, int i, IPlayer *player);
 		bool isValuable(std::string str);
 		void doWithTokens(std::string tok1, std::string tok2, bbm::IPlayer *player);
-		IPlayer *loadIplayer(int nbPlayer);
+		IPlayer *loadIPlayer(int nbPlayer);
 		IPlayer *createPlayer(std::string line);
 
 		Game &_game;
