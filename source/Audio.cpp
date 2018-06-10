@@ -41,7 +41,7 @@ int bbm::Audio::getGeneralVolume()
 
 void bbm::Audio::setEffectVolume(int volume)
 {
-	_soundEffect.setVolume(volume);	
+	_soundEffect.setVolume(volume);
 }
 
 void bbm::Audio::setGeneralVolume(int volume)

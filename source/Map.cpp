@@ -73,7 +73,7 @@ std::vector<bbm::IEntity *> &bbm::Map::getFromPos(int y, int x)
 int bbm::Map::getEntitiesFromPos(int y, int x) const
 {
 	int values = 0;
-	
+
 	for (int i = 0; i < _map[y][x].size(); ++i)
 		values += _map[y][x][i]->getIdEntity();
 	return values;

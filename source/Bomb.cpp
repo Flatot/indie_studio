@@ -85,7 +85,7 @@ void bbm::Bomb::die()
 	_match.getGame().getAudio().playBombeExplode();
 	explode();
 	_exploded = true;
-	_timePoint = std::chrono::steady_clock::now(); 
+	_timePoint = std::chrono::steady_clock::now();
 }
 
 void bbm::Bomb::update()
@@ -97,7 +97,7 @@ void bbm::Bomb::update()
 	if (!_exploded && diff.count() >= 3)
 		die();
 	if (_exploded)
-		for (int i = 0, lastSize = _explosions.size(); 
+		for (int i = 0, lastSize = _explosions.size();
 				i < _explosions.size(); ++i) {
 			_explosions[i]->update();
 			if (_explosions.size() != lastSize) {
@@ -144,7 +144,7 @@ std::pair<int, int> p)
 		if (!(idEntities & EXPLOSION)) {
 			for (auto it = entities.begin();
 				it != entities.end(); ++it,
-				entities = _map.getFromPos(p.second, x.first))
+				entities = _map.getFromPos(p.second, p.first))
 				if (!(*it)->is(BOMB))
 					(*it--)->die();
 			entities[0]->die();

@@ -10,7 +10,7 @@
 bbm::Game::Game(Config &config) :
 	_config(config),
 	_evManager(new EventManager()),
-	_graphic(config.getScreenWidth(), config.getScreenHeight(), 
+	_graphic(config.getScreenWidth(), config.getScreenHeight(),
 			config.getFullscreen(), _evManager),
 	_mainMenu(new bbm::MenuMain(*this)),
 	_inGameMenu(new bbm::MenuInGame(*this)),

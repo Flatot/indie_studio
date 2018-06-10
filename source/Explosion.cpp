@@ -96,7 +96,7 @@ void bbm::Explosion::die()
 
 	_owner->removeExplosion(this);
 	if (idEntities & BREAKABLE_BLOCK) {
-		auto breakableBlock = _match.getMap().getEntity(_z, _x, 
+		auto breakableBlock = _match.getMap().getEntity(_z, _x,
 				BREAKABLE_BLOCK);
 		if (breakableBlock)
 			breakableBlock->die();
@@ -118,9 +118,9 @@ void bbm::Explosion::update()
 	auto diff = std::chrono::duration_cast<std::chrono::seconds>
 		(timePoint - _timePoint);
 
-	for (int i = 0; i < entities.size(); ++i, 
+	for (int i = 0; i < entities.size(); ++i,
 			entities = _match.getMap().getFromPos(_z, _x))
-		if (entities[i] != this && !entities[i]->is(BOMB) && 
+		if (entities[i] != this && !entities[i]->is(BOMB) &&
 				!entities[i]->is(BREAKABLE_BLOCK))
 			entities[i--]->die();
 	if (diff.count() >= 0.75)
