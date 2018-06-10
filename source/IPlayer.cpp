@@ -26,7 +26,6 @@ bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
 	auto scale = irr::core::vector3df(_coefX, _coefY, _coefZ);
 	auto scene = _match.getGraphic().getScene();
 	auto mesh = scene->getMesh("./assets/model3D/player/ninja.b3d");
-
 	if (!mesh) {
 		std::cerr << "IPlayer constructor, "
 			"scene->getMesh return nullptr" << std::endl;
@@ -37,10 +36,6 @@ bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
 	_mesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	_mesh->setMaterialTexture(0,
 		_match.getGraphic().getDriver()->getTexture(_texture.c_str()));
-	auto animatedMesh = static_cast<
-		irr::scene::IAnimatedMeshSceneNode *>(_mesh);
-	animatedMesh->setAnimationSpeed(15);
-	animatedMesh->setFrameLoop(206, 250);
 }
 
 bbm::IPlayer::~IPlayer()
