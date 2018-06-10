@@ -198,7 +198,7 @@ bool bbm::Match::isFinished()
 	if (!_players.size())
 		return true;
 	team = _players[0]->getTeam();
-	for (int i = 0; i < _players.size(); ++i)
+	for (int i = 1; i < _players.size(); ++i)
 		if (team != _players[i]->getTeam())
 			return false;
 	return true;
@@ -216,7 +216,7 @@ bool bbm::Match::run()
 	activate();
 
 	print_skybase();
-	while(_graphic.getDevice()->run() && isActive() && isFinished()) {
+	while(_graphic.getDevice()->run() && isActive() && !isFinished()) {
 		_graphic.setWindowCaption(_camera->getPosition(), L"Match loop");
 		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
 		// auto lala = _camera->getTarget();
