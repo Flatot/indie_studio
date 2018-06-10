@@ -328,7 +328,7 @@ void	bbm::Ia::active_mode()
         }
         else {
             timeToFight();
-            std::cout << "fighting" << std::endl;
+            std::cout << "fighting" << rec[0] << std::endl;
         }
     }
     return;
@@ -336,16 +336,35 @@ void	bbm::Ia::active_mode()
 
 void bbm::Ia::timeToFight()
 {
+    std::vector<std::vector<int>> mem;
+    mem = d_map;
     d_map = generateFMap();
     scaleBomb();
     changeBoomTo(1);
-    srand(time(NULL));
-    if (rand() % 20 != 0){
-        defensive_mode();
+    for (int j = 0; j < d_map.size(); j++){
+        for (int i = 0; i < d_map[0].size(); i++){
+            std::cout << d_map[j][i];
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+    defensive_mode();
+    if (f == 0 && objectif > 4) {
+        std::cout << "trying to find ennemy player" << std::endl;
         return;
     }
-    rec.clear();
-    rec.push_back(4);
+    d_map = mem;
+    std::cout << "objectif is at " << objectif << std::endl;
+    if (objectif != 12 && aliveIfBomb(5) && _bombCount != 0) {
+        rec.clear();
+        rec.push_back(4);
+        std::cout << "puting a bomb here because it's fun and i want to put a bomb" << std::endl;
+    }
+    else {
+        rec.clear();
+        rec.push_back(5);
+        std::cout << "idle" << std::endl;
+    }
 }
 
 std::vector<std::vector<int>> bbm::Ia::generateFMap()
@@ -363,12 +382,19 @@ std::vector<std::vector<int>> bbm::Ia::generateFMap()
                 tmp.push_back(NOGO);
             else if ((entities & BOMB))
                 tmp.push_back(BOOM);
-            else
+            else if ((entities & PLAYER_1) ||
+                    (entities & PLAYER_2) ||
+                    (entities & PLAYER_3) ||
+                    (entities & PLAYER_4)) {
                 tmp.push_back(GOAL);
+            }
+            else
+                tmp.push_back(DANGER);
         }
         newMap.push_back(tmp);
         tmp.clear();
     }
+    newMap[std::floor(_z)][std::floor(_x)] = DANGER;
     return newMap;
 }
 
