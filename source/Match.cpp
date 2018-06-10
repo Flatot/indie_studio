@@ -110,11 +110,6 @@ void bbm::Match::print_skybase()
 			texture, texture, texture, texture, texture);
 }
 
-void bbm::Match::drawStarterRec(irr::video::ITexture *background)
-{
-	
-}
-
 std::vector<irr::video::ITexture *>	bbm::Match::createCounter()
 {
 	std::vector<irr::video::ITexture *>	ret;
@@ -131,17 +126,17 @@ std::vector<irr::video::ITexture *>	bbm::Match::createCounter()
 }
 
 irr::video::ITexture	*bbm::Match::getCurrentCounter(
-	std::vector<irr::video::ITexture *> list, int count)
+	std::vector<irr::video::ITexture *> list, float count)
 {
 	irr::video::ITexture	*ret = list[0];
 
 	if (count > 0)
 		ret = list[0];
-	if (count >= 1)
+	if (count >= 500)
 		ret = list[1];
-	if (count >= 2)
+	if (count >= 1000)
 		ret = list[2];
-	if (count >= 3)
+	if (count >= 1500)
 		ret = list[3];
 	return ret;
 }
@@ -173,15 +168,15 @@ void bbm::Match::drawStarter()
 	auto list = createCounter();
 	auto cTime = std::chrono::steady_clock::now();
 	auto nTime = std::chrono::steady_clock::now();
-	auto diff = std::chrono::duration_cast<std::chrono::seconds>
+	auto diff = std::chrono::duration_cast<std::chrono::milliseconds>
 	(nTime - cTime);
 	irr::video::ITexture *background = list[0];
 
 	print_skybase();
 	_graphic.getDriver()->enableMaterial2D();
-	while (diff.count() < 4) {
+	while (diff.count() < 2000) {
 		nTime = std::chrono::steady_clock::now();
-		diff = std::chrono::duration_cast<std::chrono::seconds>
+		diff = std::chrono::duration_cast<std::chrono::milliseconds>
 		(nTime - cTime);
 		background = getCurrentCounter(list, diff.count());
 		drawImageBack(screenSize, background);
