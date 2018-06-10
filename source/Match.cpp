@@ -405,6 +405,7 @@ bbm::IPlayer *bbm::Match::createPlayer(std::string line)
 	line.erase(0, pos + delimiter.length());
 	pos = line.find(delimiter);
 	std::string z = line.substr(0, pos);
+	line.erase(0, pos + delimiter.length());
 	std::string color = line;
 	if (type.compare("IA") == 0)
 		return (new Ia(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)], strToTeamColor(color)));
@@ -413,6 +414,7 @@ bbm::IPlayer *bbm::Match::createPlayer(std::string line)
 
 bbm::TeamColor bbm::Match::strToTeamColor(std::string str)
 {
+	std::cout << "LA STR LOL = " << str << std::endl;
 	if (str.compare("TEAM_RED") == 0)
 		return TEAM_RED;
 	if (str.compare("TEAM_GREEN") == 0)
