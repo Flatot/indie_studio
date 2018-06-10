@@ -1,9 +1,9 @@
-/*
-** EPITECH PROJECT, 2018
-** IndieStudio
-** File description:
-** FireUp.cpp
-*/
+//
+// EPITECH PROJECT, 2018
+// IndieStudio
+// File description:
+// FireUp.cpp
+//
 
 #include "FireUp.hpp"
 

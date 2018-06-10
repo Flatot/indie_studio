@@ -1,9 +1,9 @@
-/*
-** EPITECH PROJECT, 2018
-** IndieStudio
-** File description:
-** IPlayer.cpp
-*/
+//
+// EPITECH PROJECT, 2018
+// IndieStudio
+// File description:
+// IPlayer.cpp
+//
 
 #include "IPlayer.hpp"
 #include "Match.hpp"
@@ -62,6 +62,7 @@ void bbm::IPlayer::analyseMap()
 
 void bbm::IPlayer::die()
 {
+	_mesh->setVisible(false);
 	delete this;
 }
 

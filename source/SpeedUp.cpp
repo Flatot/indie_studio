@@ -1,9 +1,9 @@
-/*
-** EPITECH PROJECT, 2018
-** IndieStudio
-** File description:
-** SpeedUp.cpp
-*/
+//
+// EPITECH PROJECT, 2018
+// IndieStudio
+// File description:
+// SpeedUp.cpp
+//
 
 #include "SpeedUp.hpp"
 

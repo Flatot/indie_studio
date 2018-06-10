@@ -1,9 +1,9 @@
-/*
-** EPITECH PROJECT, 2018
-** IndieStudio
-** File description:
-** IMenu.cpp
-*/
+//
+// EPITECH PROJECT, 2018
+// IndieStudio
+// File description:
+// IMenu.cpp
+//
 
 #include <iostream>
 #include "IMenu.hpp"

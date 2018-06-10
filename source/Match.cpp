@@ -147,7 +147,6 @@ void bbm::Match::runAudio()
 {
 	_game.getAudio().stopMenuMusic();
 	_game.getAudio().playInGameMusic();
-	activate();
 }
 
 void bbm::Match::stopAudio()
@@ -160,8 +159,9 @@ void bbm::Match::stopAudio()
 bool bbm::Match::run()
 {
 	runAudio();
-	drawStarter();
 	print_skybase();
+	drawStarter();
+	activate();
 	while(_graphic.getDevice()->run() && isActive() && !isFinished()) {
 		_graphic.setWindowCaption(_camera->getPosition(),
 			L"Match loop");

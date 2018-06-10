@@ -77,6 +77,7 @@ void bbm::Bomb::spawn()
 
 void bbm::Bomb::die()
 {
+	_mesh->setVisible(false);
 	_mesh->remove();
 	_mesh = nullptr;
 	_owner->incBombCount();

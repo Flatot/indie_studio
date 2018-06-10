@@ -1,9 +1,9 @@
-/*
-** EPITECH PROJECT, 2018
-** IndieStudio
-** File description:
-** Player.cpp
-*/
+//
+// EPITECH PROJECT, 2018
+// IndieStudio
+// File description:
+// Player.cpp
+//
 
 #include "Player.hpp"
 #include "Game.hpp"
@@ -74,7 +74,8 @@ bool bbm::Player::OnEvent(const irr::SEvent &event)
 	auto keyMap = _playerConfig.getMap();
 
 	if (!_match.getGame().getMenuInGame()->isActive()) {
-		std::cout << "[OnEvent - Player][" << _idEntity << "]" << std::endl;
+		std::cout << "[OnEvent - Player][" << _idEntity << "]"
+		<< std::endl;
 		_move = (isKeyPressed(keyMap["LEFT"], NONE)) ?
 			_move | LEFT : _move & ~LEFT;
 		_move = (isKeyPressed(keyMap["UP"], NONE)) ?

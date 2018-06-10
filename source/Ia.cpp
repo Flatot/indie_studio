@@ -1,15 +1,15 @@
-/*
-** EPITECH PROJECT, 2018
-** IndieStudio
-** File description:
-** Ia.cpp
-*/
+//
+// EPITECH PROJECT, 2018
+// IndieStudio
+// File description:
+// Ia.cpp
+//
 
 #include "Ia.hpp"
 #include "Bomb.hpp"
 
-bbm::Ia::Ia(Match &match, float z, float x, Entities playerNum, 
-		TeamColor team) : 
+bbm::Ia::Ia(Match &match, float z, float x, Entities playerNum,
+		TeamColor team) :
 	IPlayer(match, x, z, playerNum, team)
 {
 	_type = PlayerType::AI;
@@ -44,15 +44,15 @@ void	bbm::Ia::fill_dangerosity_bis(int bombLen, int y, int x)
 
 	for (int n = y; n > (y - bombLen); n--) {
 		entities = _match.getMap().getEntitiesFromPos(n, x);
-		if (n < 0 || (entities & BREAKABLE_BLOCK) || 
+		if (n < 0 || (entities & BREAKABLE_BLOCK) ||
 			(entities & UNBREAKABLE_BLOCK))
 			break ;
 		d_map[n][x] = BOOM;
 	}
 	for (int n = y; n < (y + bombLen); n++) {
 		entities = _match.getMap().getEntitiesFromPos(n, x);
-		if (n > _match.getMap().getHeight() || 
-			(entities & BREAKABLE_BLOCK) || 
+		if (n > _match.getMap().getHeight() ||
+			(entities & BREAKABLE_BLOCK) ||
 			(entities & UNBREAKABLE_BLOCK))
 			break ;
 		d_map[n][x] = BOOM;
@@ -65,15 +65,15 @@ void	bbm::Ia::fill_dangerosity(int bombLen, int y, int x)
 
 	for (int n = x; n < (x + bombLen); n++) {
 		entities = _match.getMap().getEntitiesFromPos(y, n);
-		if (n > _match.getMap().getWidth() || 
-			(entities & BREAKABLE_BLOCK) || 
+		if (n > _match.getMap().getWidth() ||
+			(entities & BREAKABLE_BLOCK) ||
 			(entities & UNBREAKABLE_BLOCK))
 			break ;
 		d_map[y][n] = BOOM;
 	}
 	for (int n = x; n > (x - bombLen); n--) {
 		entities = _match.getMap().getEntitiesFromPos(y, n);
-		if (n < 0 || (entities & BREAKABLE_BLOCK) || 
+		if (n < 0 || (entities & BREAKABLE_BLOCK) ||
 			(entities & UNBREAKABLE_BLOCK))
 			break ;
 		d_map[y][n] = BOOM;
@@ -92,7 +92,8 @@ void	bbm::Ia::scaleBomb()
 				auto entites = _match.getMap().getFromPos(y, x);
 				for (int i = 0; i < entites.size(); ++i) {
 					if (entites[i]->is(BOMB)) {
-						auto bomb = static_cast<Bomb *>(entites[i]);
+						auto bomb = static_cast<Bomb *>
+						(entites[i]);
 						bLen = bomb->getPower() + 1;
 						fill_dangerosity(bLen, y, x);
 					}
@@ -319,7 +320,8 @@ void	bbm::Ia::active_mode()
     }
 	else {
 		for (int i = 0; i < 4; i++) {
-			if (checkAllBreakable(i, std::floor(_z), std::floor(_x)) && aliveIfBomb(4) && _bombCount != 0) {
+			if (checkAllBreakable(i, std::floor(_z),
+			std::floor(_x)) && aliveIfBomb(4) && _bombCount != 0) {
 				rec.clear();
 				rec.push_back(4);
                 std::cout << "bomb puting" << std::endl;
@@ -365,7 +367,8 @@ void bbm::Ia::timeToFight()
     if (objectif != 12 && aliveIfBomb(5) && _bombCount != 0) {
         rec.clear();
         rec.push_back(4);
-        std::cout << "puting a bomb here because it's fun and i want to put a bomb" << std::endl;
+        std::cout << "puting a bomb here because it's fun and"
+	<< " i want to put a bomb" << std::endl;
     }
     else {
         rec.clear();
@@ -545,22 +548,26 @@ bool bbm::Ia::checkAllBreakable(int dir, int y, int x)
 {
     std::cout << "dir = " << dir << std::endl;
     if (dir == 0){
- 		if (_match.getMap().getEntitiesFromPos(y - 1, x) & BREAKABLE_BLOCK)
+ 		if (_match.getMap().getEntitiesFromPos(y - 1, x)
+		& BREAKABLE_BLOCK)
  			return (true);
  		return (false);
  	}
  	if (dir == 1){
- 		if (_match.getMap().getEntitiesFromPos(y, x + 1) & BREAKABLE_BLOCK)
+ 		if (_match.getMap().getEntitiesFromPos(y, x + 1)
+		& BREAKABLE_BLOCK)
  			return (true);
         return (false);
  	}
  	if (dir == 2){
- 		if (_match.getMap().getEntitiesFromPos(y + 1, x) & BREAKABLE_BLOCK)
+ 		if (_match.getMap().getEntitiesFromPos(y + 1, x)
+		& BREAKABLE_BLOCK)
  			return (true);
  		return (false);
  	}
  	if (dir == 3){
- 		if (_match.getMap().getEntitiesFromPos(y, x - 1) & BREAKABLE_BLOCK)
+ 		if (_match.getMap().getEntitiesFromPos(y, x - 1)
+		& BREAKABLE_BLOCK)
  			return (true);
  		return (false);
  	}

@@ -8,7 +8,7 @@
 #include <iostream>
 #include "EventManager.hpp"
 
-bbm::EventManager::EventManager() : 
+bbm::EventManager::EventManager() :
 	IMyEventReceiver(),
 	_root(false),
 	_evReceivers()
@@ -21,7 +21,9 @@ bool bbm::EventManager::OnEvent(const irr::SEvent &event)
 	if (_root) {
 		std::cout << "EventManager root ";
 		if (event.EventType == irr::EET_KEY_INPUT_EVENT)
-			std::cout << ((event.KeyInput.PressedDown) ? "PressedDown " : "") << "[" << (char)event.KeyInput.Char << "] [" << event.KeyInput.Key ; 
+			std::cout << ((event.KeyInput.PressedDown) ?
+			"PressedDown " : "") << "[" << (char)event.KeyInput
+			.Char << "] [" << event.KeyInput.Key ;
 		else
 			std::cout << "[Not a char";
 		std::cout << "] - OnEvent" << std::endl;

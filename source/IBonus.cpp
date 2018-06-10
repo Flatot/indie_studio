@@ -1,9 +1,9 @@
-/*
-** EPITECH PROJECT, 2018
-** IndieStudio
-** File description:
-** IBonus.cpp
-*/
+//
+// EPITECH PROJECT, 2018
+// IndieStudio
+// File description:
+// IBonus.cpp
+//
 
 #include "IBonus.hpp"
 #include "Match.hpp"
