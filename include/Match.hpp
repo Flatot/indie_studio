@@ -62,7 +62,7 @@ namespace bbm {
 		bool isFinished();
 
 	private:
-		void handleLine(std::string line, int i, IPlayer **player);
+		bool handleLine(std::string line, int i, IPlayer **player);
 		bool isValuable(std::string str);
 		void doWithTokens(std::string tok1, std::string tok2, bbm::IPlayer **player);
 		IPlayer *loadIPlayer(int nbPlayer);
