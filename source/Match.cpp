@@ -111,18 +111,25 @@ void bbm::Match::print_skybase()
 
 bool bbm::Match::run()
 {
+	std::cout << "1" << std::endl;
 	activate();
+	std::cout << "2" << std::endl;
 
 	print_skybase();
+	std::cout << "3" << std::endl;
 	while(_graphic.getDevice()->run() && isActive()) {
+	std::cout << "4" << std::endl;
 		_graphic.setWindowCaption(_camera->getPosition(), L"Match loop");
 		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
 		// auto lala = _camera->getTarget();
 		// std::cout << "x : " << lala.X << " y : " << lala.Y << " z : " << lala.Z << std::endl;
 		_graphic.getScene()->drawAll();
 		_graphic.getDriver()->endScene();
+	std::cout << "4.5" << std::endl;
 		update();
+	std::cout << "5" << std::endl;
 	}
+	std::cout << "6" << std::endl;
 	_map.clear();
 	_players.clear();
 	_bombs.clear();
@@ -134,8 +141,14 @@ void bbm::Match::update()
 {
 	int lastSize;
 
-	for (auto it = _players.begin(); it < _players.end(); ++it)
+	for (auto it = _players.begin(); it < _players.end(); ++it) {
+		if (! *it)
+			std::cout << "SUCE MA TEUB" << std::endl;
+		std::cout << *it << std::endl;
+		std::cout << "before update player" << std::endl;
 		(*it)->update();
+		std::cout << "after update player" << std::endl;
+	}
 	lastSize = _bombs.size();
 	for (int i = 0; i < _bombs.size(); ++i) {
 		_bombs[i]->update();
@@ -145,7 +158,6 @@ void bbm::Match::update()
 		}
 	}
 	std::cout << "BONJOUR FDP" << std::endl;
-	save();
 }
 
 bbm::EventManager *bbm::Match::getEventManager()
@@ -182,6 +194,8 @@ void bbm::Match::removeBomb(Bomb *bomb)
 
 void bbm::Match::addPlayer(IPlayer *player)
 {
+	if (!player)
+		std::cout << "SUUUUUUUUUUUCE" << std::endl;
 	_players.push_back(player);
 }
 
@@ -293,4 +307,8 @@ void bbm::Match::load()
 	for(int i = 0; i < 4; i++) {
 		this->addPlayer(this->loadIPlayer(i));
 	}
+	std::cout << _map << std::endl;
+	std::cout << "height: " << _map.getHeight() << std::endl;
+	std::cout << "width: " << _map.getWidth() << std::endl;
+
 }

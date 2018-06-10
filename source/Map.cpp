@@ -148,7 +148,6 @@ void bbm::Map::clear()
 		for (int x = 0; x < getWidth(); ++x)
 			for (int i = 0; i < _map[z][x].size(); ++i)
 				delete _map[z][x][i];
-//	 _map[z][x][i]->die();
 	_map.clear();
 }
 

@@ -120,8 +120,15 @@ void	bbm::MenuMain::continueGame()
 {
 	_gameToLoad = _game.hasSave();
 	if (_gameToLoad) {
+		deactivate();
+		enableButtons(false);
+		std::cout << "BEFORE LOAD" << std::endl;
 		_game.getMatch().load();
+		std::cout << "BEFORE RUN" << std::endl;
 		_game.getMatch().run();
+		std::cout << "AFTER RUN" << std::endl;
+		activate();
+		enableButtons(true);
 	} else {
 		std::cout << "IL N'Y A PAS DE GAME A LOAD {{lancer un son}}" << std::endl;
 	}
