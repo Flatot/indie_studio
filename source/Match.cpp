@@ -411,7 +411,6 @@ bbm::IPlayer *bbm::Match::createPlayer(std::string line)
 
 bbm::TeamColor bbm::Match::strToTeamColor(std::string str)
 {
-	std::cout << "LA STR LOL = " << str << std::endl;
 	if (str.compare("TEAM_RED") == 0)
 		return TEAM_RED;
 	if (str.compare("TEAM_GREEN") == 0)
@@ -456,6 +455,7 @@ void bbm::Match::doWithTokens(std::string tok1, std::string tok2, bbm::IPlayer *
 {
 	std::string::size_type sz;
 
+	std::cout << "TOK 1 = " << tok1 << "TOK 2 = " << tok2 <<std::endl;
 	if (tok1.compare("WALLPASS") == 0 && *player)
 		(*player)->setWallPass(tok2.compare("false"));
 	if (tok1.compare("SPEED") == 0 && (*player))

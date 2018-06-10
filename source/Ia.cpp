@@ -235,25 +235,32 @@ void bbm::Ia::move_to_rec()
 {
     std::cout << rec[0] << std::endl;
 	if (rec[0] == 0) {
+		setFrameMyLoop(0, 13);
 		moveBottom();
 		return ;
 	}
 	if (rec[0] == 1) {
+		setFrameMyLoop(0, 13);
 		moveRight();
 		return ;
 	}
 	if (rec[0] == 2) {
+		setFrameMyLoop(0, 13);
 		moveTop();
 		return ;
 	}
 	if (rec[0] == 3) {
+		setFrameMyLoop(0, 13);
         moveLeft();
         return;
     }
     if (rec[0] == 4){
+		setFrameMyLoop(206, 250);
         putBomb();
         return;
     }
+	setFrameMyLoop(206, 250);
+
 	return;
 }
 
@@ -267,6 +274,7 @@ void bbm::Ia::move_to_center()
 		moveLeft();
 	if (_x < std::floor(_x) + 0.5)
 		moveRight();
+	setFrameMyLoop(206, 250);
 }
 
 void bbm::Ia::changeBoomTo(int zone)
