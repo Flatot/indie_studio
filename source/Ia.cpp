@@ -327,11 +327,13 @@ void	bbm::Ia::active_mode()
 			}
 		}
         if (wallCount() > 10) {
+            std::cout << "start wallcount" << std::endl;
             findBreakable();
 		setFrameMyLoop(206, 250);
             std::cout << "searching something to break" << std::endl;
         }
         else {
+            std::cout << "start fighting" << std::endl;
             timeToFight();
             std::cout << "fighting" << rec[0] << std::endl;
         }

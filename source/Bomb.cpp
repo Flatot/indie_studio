@@ -21,21 +21,21 @@ bbm::Bomb::Bomb(Match &match, float z, float x, IPlayer *owner) :
 	_explosions()
 {
 	_idEntity = BOMB;
-	_texturePath = "./assets/model3D/bomb/Bomb_obj/Albedo.png";
+	_texture = "./assets/model3D/bomb/Bomb_obj/Albedo.png";
 	_meshPath = "./assets/model3D/bomb/Bomb_obj/Bomb.obj";
 	setCoefs(1.5f, 1.5f, 1.5f);
 	x = std::floor(x);
 	z = std::floor(z);
-	auto position = irr::core::vector3df(x, 0.5, z);
-	auto rotation = irr::core::vector3df(0, 0, 0);
+	auto pos = irr::core::vector3df(x, 0.5, z);
+	auto rot = irr::core::vector3df(0, 0, 0);
 	auto scale = irr::core::vector3df(_coefX, _coefY, _coefZ);
 	auto scene = _match.getGraphic().getScene();
 	auto driver = _match.getGraphic().getDriver();
 	auto mesh = scene->getMesh(_meshPath.c_str());
 
-	_mesh = scene->addAnimatedMeshSceneNode(mesh, 0, -1, position, rotation, scale);
+	_mesh = scene->addAnimatedMeshSceneNode(mesh, 0, -1, pos, rot, scale);
 	_mesh->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	_mesh->setMaterialTexture(0, driver->getTexture(_texturePath.c_str()));
+	_mesh->setMaterialTexture(0, driver->getTexture(_texture.c_str()));
 	particlesImplementation(x, z);
 }
 
@@ -48,7 +48,8 @@ bbm::Bomb::~Bomb()
 
 void bbm::Bomb::particlesImplementation(int x, int z)
 {
-	_p = _match.getGraphic().getScene()->addParticleSystemSceneNode(false);	
+	auto graphic = _match.getGraphic();
+	_p = graphic.getScene()->addParticleSystemSceneNode(false);
 	irr::scene::IParticleEmitter* emitter = _p->createBoxEmitter(
 	irr::core::aabbox3d<irr::f32>(x - 0.2, 0, z - 0.2, x, 1, z),
 	irr::core::vector3df(0.0f,0.006f,0.0f),
@@ -108,8 +109,7 @@ void bbm::Bomb::update()
 		_match.removeBomb(this);
 		_map.removeEntity(this);
 		delete this;
-	} 
-
+	}
 }
 
 int bbm::Bomb::getPower() const
@@ -136,6 +136,24 @@ void bbm::Bomb::explode()
 	}
 }
 
+bool bbm::Bomb::explodeBomb(int idEntities,
+std::vector<bbm::IEntity *> entities,
+std::pair<int, int> p)
+{
+	if ((idEntities & BOMB)) {
+		if (!(idEntities & EXPLOSION)) {
+			for (auto it = entities.begin();
+				it != entities.end(); ++it,
+				entities = _map.getFromPos(p.second, x.first))
+				if (!(*it)->is(BOMB))
+					(*it--)->die();
+			entities[0]->die();
+		}
+		return false;
+	}
+	return true;
+}
+
 bool bbm::Bomb::explodeLine(int z, int x)
 {
 	auto entities = _map.getFromPos(z, x);
@@ -155,15 +173,8 @@ bool bbm::Bomb::explodeLine(int z, int x)
 		}
 		return false;
 	}
-	if ((idEntities & BOMB)) {
-		if (!(idEntities & EXPLOSION)) {
-			for (auto it = entities.begin(); it != entities.end(); ++it, entities = _map.getFromPos(z, x))
-				if (!(*it)->is(BOMB))
-					(*it--)->die();
-			entities[0]->die();
-		}
+	if (!explodeBomb(idEntities, entities, std::pair<int, int>(x, z)))
 		return false;
-	}
 	addExplosion(new Explosion(_match, z, x, this));
 	return true;
 }

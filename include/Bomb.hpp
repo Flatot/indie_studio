@@ -26,6 +26,9 @@ namespace bbm {
 		void removeExplosion(Explosion *explo);
 		int getPower() const;
 	private:
+		bool explodeBomb(int entities,
+			std::vector<bbm::IEntity *> idEntities,
+			std::pair<int, int> p);
 		bool explodeLine(int z, int x);
 		void particlesImplementation(int x, int z);
 

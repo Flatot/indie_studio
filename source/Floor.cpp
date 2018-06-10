@@ -9,7 +9,7 @@
 
 bbm::Floor::Floor(Graphic &graphic) :
 	_meshPath(""),
-	_texturePath("./assets/model3D/floor/textures/tatami.jpg"),
+	_texture("./assets/model3D/floor/textures/tatami.jpg"),
 	_coefX(1.f),
 	_coefY(1.f),
 	_coefZ(1.f)
@@ -28,7 +28,7 @@ bbm::Floor::Floor(Graphic &graphic) :
 					position, rotation, scale);
 			floor->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 			floor->setMaterialTexture(0, driver->getTexture(
-						_texturePath.c_str()));
+						_texture.c_str()));
 		}
 	}
 }

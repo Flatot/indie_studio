@@ -58,7 +58,7 @@ namespace bbm {
 		float _x;
 		float _z;
 		std::string _meshPath;
-		std::string _texturePath;
+		std::string _texture;
 		float _coefX;
 		float _coefY;
 		float _coefZ;

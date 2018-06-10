@@ -13,7 +13,7 @@ bbm::IEntity::IEntity(Match &match, float z, float x, bool isTraversable) :
 	_z(z),
 	_isTraversable(isTraversable),
 	_meshPath(),
-	_texturePath(),
+	_texture(),
 	_coefX(1.0f),
 	_coefY(1.0f),
 	_coefZ(1.0f)
@@ -61,7 +61,7 @@ void bbm::IEntity::setMesh(irr::scene::ISceneNode *mesh)
 
 void bbm::IEntity::setTexturePath(std::string &path)
 {
-	_texturePath = path;
+	_texture = path;
 }
 
 irr::scene::ISceneNode *bbm::IEntity::getMesh()
