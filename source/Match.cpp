@@ -308,6 +308,7 @@ bbm::IPlayer *bbm::Match::createPlayer(std::string line)
 	line.erase(0, pos + delimiter.length());
 	pos = line.find(delimiter);
 	std::string z = line.substr(0, pos);
+	line.erase(0, pos + delimiter.length());
 	std::string color = line;
 	if (type.compare("IA") == 0)
 		return (new Ia(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)], strToTeamColor(color)));
@@ -327,7 +328,7 @@ bbm::TeamColor bbm::Match::strToTeamColor(std::string str)
 	return TEAM_RED;
 }
 
-void bbm::Match::handleLine(std::string line, int i, bbm::IPlayer **player)
+bool bbm::Match::handleLine(std::string line, int i, bbm::IPlayer **player)
 {
 	size_t pos = 0;
 	std::string firstTok;
@@ -341,10 +342,11 @@ void bbm::Match::handleLine(std::string line, int i, bbm::IPlayer **player)
 	if (this->isValuable(firstTok) && firstTok.compare(valuable[i]) == 0) {
 		*player = this->createPlayer(line);
 	}
-	else if (this->isValuable(firstTok))
-		return;
+	else if (this->isValuable(firstTok) && *player)
+		return false;
 	line.erase(0, pos + delimiter.length());
 	doWithTokens(firstTok, line, player);
+	return true;
 }
 
 bool bbm::Match::isValuable(std::string str)
@@ -360,12 +362,16 @@ void bbm::Match::doWithTokens(std::string tok1, std::string tok2, bbm::IPlayer *
 {
 	std::string::size_type sz;
 
-	if (tok1.compare("WALLPASS") == 0 && *player)
+	if (tok1.compare("WALLPASS") == 0 && *player) {
 		(*player)->setWallPass(tok2.compare("false"));
+	}
 	if (tok1.compare("SPEED") == 0 && (*player))
 		(*player)->setSpeed(std::stoi(tok2, &sz));
-	if (tok1.compare("BOMB_COUNT") == 0 && (*player))
+	if (tok1.compare("BOMB_COUNT") == 0 && (*player)) {
 		(*player)->setBombCount(std::stoi(tok2, &sz));
+		if (std::stoi(tok2, &sz) <= 0)
+			(*player)->setBombCount(1);
+	}
 	if (tok1.compare("POWER") == 0 && (*player))
 		(*player)->setPower(std::stoi(tok2, &sz));
 }
@@ -386,13 +392,14 @@ bbm::IPlayer *bbm::Match::loadIPlayer(int nbPlayer)
 	std::ifstream file("PlayerMatch.cfg");
 	std::string line;
 	bbm::IPlayer *player = nullptr;
+	bool check = true;
 
 	if (!file) {
 		std::cout << "file null" << std::endl;
 		return player;
 	}
-	while (std::getline(file, line)) {
-		this->handleLine(line, nbPlayer, &player);
+	while (std::getline(file, line) && check == true) {
+		check = this->handleLine(line, nbPlayer, &player);
 	}
 	if (player)
 	{
