@@ -240,8 +240,8 @@ screenSize)
 	irr::core::rect<irr::s32>(0, 0, _background->
 	getSize().Width, _background->getSize().Height));
 	_game.getGraphic().getDriver()->draw2DImage(_bomberman,
-	irr::core::rect<irr::s32>(screenSize.Width / 12,
-	screenSize.Height / 7, screenSize.Width / 2 - screenSize.Width / 12,
+	irr::core::rect<irr::s32>(screenSize.Width / 20,
+	screenSize.Height / 7, screenSize.Width / 2 - screenSize.Width / 20,
 	screenSize.Height - screenSize.Height / 7),
 	irr::core::rect<irr::s32>(0, 0, _bomberman->
 	getSize().Width, _bomberman->getSize().Height), 0, 0, true);
