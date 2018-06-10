@@ -119,6 +119,7 @@ void	bbm::MenuNewGame::startGame()
 	_game.launchMatch(_attrs, _teams);
 	enableButtons(true);
 	activate();
+	resetKeys();
 	_game.getGraphic().getGuienv()->setFocus(_btns[4]->getButton());
 	_focused = 4;
 }
