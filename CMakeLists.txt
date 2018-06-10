@@ -14,7 +14,6 @@ add_custom_target(build_irrlicht ALL
 add_library(irrlicht STATIC IMPORTED)
 add_dependencies(irrlicht build_irrlicht)
 
-
 # GIVE LIB AND INCLUDE FOLDERS
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
@@ -64,7 +63,8 @@ set(SRCS 	source/main.cpp
 add_executable(${BINARY_NAME} ${SRCS})
 
 # GIVE THE LIBRARIES DEPENDENCIES TO THE BINARY
-target_link_libraries(${BINARY_NAME} Irrlicht GL X11 Xxf86vm)
+#target_link_libraries(${BINARY_NAME} Irrlicht GL X11 Xxf86vm IrrKlang)
+target_link_libraries(${BINARY_NAME} Irrlicht GL X11 Xxf86vm sfml-audio)
 
 install(TARGETS ${BINARY_NAME}
 	RUNTIME DESTINATION .)

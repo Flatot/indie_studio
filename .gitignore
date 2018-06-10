@@ -1,7 +1,7 @@
 build/
 *.o
 command
-*.a
+libIrrlicht.a
 *.d
 bomberman
 .idea/
