@@ -27,6 +27,7 @@ namespace bbm {
 			void	drawSounds(const irr::core::dimension2du&);
 			bool	keysHandling(const irr::SEvent &event);
 			bool	changeVolume();
+			bool	changeVolumeLeft();
 			void	drawBackground(const irr::core::dimension2du&);
 			void	drawSceneBackground(
 				const irr::core::dimension2du&);

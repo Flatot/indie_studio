@@ -119,7 +119,6 @@ void	bbm::MenuVideo::goBack()
 
 void	bbm::MenuVideo::updateResolution()
 {
-	std::cout << "update resolution" << std::endl;
 	_game.getGraphic().setWidth(_resolutions[_idxres].first);
 	_game.getGraphic().setHeight(_resolutions[_idxres].second);
 	_game.getConfig().setScreenWidth(_resolutions[_idxres].first);
@@ -173,7 +172,6 @@ bool	bbm::MenuVideo::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);
 
-	std::cout << "[OnEvent - MenuVideo]" << std::endl;
 	if (event.EventType == irr::EET_GUI_EVENT) {
 		irr::s32 id = event.GUIEvent.Caller->getID();
 		if (event.GUIEvent.EventType == irr::gui::EGET_BUTTON_CLICKED)
@@ -202,7 +200,6 @@ bool	bbm::MenuVideo::run()
 	enableButtons(true);
 	_res->setVisible(true);
 	_full->setVisible(true);
-	std::cout << "Menu video run" << std::endl;
 	while(_graphic.getDevice()->run() && isActive()) {
 		_graphic.getDriver()->beginScene(true, true,
 		irr::video::SColor(255, 100, 101, 140));

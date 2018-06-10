@@ -14,10 +14,12 @@ bbm::ButtonInfos	bbm::Corners::getCenteredVertical(
 {
 	bbm::ButtonInfos	ret;
 
-	ret.startX = (screenSize.Width / 2) + (screenSize.Width / 4) - (buttonSize.Width / 2);
+	ret.startX = (screenSize.Width / 2) + (screenSize.Width / 4) -
+		(buttonSize.Width / 2);
 	ret.startY = (screenSize.Height / pos.total * pos.
 	index) + (screenSize.Height / pos.total / 2) - (buttonSize.Height / 2);
-	ret.endX = (screenSize.Width / 2) + (screenSize.Width / 4) + (buttonSize.Width / 2);
+	ret.endX = (screenSize.Width / 2) + (screenSize.Width / 4) +
+		(buttonSize.Width / 2);
 	ret.endY = (screenSize.Height / pos.total * pos.
 	index) + (screenSize.Height / pos.total / 2) + (buttonSize.Height / 2);
 	return ret;

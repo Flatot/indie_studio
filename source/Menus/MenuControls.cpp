@@ -63,20 +63,20 @@ void	bbm::MenuControls::setupOtherButtons(
 	irr::io::path	folder("./assets/menus/buttons/");
 
 	_btns.push_back(new bbm::Button(folder + "rightgray.png",
-				folder + "rightblue.png", folder + "rightred.png",
-				bbm::GUI_BUTTON_RIGHT, bbm::Corners::getCenteredAudio(screenSize,
-					{0, 2, 3, 7}, buttonSize), _game));
+	folder + "rightblue.png", folder + "rightred.png",
+	bbm::GUI_BUTTON_RIGHT, bbm::Corners::getCenteredAudio(screenSize,
+	{0, 2, 3, 7}, buttonSize), _game));
 	_btns.push_back(new bbm::Button(folder + "bombgray.png",
-				folder + "bombblue.png", folder + "bombred.png",
-				bbm::GUI_BUTTON_BOMB, bbm::Corners::getCenteredAudio(screenSize,
-					{0, 2, 4, 7}, buttonSize), _game));
+	folder + "bombblue.png", folder + "bombred.png",
+	bbm::GUI_BUTTON_BOMB, bbm::Corners::getCenteredAudio(screenSize,
+	{0, 2, 4, 7}, buttonSize), _game));
 	_btns.push_back(new bbm::Button(_pimg[0], _pimg[1], _pimg[2],
-				bbm::GUI_BUTTON_PLAYER, bbm::Corners::getCenteredAudio(screenSize,
-					{1, 3, 5, 7}, buttonSize), _game));
+	bbm::GUI_BUTTON_PLAYER, bbm::Corners::getCenteredAudio(screenSize,
+	{1, 3, 5, 7}, buttonSize), _game));
 	_btns.push_back(new bbm::Button(folder + "backgray.png",
-				folder + "backblue.png", folder + "backred.png",
-				bbm::GUI_BUTTON_BACK, bbm::Corners::getCenteredAudio(screenSize,
-					{1, 3, 6, 7}, buttonSize), _game));
+	folder + "backblue.png", folder + "backred.png",
+	bbm::GUI_BUTTON_BACK, bbm::Corners::getCenteredAudio(screenSize,
+	{1, 3, 6, 7}, buttonSize), _game));
 	setupPlayerButton();
 }
 
@@ -87,17 +87,17 @@ void	bbm::MenuControls::setupButtons(
 	irr::io::path	folder("./assets/menus/buttons/");
 
 	_btns.push_back(new bbm::Button(folder + "forwardgray.png",
-				folder + "forwardblue.png", folder + "forwardred.png",
-				bbm::GUI_BUTTON_FORWARD, bbm::Corners::getCenteredAudio(screenSize,
-					{0, 2, 0, 7}, buttonSize), _game));
+	folder + "forwardblue.png", folder + "forwardred.png",
+	bbm::GUI_BUTTON_FORWARD, bbm::Corners::getCenteredAudio(screenSize,
+	{0, 2, 0, 7}, buttonSize), _game));
 	_btns.push_back(new bbm::Button(folder + "leftgray.png",
-				folder + "leftblue.png", folder + "leftred.png",
-				bbm::GUI_BUTTON_LEFT, bbm::Corners::getCenteredAudio(screenSize,
-					{0, 2, 1, 7}, buttonSize), _game));
+	folder + "leftblue.png", folder + "leftred.png",
+	bbm::GUI_BUTTON_LEFT, bbm::Corners::getCenteredAudio(screenSize,
+	{0, 2, 1, 7}, buttonSize), _game));
 	_btns.push_back(new bbm::Button(folder + "backwardgray.png",
-				folder + "backwardblue.png", folder + "backwardred.png",
-				bbm::GUI_BUTTON_BACKWARD, bbm::Corners::getCenteredAudio(screenSize,
-					{0, 2, 2, 7}, buttonSize), _game));
+	folder + "backwardblue.png", folder + "backwardred.png",
+	bbm::GUI_BUTTON_BACKWARD, bbm::Corners::getCenteredAudio(screenSize,
+	{0, 2, 2, 7}, buttonSize), _game));
 	setupOtherButtons(screenSize, buttonSize);
 	_btns[0]->getButton()->setIsPushButton();
 	_btns[1]->getButton()->setIsPushButton();
@@ -152,6 +152,7 @@ bool	bbm::MenuControls::changePlayer()
 			_player = _player + 1 >= _pimg.size() / 3 ? 0 :
 				_player + 1;
 			setupPlayerButton();
+			resetKey(irr::KEY_RIGHT, NONE);
 		}
 		return true;
 	} else if (isKeyPressed(irr::KEY_LEFT, NONE) && _game.getGraphic().
@@ -160,6 +161,7 @@ bool	bbm::MenuControls::changePlayer()
 			_player = _player - 1 < 0 ? _pimg.size() / 3 - 1 :
 				_player - 1;
 			setupPlayerButton();
+			resetKey(irr::KEY_LEFT, NONE);
 		}
 		return true;
 	}
@@ -229,7 +231,7 @@ bool	bbm::MenuControls::OnEvent(const irr::SEvent &event)
 
 void	bbm::MenuControls::enableButtons(bool enabled)
 {
-	for(std::vector<bbm::Button *>::iterator it = _btns.begin(); 
+	for(std::vector<bbm::Button *>::iterator it = _btns.begin();
 			it != _btns.end(); ++it) {
 		(*it)->getButton()->setEnabled(enabled);
 		(*it)->getButton()->setTabStop(enabled);
@@ -275,7 +277,7 @@ void	bbm::MenuControls::initializeControls()
 {
 	for (int i = 0; i < 4; ++i) {
 		auto &keyMap = _game.getConfig().getPlayerConfig(i).getMap();
-		_pctrl.push_back({keyMap["UP"], keyMap["LEFT"], keyMap["DOWN"], 
+		_pctrl.push_back({keyMap["UP"], keyMap["LEFT"], keyMap["DOWN"],
 				keyMap["RIGHT"], keyMap["PUT_BOMB"]});
 	}
 }
@@ -289,15 +291,16 @@ void	bbm::MenuControls::setupControls(const irr::core::dimension2du&
 
 	for (int i = 0; i < 5; i++) {
 		corners = bbm::Corners::getCenteredAudio(
-				screenSize, {1, 2, i, 7}, {400, 70});
+		screenSize, {1, 2, i, 7}, {400, 70});
 		_controls.push_back(_game.getGraphic().getGuienv()
-				->addStaticText(L"NONE", irr::core::rect<irr::s32>(corners.
-						startX, corners.startY, corners.endX, corners.endY),
-					false, true, 0, -1, true));
+		->addStaticText(L"NONE",
+		irr::core::rect<irr::s32>(corners.startX,
+		corners.startY, corners.endX, corners.endY),
+		false, true, 0, -1, true));
 		_controls[_controls.size() - 1]->setOverrideFont(font);
 		_controls[_controls.size() - 1]->setVisible(false);
 		_controls[_controls.size() - 1]->setTextAlignment(
-				irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
+		irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 	}
 }
 
@@ -342,17 +345,17 @@ void	bbm::MenuControls::drawBackground(const irr::core::dimension2du&
 {
 	_game.getGraphic().getDriver()->enableMaterial2D();
 	_game.getGraphic().getDriver()->draw2DImage(_background,
-			irr::core::rect<irr::s32>(0,
-				0, screenSize.Width, screenSize.Height),
-			irr::core::rect<irr::s32>(0, 0, _background->
-				getSize().Width, _background->getSize().Height));
+	irr::core::rect<irr::s32>(0,
+	0, screenSize.Width, screenSize.Height),
+	irr::core::rect<irr::s32>(0, 0, _background
+	->getSize().Width, _background->getSize().Height));
 	_game.getGraphic().getDriver()->enableMaterial2D(false);
 }
 
 void	bbm::MenuControls::draw()
 {
-	const irr::core::dimension2du& screenSize = _game.getGraphic().
-		getDriver()->getScreenSize();
+	const irr::core::dimension2du& screenSize = _game.getGraphic()
+	.getDriver()->getScreenSize();
 
 	if (_scene)
 		drawSceneBackground(screenSize);

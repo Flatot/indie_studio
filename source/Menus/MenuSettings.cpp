@@ -30,12 +30,10 @@ bbm::MenuSettings::MenuSettings(bbm::Game &Game, bool scene) :
 	_bomberman = _game.getGraphic().getDriver()->
 	getTexture("./assets/menus/player.png");
 	_scene = scene;
-	std::cout << "Menu Settings constructor" << std::endl;
 }
 
 bbm::MenuSettings::~MenuSettings()
 {
-	std::cout << "Menu Settings destructor" << std::endl;
 }
 
 void	bbm::MenuSettings::setupButtons(
@@ -116,7 +114,6 @@ bool	bbm::MenuSettings::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);
 
-	std::cout << "[OnEvent - MenuSettings]" << std::endl;
 	if (event.EventType == irr::EET_GUI_EVENT) {
 		irr::s32 id = event.GUIEvent.Caller->getID();
 		if (event.GUIEvent.EventType == irr::gui::EGET_BUTTON_CLICKED)
@@ -143,7 +140,6 @@ bool	bbm::MenuSettings::run()
 	_game.getGraphic().getGuienv()->setFocus(_btns[0]->getButton());
 	_focused = 0;
 	enableButtons(true);
-	std::cout << "Menu SETTINGS run" << std::endl;
 	while(_graphic.getDevice()->run() && isActive()) {
 		_graphic.getDriver()->beginScene(true, true,
 		irr::video::SColor(255, 100, 101, 140));

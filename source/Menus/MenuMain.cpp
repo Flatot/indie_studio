@@ -29,12 +29,10 @@ bbm::MenuMain::MenuMain(bbm::Game &Game) :
 	getTexture("./assets/menus/white.png");
 	_bomberman = _game.getGraphic().getDriver()->
 	getTexture("./assets/menus/player.png");
-	std::cout << "Menu Main constructor" << std::endl;
 }
 
 bbm::MenuMain::~MenuMain()
 {
-	std::cout << "Menu Main destructor" << std::endl;
 }
 
 void	bbm::MenuMain::setupLoadButton()
@@ -123,11 +121,8 @@ void	bbm::MenuMain::continueGame()
 	if (_gameToLoad) {
 		deactivate();
 		enableButtons(false);
-		std::cout << "BEFORE LOAD" << std::endl;
 		_game.getMatch().load();
-		std::cout << "BEFORE RUN" << std::endl;
 		_game.getMatch().run();
-		std::cout << "AFTER RUN" << std::endl;
 		activate();
 		enableButtons(true);
 	} else {
@@ -164,7 +159,6 @@ bool	bbm::MenuMain::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);
 
-	std::cout << "[OnEvent - MenuMain]" << std::endl;
 	if (event.EventType == irr::EET_GUI_EVENT) {
 		irr::s32 id = event.GUIEvent.Caller->getID();
 		if (event.GUIEvent.EventType == irr::gui::EGET_BUTTON_CLICKED)
@@ -218,7 +212,6 @@ bool	bbm::MenuMain::run()
 	_gameToLoad = _game.hasSave();
 	setupLoadButton();
 	enableButtons(true);
-	std::cout << "Menu MAIN run" << std::endl;
 	while(_graphic.getDevice()->run() && isActive()) {
 		_graphic.getDriver()->beginScene(true, true,
 		irr::video::SColor(255, 100, 101, 140));
