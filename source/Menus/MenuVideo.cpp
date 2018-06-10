@@ -133,14 +133,18 @@ bool	bbm::MenuVideo::changeResolution()
 		if (_focused == 0) {
 			_idxres = _idxres + 1 >= _resolutions.size() ?
 			0 : _idxres + 1;
-		}
+		} else if (_focused == 1)
+			_game.getConfig().setFullscreen(
+				!_game.getConfig().getFullscreen());
 		return true;
 	}
 	if (isKeyPressed(irr::KEY_LEFT, NONE)) {
 		if (_focused == 0) {
 			_idxres = _idxres - 1 < 0 ? _resolutions.size() - 1 :
 			_idxres - 1;
-		}
+		} else if (_focused == 1)
+			_game.getConfig().setFullscreen(
+				!_game.getConfig().getFullscreen());
 		return true;
 	}
 	return false;
