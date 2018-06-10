@@ -288,22 +288,21 @@ void bbm::Ia::analyseMap()
 {
 	d_map = generateDMap();
 	scaleBomb();
-    changeBoomTo(DANGER);
+	changeBoomTo(DANGER);
 	rec.push_back(4);
 	if (d_map[_z][_x] == DANGER || d_map[_z][_x] == 4) {
 		rec.clear();
 		defensive_mode();
 		move_to_rec();
-        std::cout << "defensive" << std::endl;
-        d_map.clear();
-    }
-	else {
-        std::cout << "active" << std::endl;
-        active_mode();
-        if (rec[0] == 5)
-            move_to_center();
-        move_to_rec();
-        getBonus();
+		std::cout << "defensive" << std::endl;
+		d_map.clear();
+	} else {
+		std::cout << "active" << std::endl;
+		active_mode();
+		if (rec[0] == 5)
+			move_to_center();
+		move_to_rec();
+		getBonus();
 	}
 }
 

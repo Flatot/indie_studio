@@ -89,15 +89,15 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 	if (isKeyPressed(irr::KEY_ESCAPE, NONE) && !_counting) {
 		deactivate();
 		resetKey(irr::KEY_ESCAPE, NONE);
-		for (int i = 0; i < _players.size(); i++)
-			static_cast<Player *>(_players[i])->deactivate();
+		// for (int i = 0; i < _players.size(); i++)
+		// 	static_cast<Player *>(_players[i])->deactivate();
 		_menuReturn = _game.getMenuInGame()->run();
-		for (int i = 0; i < _players.size(); i++)
-			static_cast<Player *>(_players[i])->activate();
 		resetKey(irr::KEY_ESCAPE, NONE);
 		if (_menuReturn) {
 			drawStarter();
 			activate();
+			// for (int i = 0; i < _players.size(); i++)
+			// 	static_cast<Player *>(_players[i])->activate();
 		}
 		return true;
 	}
@@ -214,8 +214,10 @@ void bbm::Match::update()
 {
 	int lastSize;
 
-	for (auto it = _players.begin(); it < _players.end(); ++it)
-		(*it)->update();
+	for (auto it = _players.begin(); it != _players.end(); ++it) {
+		if ((*it))
+			(*it)->update();
+	}
 	lastSize = _bombs.size();
 	for (int i = 0; i < _bombs.size(); ++i) {
 		_bombs[i]->update();

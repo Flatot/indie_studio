@@ -116,7 +116,10 @@ void	bbm::MenuNewGame::startGame()
 	deactivate();
 	enableButtons(false);
 	_lobby->setVisible(false);
+	std::cout << "avant" << std::endl;
 	_game.launchMatch(_attrs, _teams);
+	std::cout << "apres" << std::endl;
+	_lobby->setVisible(true);
 	enableButtons(true);
 	activate();
 	resetKeys();

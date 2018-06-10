@@ -94,7 +94,7 @@ void bbm::Bomb::update()
 		(timePoint - _timePoint);
 
 	if (!_exploded && diff.count() >= 3)
-		die();	
+		die();
 	if (_exploded)
 		for (int i = 0, lastSize = _explosions.size(); 
 				i < _explosions.size(); ++i) {

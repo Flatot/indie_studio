@@ -122,5 +122,4 @@ void	bbm::MenuLobby::draw(std::vector<bbm::AttrEntity> attrs,
 		_ninjas[i]->setVisible(false);
 	setVisible(false);
 	_skyBox->setVisible(false);
-	std::cout << "Menu Lobby" << std::endl;
 }
