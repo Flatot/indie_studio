@@ -9,7 +9,7 @@
 #include "Game.hpp"
 
 bbm::Player::Player(Match &match, float z, float x, Entities playerNum, 
-		TeamColor color) :
+		TeamColor team) :
 	bbm::IPlayer(match, x, z, playerNum, team),
 	_playerConfig(getPlayerConfig())
 {
