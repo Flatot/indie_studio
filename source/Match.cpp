@@ -103,115 +103,10 @@ void bbm::Match::draw()
 
 }
 
-void bbm::Match::print_skybase()
-{
-	std::string path = "assets/model3D/Sky/brouillard.jpg";
-	auto texture = _graphic.getDriver()->getTexture(path.c_str());
-	auto skybase = _graphic.getScene()->addSkyBoxSceneNode(texture, 
-			texture, texture, texture, texture, texture);
-}
-
-void bbm::Match::drawStarterRec(irr::video::ITexture *background)
-{
-	
-}
-
-std::vector<irr::video::ITexture *>	bbm::Match::createCounter()
-{
-	std::vector<irr::video::ITexture *>	ret;
-
-	ret.push_back(_game.getGraphic().getDriver()->
-	getTexture("./assets/gameplay/3.png"));
-	ret.push_back(_game.getGraphic().getDriver()->
-	getTexture("./assets/gameplay/2.png"));
-	ret.push_back(_game.getGraphic().getDriver()->
-	getTexture("./assets/gameplay/1.png"));
-	ret.push_back(_game.getGraphic().getDriver()->
-	getTexture("./assets/gameplay/fight.png"));
-	return ret;
-}
-
-irr::video::ITexture	*bbm::Match::getCurrentCounter(
-	std::vector<irr::video::ITexture *> list, int count)
-{
-	irr::video::ITexture	*ret = list[0];
-
-	if (count > 0)
-		ret = list[0];
-	if (count >= 1)
-		ret = list[1];
-	if (count >= 2)
-		ret = list[2];
-	if (count >= 3)
-		ret = list[3];
-	return ret;
-}
-
-void bbm::Match::drawImageBack(const irr::core::dimension2du& screenSize,
-	irr::video::ITexture *img)
-{
-	_graphic.getDriver()->beginScene(true, true,
-	irr::video::SColor(255, 100, 101, 140));
-	_graphic.getScene()->drawAll();
-	_graphic.getDriver()->draw2DImage(img,
-	irr::core::rect<irr::s32>(screenSize.Width / 5 * 2,
-	screenSize.Height / 5 * 2, screenSize.Width / 5 * 3,
-	screenSize.Height / 5 * 3),
-	irr::core::rect<irr::s32>(0, 0, img->
-	getSize().Width, img->getSize().Height), 0, 0, true);
-	_graphic.getDriver()->draw2DRectangle(
-	irr::video::SColor(110, 150, 150, 150),
-	irr::core::rect<irr::s32>(0, 0, screenSize.Width,
-	screenSize.Height));
-	_graphic.getGuienv()->drawAll();
-	_graphic.getDriver()->endScene();
-}
-
-void bbm::Match::drawStarter()
-{
-	const irr::core::dimension2du& screenSize = _graphic.
-		getDriver()->getScreenSize();
-	auto list = createCounter();
-	auto cTime = std::chrono::steady_clock::now();
-	auto nTime = std::chrono::steady_clock::now();
-	auto diff = std::chrono::duration_cast<std::chrono::seconds>
-	(nTime - cTime);
-	irr::video::ITexture *background = list[0];
-
-	print_skybase();
-	_graphic.getDriver()->enableMaterial2D();
-	while (diff.count() < 4) {
-		nTime = std::chrono::steady_clock::now();
-		diff = std::chrono::duration_cast<std::chrono::seconds>
-		(nTime - cTime);
-		background = getCurrentCounter(list, diff.count());
-		drawImageBack(screenSize, background);
-
-	}
-	_graphic.getDriver()->enableMaterial2D(false);
-}
-
-bool bbm::Match::isFinished()
-{
-	TeamColor team;
-
-	if (!_players.size())
-		return true;
-	team = _players[0]->getTeam();
-	for (int i = 1; i < _players.size(); ++i)
-		if (team != _players[i]->getTeam())
-			return false;
-	return true;
-}
-
-bbm::TeamColor bbm::Match::getWinner()
-{
-	return (!_players.size()) ? TeamColor::TEAM_NONE : 
-		_players[0]->getTeam();
-}
-
 bool bbm::Match::run()
 {
+	_game.getAudio().stopMenuMusic();
+	_game.getAudio().playInGameMusic();
 	drawStarter();
 	activate();
 
@@ -233,6 +128,8 @@ bool bbm::Match::run()
 	_players.clear();
 	_bombs.clear();
 	deactivate();
+	_game.getAudio().stopInGameMusic();
+	_game.getAudio().playMenuMusic();
 	return true;
 }
 
@@ -435,4 +332,111 @@ void bbm::Match::load()
 	for(int i = 0; i < 4; i++) {
 		this->addPlayer(this->loadIPlayer(i));
 	}
+}
+
+void bbm::Match::print_skybase()
+{
+	std::string path = "assets/model3D/Sky/brouillard.jpg";
+	auto texture = _graphic.getDriver()->getTexture(path.c_str());
+	auto skybase = _graphic.getScene()->addSkyBoxSceneNode(texture, 
+			texture, texture, texture, texture, texture);
+}
+
+void bbm::Match::drawStarterRec(irr::video::ITexture *background)
+{
+	
+}
+
+std::vector<irr::video::ITexture *>	bbm::Match::createCounter()
+{
+	std::vector<irr::video::ITexture *>	ret;
+
+	ret.push_back(_game.getGraphic().getDriver()->
+	getTexture("./assets/gameplay/3.png"));
+	ret.push_back(_game.getGraphic().getDriver()->
+	getTexture("./assets/gameplay/2.png"));
+	ret.push_back(_game.getGraphic().getDriver()->
+	getTexture("./assets/gameplay/1.png"));
+	ret.push_back(_game.getGraphic().getDriver()->
+	getTexture("./assets/gameplay/fight.png"));
+	return ret;
+}
+
+irr::video::ITexture	*bbm::Match::getCurrentCounter(
+	std::vector<irr::video::ITexture *> list, int count)
+{
+	irr::video::ITexture	*ret = list[0];
+
+	if (count > 0)
+		ret = list[0];
+	if (count >= 1)
+		ret = list[1];
+	if (count >= 2)
+		ret = list[2];
+	if (count >= 3)
+		ret = list[3];
+	return ret;
+}
+
+void bbm::Match::drawImageBack(const irr::core::dimension2du& screenSize,
+	irr::video::ITexture *img)
+{
+	_graphic.getDriver()->beginScene(true, true,
+	irr::video::SColor(255, 100, 101, 140));
+	_graphic.getScene()->drawAll();
+	_graphic.getDriver()->draw2DImage(img,
+	irr::core::rect<irr::s32>(screenSize.Width / 5 * 2,
+	screenSize.Height / 5 * 2, screenSize.Width / 5 * 3,
+	screenSize.Height / 5 * 3),
+	irr::core::rect<irr::s32>(0, 0, img->
+	getSize().Width, img->getSize().Height), 0, 0, true);
+	_graphic.getDriver()->draw2DRectangle(
+	irr::video::SColor(110, 150, 150, 150),
+	irr::core::rect<irr::s32>(0, 0, screenSize.Width,
+	screenSize.Height));
+	_graphic.getGuienv()->drawAll();
+	_graphic.getDriver()->endScene();
+}
+
+void bbm::Match::drawStarter()
+{
+	const irr::core::dimension2du& screenSize = _graphic.
+		getDriver()->getScreenSize();
+	auto list = createCounter();
+	auto cTime = std::chrono::steady_clock::now();
+	auto nTime = std::chrono::steady_clock::now();
+	auto diff = std::chrono::duration_cast<std::chrono::seconds>
+	(nTime - cTime);
+	irr::video::ITexture *background = list[0];
+
+	print_skybase();
+	_graphic.getDriver()->enableMaterial2D();
+	while (diff.count() < 4) {
+		nTime = std::chrono::steady_clock::now();
+		diff = std::chrono::duration_cast<std::chrono::seconds>
+		(nTime - cTime);
+		background = getCurrentCounter(list, diff.count());
+		drawImageBack(screenSize, background);
+
+	}
+	_graphic.getDriver()->enableMaterial2D(false);
+}
+
+bool bbm::Match::isFinished()
+{
+	TeamColor team;
+
+	if (!_players.size())
+		return true;
+	team = _players[0]->getTeam();
+	for (int i = 1; i < _players.size(); ++i)
+		if (team != _players[i]->getTeam())
+			return false;
+	return true;
+}
+
+bbm::TeamColor bbm::Match::getWinner()
+{
+	return (!_players.size()) ? TeamColor::TEAM_NONE : 
+		_players[0]->getTeam();
 }

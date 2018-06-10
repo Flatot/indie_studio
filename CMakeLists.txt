@@ -57,6 +57,7 @@ set(SRCS 	source/main.cpp
 		source/Menus/MenuControls.cpp
 		source/Menus/Corners.cpp
 		source/Menus/Button.cpp
+		source/Audio.cpp
 		)
 
 # CREATE THE BINARY

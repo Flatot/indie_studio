@@ -12,17 +12,34 @@
 namespace bbm {
 	class Audio {
 	public:
-		Audio();
-	private:
-		sf::SoundBuffer bMenus;
-		sf::SoundBuffer bInGame;
-		sf::SoundBuffer bBombExplode;
-		sf::SoundBuffer bPlayerDie;
-		sf::SoundBuffer bError;
-		sf::SoundBuffer bVolumeUp;
-		sf::SoundBuffer bVolumeDown;
+		Audio(int generalVolume, int effectVolume);
 
-		sf::Sound soundGeneral;
-		sf::Sound soundEffect;
+		void playMenuMusic();
+		void stopMenuMusic();
+		void playInGameMusic();
+		void stopInGameMusic();
+
+		void playBombeExplode();
+		void playPlayerDie();
+		void playError();
+		void playVolumeUp();
+		void playVolumeDown();
+
+		int getEffectVolume();
+		int getGeneralVolume();
+		void setEffectVolume(int volume);
+		void setGeneralVolume(int volume);
+
+
+	private:
+		sf::Music _menuPlayer;
+		sf::Music _inGamePlayer;
+		sf::SoundBuffer _bBombExplode;
+		sf::SoundBuffer _bPlayerDie;
+		sf::SoundBuffer _bError;
+		sf::SoundBuffer _bVolumeUp;
+		sf::SoundBuffer _bVolumeDown;
+
+		sf::Sound _soundEffect;
 	};
 }
