@@ -84,7 +84,7 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 	IMyEventReceiver::OnEvent(event);
 
 	std::cout << "[OnEvent - Match]" << std::endl;
-	if (isKeyPressed(irr::KEY_KEY_Q, NONE)) {
+	if (isKeyPressed(irr::KEY_ESCAPE, NONE)) {
 		deactivate();
 		resetKey(irr::KEY_ESCAPE, NONE);
 		_menuReturn = _game.getMenuInGame()->run();
