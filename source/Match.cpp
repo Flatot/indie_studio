@@ -1,9 +1,9 @@
-/*
-** EPITECH PROJECT, 2018
-** IndieStudio
-** File description:
-** Match.cpp
-*/
+//
+// EPITECH PROJECT, 2018
+// IndieStudio
+// File description:
+// Match.cpp
+//
 
 #include <iostream>
 #include "Match.hpp"
@@ -31,25 +31,6 @@ bbm::Match::Match(Game &game) :
 	_counting(false)
 {
 	_evManager->addEventReceiver(this);
-	// irr::SKeyMap keyMap[5];                    // re-assigne les commandes
-	// keyMap[0].Action = irr::EKA_MOVE_FORWARD;  // avancer
-	// keyMap[0].KeyCode = irr::KEY_KEY_I;        // w
-	// keyMap[1].Action = irr::EKA_MOVE_BACKWARD; // reculer
-	// keyMap[1].KeyCode = irr::KEY_KEY_K;        // s
-	// keyMap[2].Action = irr::EKA_STRAFE_LEFT;   // a gauche
-	// keyMap[2].KeyCode = irr::KEY_KEY_J;        // a
-	// keyMap[3].Action = irr::EKA_STRAFE_RIGHT;  // a droite
-	// keyMap[3].KeyCode = irr::KEY_KEY_L;        // d
-	// keyMap[4].Action = irr::EKA_JUMP_UP;       // saut
-	// keyMap[4].KeyCode = irr::KEY_SPACE;        // barre espace
-
-	// _camera = _graphic.getScene()->addCameraSceneNodeFPS(       // ajout de la camera FPS
-	// 	0,                                     // pas de noeud parent
-	// 	100.0f,                                // vitesse de rotation
-	// 	0.01f,                                  // vitesse de deplacement
-	// 	-1,                                    // pas de numero d'ID
-	// 	keyMap,                                // on change la keymap
-	// 	3);
 	_camera = _graphic.getScene()->addCameraSceneNode(0,
 			irr::core::vector3df(6.92f, 13.05f, 2.16f),
 			irr::core::vector3df(6.94f, -1.82f, 5.70f));
@@ -58,7 +39,6 @@ bbm::Match::Match(Game &game) :
 void bbm::Match::init(std::vector<bbm::AttrEntity> attrs,
 	std::vector<bbm::TeamColor> teams)
 {
-	std::cout << "begin init" << std::endl;
 	_map.loadMap(MapGenerator::generate("./assets/maps/map1"));
 	if (attrs[0] == bbm::ATTR_PLAYER)
 		addPlayer(new Player(*this, 1.5, 1.5, PLAYER_1, teams[0]));
@@ -83,19 +63,14 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 {
 	IMyEventReceiver::OnEvent(event);
 
-	std::cout << "[OnEvent - Match]" << std::endl;
 	if (isKeyPressed(irr::KEY_ESCAPE, NONE) && !_counting) {
 		deactivate();
 		resetKey(irr::KEY_ESCAPE, NONE);
-		// for (int i = 0; i < _players.size(); i++)
-		// 	static_cast<Player *>(_players[i])->deactivate();
 		_menuReturn = _game.getMenuInGame()->run();
 		resetKey(irr::KEY_ESCAPE, NONE);
 		if (_menuReturn) {
 			drawStarter();
 			activate();
-			// for (int i = 0; i < _players.size(); i++)
-			// 	static_cast<Player *>(_players[i])->activate();
 		}
 		return true;
 	}
@@ -110,30 +85,21 @@ void bbm::Match::draw()
 irr::video::ITexture *bbm::Match::getWinnerColor(TeamColor color)
 {
 	irr::video::ITexture	*ret;
+	auto driver = _game.getGraphic().getDriver();
 
 	switch (color) {
 	case TEAM_NONE :
-		ret = _game.getGraphic().getDriver()->
-			getTexture("./assets/gameplay/draw.png");
-		break;
+		return driver->getTexture("./assets/gameplay/draw.png");
 	case TEAM_RED :
-		ret = _game.getGraphic().getDriver()->
-			getTexture("./assets/gameplay/red_win.png");
-		break;
+		return driver->getTexture("./assets/gameplay/red_win.png");
 	case TEAM_BLUE :
-		ret = _game.getGraphic().getDriver()->
-			getTexture("./assets/gameplay/blue_win.png");
-		break;
+		return driver->getTexture("./assets/gameplay/blue_win.png");
 	case TEAM_GREEN :
-		ret = _game.getGraphic().getDriver()->
-			getTexture("./assets/gameplay/green_win.png");
-		break;
+		return driver->getTexture("./assets/gameplay/green_win.png");
 	case TEAM_PURPLE :
-		ret = _game.getGraphic().getDriver()->
-			getTexture("./assets/gameplay/purple_win.png");
-		break;
+		return driver->getTexture("./assets/gameplay/purple_win.png");
 	}
-	return ret;
+	return NULL;
 }
 
 void bbm::Match::drawWinnerRec(const irr::core::dimension2du& screenSize,
@@ -177,12 +143,24 @@ void bbm::Match::drawWinner()
 	_graphic.getDriver()->enableMaterial2D(false);
 }
 
-bool bbm::Match::run()
+void bbm::Match::runAudio()
 {
 	_game.getAudio().stopMenuMusic();
 	_game.getAudio().playInGameMusic();
-	drawStarter();
 	activate();
+}
+
+void bbm::Match::stopAudio()
+{
+	_game.getAudio().stopInGameMusic();
+	_game.getAudio().playMenuMusic();
+	deactivate();
+}
+
+bool bbm::Match::run()
+{
+	runAudio();
+	drawStarter();
 	print_skybase();
 	while(_graphic.getDevice()->run() && isActive() && !isFinished()) {
 		_graphic.setWindowCaption(_camera->getPosition(),
@@ -198,9 +176,7 @@ bool bbm::Match::run()
 	_map.clear();
 	_players.clear();
 	_bombs.clear();
-	deactivate();
-	_game.getAudio().stopInGameMusic();
-	_game.getAudio().playMenuMusic();
+	stopAudio();
 	return true;
 }
 
@@ -256,9 +232,7 @@ void bbm::Match::removeBomb(Bomb *bomb)
 
 void bbm::Match::addPlayer(IPlayer *player)
 {
-	if (!player)
-	{
-		std::cout << "player null" << std::endl;
+	if (!player) {
 		return;
 	}
 	_players.push_back(player);
@@ -388,7 +362,6 @@ bbm::IPlayer *bbm::Match::loadIPlayer(int nbPlayer)
 	bool check = true;
 
 	if (!file) {
-		std::cout << "file null" << std::endl;
 		return player;
 	}
 	while (std::getline(file, line) && check == true) {

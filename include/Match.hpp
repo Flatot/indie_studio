@@ -60,6 +60,8 @@ namespace bbm {
 		void drawWinnerRec(const irr::core::dimension2du& screenSize,
 			irr::video::ITexture *img);
 		bool isFinished();
+		void runAudio();
+		void stopAudio();
 
 	private:
 		bool handleLine(std::string line, int i, IPlayer **player);
