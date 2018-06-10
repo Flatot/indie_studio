@@ -9,6 +9,7 @@
 #include "Bomb.hpp"
 #include "Map.hpp"
 #include "Match.hpp"
+#include "Game.hpp"
 
 bbm::Bomb::Bomb(Match &match, float z, float x, IPlayer *owner) :
 	IEntity(match, z, x, false),
@@ -80,6 +81,7 @@ void bbm::Bomb::die()
 	_owner->incBombCount();
 	_p->remove();
 	_p = nullptr;
+	_match.getGame().getAudio().playBombeExplode();
 	explode();
 	_exploded = true;
 	_timePoint = std::chrono::steady_clock::now(); 

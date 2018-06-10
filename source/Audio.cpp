@@ -12,13 +12,13 @@ bbm::Audio::Audio(int generalVolume, int effectVolume)
 {
 	bool ret = true;
 
-	ret &= _menuPlayer.openFromFile("./assets/sound/menu103.ogg");
-	ret &= _inGamePlayer.openFromFile("./assets/sound/menu103.ogg");
-	ret &= _bBombExplode.loadFromFile("./assets/sound/menu103.ogg");
-	ret &= _bPlayerDie.loadFromFile("./assets/sound/menu103.ogg");
-	ret &= _bError.loadFromFile("./assets/sound/menu103.ogg");
-	ret &= _bVolumeUp.loadFromFile("./assets/sound/menu103.ogg");
-	ret &= _bVolumeDown.loadFromFile("./assets/sound/menu103.ogg");
+	ret &= _menuPlayer.openFromFile("./assets/sound/menu.ogg");
+	ret &= _inGamePlayer.openFromFile("./assets/sound/inGame.ogg");
+	ret &= _bBombExplode.loadFromFile("./assets/sound/bomb.ogg");
+	ret &= _bPlayerDie.loadFromFile("./assets/sound/error.ogg");
+	ret &= _bError.loadFromFile("./assets/sound/error.ogg");
+	ret &= _bVolumeUp.loadFromFile("./assets/sound/error.ogg");
+	ret &= _bVolumeDown.loadFromFile("./assets/sound/error.ogg");
 	if (!ret) {
 		std::cerr << "Sound load file error" << std::endl;
 		exit(84);

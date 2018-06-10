@@ -131,7 +131,7 @@ void	bbm::MenuMain::continueGame()
 		activate();
 		enableButtons(true);
 	} else {
-		std::cout << "IL N'Y A PAS DE GAME A LOAD {{lancer un son}}" << std::endl;
+		_game.getAudio().playError();
 	}
 }
 

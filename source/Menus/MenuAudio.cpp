@@ -63,21 +63,32 @@ bool	bbm::MenuAudio::changeVolume()
 {
 	if (isKeyPressed(irr::KEY_RIGHT, NONE) && _game.getGraphic().
 	getGuienv()->hasFocus(_btns[_focused]->getButton())) {
-		if (_btns[_focused]->getId() == bbm::GUI_BUTTON_SOUNDS)
+		if (_btns[_focused]->getId() == bbm::GUI_BUTTON_SOUNDS) {
 			_game.getConfig().setVolumeGeneral(_game.getConfig().
 			getVolumeGeneral() + 1);
-		else if (_btns[_focused]->getId() == bbm::GUI_BUTTON_EFFECTS)
+			_game.getAudio().setGeneralVolume(
+					_game.getConfig().getVolumeGeneral());
+		}
+		else if (_btns[_focused]->getId() == bbm::GUI_BUTTON_EFFECTS) {
 			_game.getConfig().setVolumeEffect(_game.getConfig().
 			getVolumeEffect() + 1);
+			_game.getAudio().setEffectVolume(
+					_game.getConfig().getVolumeEffect());
+		}
 		return true;
 	} else if (isKeyPressed(irr::KEY_LEFT, NONE) && _game.getGraphic().
 	getGuienv()->hasFocus(_btns[_focused]->getButton())) {
-		if (_btns[_focused]->getId() == bbm::GUI_BUTTON_SOUNDS)
+		if (_btns[_focused]->getId() == bbm::GUI_BUTTON_SOUNDS) {
 			_game.getConfig().setVolumeGeneral(_game.getConfig().
 			getVolumeGeneral() - 1);
-		else if (_btns[_focused]->getId() == bbm::GUI_BUTTON_EFFECTS)
+			_game.getAudio().setGeneralVolume(
+					_game.getConfig().getVolumeGeneral());
+		} else if (_btns[_focused]->getId() == bbm::GUI_BUTTON_EFFECTS) {
 			_game.getConfig().setVolumeEffect(_game.getConfig().
-			getVolumeEffect() - 1);
+			getVolumeEffect() - 1);	
+			_game.getAudio().setGeneralVolume(
+					_game.getConfig().getVolumeGeneral());
+		}
 		return true;
 	}
 	return false;
