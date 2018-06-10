@@ -17,7 +17,7 @@ bbm::MenuLobby::MenuLobby(bbm::Game &game) : _game(game)
 	getTexture("./assets/model3D/Cube/unbreakable.jpg");
 
 	initPilars();
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < _blocks.size(); i++) {
 		_blocks[i]->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		_blocks[i]->setMaterialTexture(0, texture);
 		_blocks[i]->setVisible(false);
@@ -50,26 +50,54 @@ void	bbm::MenuLobby::initTextures()
 
 void	bbm::MenuLobby::initNinjas()
 {
-	auto scale = irr::core::vector3df(0.15f, 0.15f, 0.15f);
+	auto scale = irr::core::vector3df(0.35f, 0.35f, 0.35f);
 	auto scene = _game.getGraphic().getScene();
 	auto mesh = scene->getMesh("./assets/model3D/player/ninja.b3d");
 
-	auto position = irr::core::vector3df(2, 2.5f, 3);
+	auto position = irr::core::vector3df(3, 2.5f, 4);
 	_ninjas.push_back(scene->addAnimatedMeshSceneNode(mesh, 0, -1,
 		position, irr::core::vector3df(0, 45, 0), scale));
-	position = irr::core::vector3df(12, 2.5f, 3);
+	position = irr::core::vector3df(11, 2.5f, 4);
 	_ninjas.push_back(scene->addAnimatedMeshSceneNode(mesh, 0, -1,
 		position, irr::core::vector3df(0, 315, 0), scale));
-	position = irr::core::vector3df(2, 2.5f, 9);
+	position = irr::core::vector3df(3, 2.5f, 8);
 	_ninjas.push_back(scene->addAnimatedMeshSceneNode(mesh, 0, -1,
 		position, irr::core::vector3df(0, 135, 0), scale));
-	position = irr::core::vector3df(12, 2.5f, 9);
+	position = irr::core::vector3df(11, 2.5f, 8);
 	_ninjas.push_back(scene->addAnimatedMeshSceneNode(mesh, 0, -1,
 		position, irr::core::vector3df(0, 225, 0), scale));
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < _ninjas.size(); i++) {
 		_ninjas[i]->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		_ninjas[i]->setVisible(false);
 	}
+}
+
+void	bbm::MenuLobby::initPilar(irr::core::vector3df rot,
+	irr::core::vector3df scl, irr::core::vector3df pos)
+{
+	auto scene = _game.getGraphic().getScene();
+	irr::core::vector3df pil;
+
+	pil = irr::core::vector3df(pos.X, 1, pos.Z);
+	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pil, rot, scl));
+	pil = irr::core::vector3df(pos.X, 2, pos.Z);
+	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pil, rot, scl));
+	pil = irr::core::vector3df(pos.X, 1, pos.Z + 1);
+	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pil, rot, scl));
+	pil = irr::core::vector3df(pos.X, 2, pos.Z + 1);
+	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pil, rot, scl));
+	pil = irr::core::vector3df(pos.X, 1, pos.Z - 1);
+	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pil, rot, scl));
+	pil = irr::core::vector3df(pos.X, 2, pos.Z - 1);
+	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pil, rot, scl));
+	pil = irr::core::vector3df(pos.X + 1, 1, pos.Z);
+	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pil, rot, scl));
+	pil = irr::core::vector3df(pos.X + 1, 2, pos.Z);
+	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pil, rot, scl));
+	pil = irr::core::vector3df(pos.X - 1, 1, pos.Z);
+	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pil, rot, scl));
+	pil = irr::core::vector3df(pos.X - 1, 2, pos.Z);
+	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pil, rot, scl));
 }
 
 void	bbm::MenuLobby::initPilars()
@@ -77,28 +105,21 @@ void	bbm::MenuLobby::initPilars()
 	auto rot = irr::core::vector3df(90, 45, 0);
 	auto scl = irr::core::vector3df(1, 1, 1);
 	auto scene = _game.getGraphic().getScene();
-	auto pos = irr::core::vector3df(2, 1, 3);
+	irr::core::vector3df pos;
 
-	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pos, rot, scl));
-	pos = irr::core::vector3df(2, 2, 3);
-	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pos, rot, scl));
-	pos = irr::core::vector3df(12, 1, 3);
-	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pos, rot, scl));
-	pos = irr::core::vector3df(12, 2, 3);
-	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pos, rot, scl));
-	pos = irr::core::vector3df(2, 1, 9);
-	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pos, rot, scl));
-	pos = irr::core::vector3df(2, 2, 9);
-	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pos, rot, scl));
-	pos = irr::core::vector3df(12, 1, 9);
-	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pos, rot, scl));
-	pos = irr::core::vector3df(12, 2, 9);
-	_blocks.push_back(scene->addCubeSceneNode(1.f, 0, -1, pos, rot, scl));
+	pos = irr::core::vector3df(3, 1, 4);
+	initPilar(rot, scl, pos);
+	pos = irr::core::vector3df(11, 1, 4);
+	initPilar(rot, scl, pos);
+	pos = irr::core::vector3df(3, 1, 8);
+	initPilar(rot, scl, pos);
+	pos = irr::core::vector3df(11, 1, 8);
+	initPilar(rot, scl, pos);
 }
 
 void	bbm::MenuLobby::setVisible(bool visible)
 {
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < _blocks.size(); i++)
 		_blocks[i]->setVisible(visible);
 }
 
@@ -107,7 +128,7 @@ void	bbm::MenuLobby::draw(std::vector<bbm::AttrEntity> attrs,
 {
 	setVisible(true);
 	_skyBox->setVisible(true);
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < _ninjas.size(); i++) {
 		_ninjas[i]->setVisible(false);
 		if (attrs[i] != bbm::ATTR_NONE) {
 			_ninjas[i]->setVisible(true);
@@ -118,7 +139,7 @@ void	bbm::MenuLobby::draw(std::vector<bbm::AttrEntity> attrs,
 			_ninjas[i]->setFrameLoop(206, 250);
 	}
 	_game.getGraphic().getScene()->drawAll();
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < _ninjas.size(); i++)
 		_ninjas[i]->setVisible(false);
 	setVisible(false);
 	_skyBox->setVisible(false);

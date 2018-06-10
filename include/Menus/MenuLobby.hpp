@@ -25,6 +25,8 @@ namespace bbm {
 			void initPilars();
 			void initNinjas();
 			void initTextures();
+			void initPilar(irr::core::vector3df,
+				irr::core::vector3df, irr::core::vector3df);
 
 		protected:
 		private:
