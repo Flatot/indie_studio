@@ -26,8 +26,7 @@ bbm::Match::Match(Game &game) :
 	_map(*this),
 	_bombs(),
 	_players(),
-	_camera(),
-	_menuReturn(false)
+	_camera()
 {
 	_evManager->addEventReceiver(this);
 	// irr::SKeyMap keyMap[5];                    // re-assigne les commandes
@@ -85,12 +84,9 @@ bool bbm::Match::OnEvent(const irr::SEvent &event)
 	IMyEventReceiver::OnEvent(event);
 
 	std::cout << "[OnEvent - Match]" << std::endl;
-	if (isKeyPressed(irr::KEY_ESCAPE, NONE)) {
+	if (isKeyPressed(irr::KEY_KEY_Q, NONE)) {
 		deactivate();
-		resetKey(irr::KEY_ESCAPE, NONE);
-		_menuReturn = _game.getMenuInGame()->run();
-		if (_menuReturn)
-			activate();
+		resetKey(irr::KEY_KEY_Q, NONE);
 		return true;
 	}
 	return false;
@@ -111,25 +107,18 @@ void bbm::Match::print_skybase()
 
 bool bbm::Match::run()
 {
-	std::cout << "1" << std::endl;
 	activate();
-	std::cout << "2" << std::endl;
 
 	print_skybase();
-	std::cout << "3" << std::endl;
 	while(_graphic.getDevice()->run() && isActive()) {
-	std::cout << "4" << std::endl;
 		_graphic.setWindowCaption(_camera->getPosition(), L"Match loop");
 		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
 		// auto lala = _camera->getTarget();
 		// std::cout << "x : " << lala.X << " y : " << lala.Y << " z : " << lala.Z << std::endl;
 		_graphic.getScene()->drawAll();
 		_graphic.getDriver()->endScene();
-	std::cout << "4.5" << std::endl;
 		update();
-	std::cout << "5" << std::endl;
 	}
-	std::cout << "6" << std::endl;
 	_map.clear();
 	_players.clear();
 	_bombs.clear();
@@ -141,14 +130,8 @@ void bbm::Match::update()
 {
 	int lastSize;
 
-	for (auto it = _players.begin(); it < _players.end(); ++it) {
-		if (! *it)
-			std::cout << "SUCE MA TEUB" << std::endl;
-		std::cout << *it << std::endl;
-		std::cout << "before update player" << std::endl;
+	for (auto it = _players.begin(); it < _players.end(); ++it)
 		(*it)->update();
-		std::cout << "after update player" << std::endl;
-	}
 	lastSize = _bombs.size();
 	for (int i = 0; i < _bombs.size(); ++i) {
 		_bombs[i]->update();
@@ -157,7 +140,6 @@ void bbm::Match::update()
 			--i;
 		}
 	}
-	std::cout << "BONJOUR FDP" << std::endl;
 }
 
 bbm::EventManager *bbm::Match::getEventManager()
@@ -195,7 +177,10 @@ void bbm::Match::removeBomb(Bomb *bomb)
 void bbm::Match::addPlayer(IPlayer *player)
 {
 	if (!player)
-		std::cout << "SUUUUUUUUUUUCE" << std::endl;
+	{
+		std::cout << "player null" << std::endl;
+		return;
+	}
 	_players.push_back(player);
 }
 
@@ -247,7 +232,7 @@ bbm::IPlayer *bbm::Match::createPlayer(std::string line)
 	return (new Player(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)]));
 }
 
-void bbm::Match::handleLine(std::string line, int i, bbm::IPlayer *player)
+void bbm::Match::handleLine(std::string line, int i, bbm::IPlayer **player)
 {
 	size_t pos = 0;
 	std::string firstTok;
@@ -258,8 +243,9 @@ void bbm::Match::handleLine(std::string line, int i, bbm::IPlayer *player)
 	pos = line.find(delimiter);
 	token = line.substr(0, pos);
 	firstTok = token;
-	if (this->isValuable(firstTok) && firstTok.compare(valuable[i]) == 0)
-		player = this->createPlayer(line);
+	if (this->isValuable(firstTok) && firstTok.compare(valuable[i]) == 0) {
+		*player = this->createPlayer(line);
+	}
 	else if (this->isValuable(firstTok))
 		return;
 	line.erase(0, pos + delimiter.length());
@@ -268,36 +254,57 @@ void bbm::Match::handleLine(std::string line, int i, bbm::IPlayer *player)
 
 bool bbm::Match::isValuable(std::string str)
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++) {
 		if (valuable[i].compare(str) == 0)
 			return true;
+	}
 	return false;
 }
 
-void bbm::Match::doWithTokens(std::string tok1, std::string tok2, bbm::IPlayer *player)
+void bbm::Match::doWithTokens(std::string tok1, std::string tok2, bbm::IPlayer **player)
 {
 	std::string::size_type sz;
 
-	if (tok1.compare("WALLPASS") == 0 && player)
-		player->setWallPass(tok2.compare("false"));
-	if (tok1.compare("SPEED") == 0 && player)
-		player->setSpeed(std::stoi(tok2, &sz));
-	if (tok1.compare("BOMB_COUNT") == 0 && player)
-		player->setBombCount(std::stoi(tok2, &sz));
-	if (tok1.compare("POWER") == 0 && player)
-		player->setPower(std::stoi(tok2, &sz));
+	if (tok1.compare("WALLPASS") == 0 && *player)
+		(*player)->setWallPass(tok2.compare("false"));
+	if (tok1.compare("SPEED") == 0 && (*player))
+		(*player)->setSpeed(std::stoi(tok2, &sz));
+	if (tok1.compare("BOMB_COUNT") == 0 && (*player))
+		(*player)->setBombCount(std::stoi(tok2, &sz));
+	if (tok1.compare("POWER") == 0 && (*player))
+		(*player)->setPower(std::stoi(tok2, &sz));
 }
+
+bool bbm::Match::hasSave()
+{
+	std::ifstream file("PlayerMatch.cfg");
+
+	if (!file)
+		return false;
+	file.close();
+	return true;
+}
+
 
 bbm::IPlayer *bbm::Match::loadIPlayer(int nbPlayer)
 {
 	std::ifstream file("PlayerMatch.cfg");
 	std::string line;
-	bbm::IPlayer *player = NULL;
+	bbm::IPlayer *player = nullptr;
 
-	if (!file)
-		return NULL;
-	while (std::getline(file, line))
-		this->handleLine(line, nbPlayer, player);
+	if (!file) {
+		std::cout << "file null" << std::endl;
+		return player;
+	}
+	while (std::getline(file, line)) {
+		this->handleLine(line, nbPlayer, &player);
+	}
+	if (player)
+	{
+		std::cout << "FINAL PLAYER" << std::endl;
+		std::cout << player << std::endl;
+		std::cout << "FINAL PLAYER FIN" << std::endl;
+	}
 	return player;
 }
 
@@ -307,8 +314,4 @@ void bbm::Match::load()
 	for(int i = 0; i < 4; i++) {
 		this->addPlayer(this->loadIPlayer(i));
 	}
-	std::cout << _map << std::endl;
-	std::cout << "height: " << _map.getHeight() << std::endl;
-	std::cout << "width: " << _map.getWidth() << std::endl;
-
 }

@@ -257,7 +257,7 @@ void bbm::IPlayer::decSpeed()
 
 bool bbm::IPlayer::getWallPass() const
 {
-	return _speed;
+	return _passWall;
 }
 
 void bbm::IPlayer::setWallPass(bool wallPass)
