@@ -81,9 +81,9 @@ void	bbm::MenuVideo::setupButtons(
 	bbm::GUI_BUTTON_RESOLUTION, bbm::Corners::getCenteredAudio(screenSize,
 	{0, 2, 0, 3}, buttonSize), _game));
 	_btns.push_back(new bbm::Button(
-	"./assets/menus/buttons/leavegray.png",
-	"./assets/menus/buttons/leaveblue.png",
-	"./assets/menus/buttons/leavered.png",
+	"./assets/menus/buttons/fullscreengray.png",
+	"./assets/menus/buttons/fullscreenblue.png",
+	"./assets/menus/buttons/fullscreenred.png",
 	bbm::GUI_BUTTON_FULLSCREEN, bbm::Corners::getCenteredAudio(screenSize,
 	{0, 2, 1, 3}, buttonSize), _game));
 	_btns.push_back(new bbm::Button(
