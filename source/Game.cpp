@@ -56,16 +56,16 @@ bool bbm::Game::OnEvent(const irr::SEvent &event)
 	static int i = 0;
 
 	std::cout << "[OnEvent - Game]" << std::endl;
-	if (isKeyPressed(irr::KEY_KEY_Q, NONE)) {
-		_graphic.getDevice()->closeDevice();		
-		return true;
-	}
-	if (isKeyPressed(irr::KEY_KEY_T, NONE)) {
-		_matchLaunched = true;
-		std::cout << "MatchLaunched" << std::endl;
-		resetKey(irr::KEY_KEY_T, NONE);
-		return true;
-	}
+	// if (isKeyPressed(irr::KEY_KEY_Q, NONE)) {
+	// 	_graphic.getDevice()->closeDevice();		
+	// 	return true;
+	// }
+	// if (isKeyPressed(irr::KEY_KEY_T, NONE)) {
+	// 	_matchLaunched = true;
+	// 	std::cout << "MatchLaunched" << std::endl;
+	// 	resetKey(irr::KEY_KEY_T, NONE);
+	// 	return true;
+	// }
 	return false;
 }
 
