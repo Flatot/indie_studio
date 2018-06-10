@@ -10,6 +10,7 @@
 #include <chrono>
 #include "IMyEventReceiver.hpp"
 #include "IEntity.hpp"
+#include "Definer.hpp"
 
 namespace bbm {
 	class Match;
@@ -28,7 +29,8 @@ namespace bbm {
 
 	class IPlayer : public IEntity {
 	public:
-		IPlayer(Match &match, float z, float x, Entities playerNum);
+		IPlayer(Match &match, float z, float x, Entities playerNum, 
+				TeamColor team);
 		virtual ~IPlayer();
 		virtual void spawn() = 0;
 		virtual void die() override;
@@ -54,13 +56,15 @@ namespace bbm {
 		void setWallPass(bool wallPass);
 		std::string typeToStr();
 		std::string entitiesToInt();
+		TeamColor getTeam();
+		std::string teamToStr();
 
 	private:
 		void getTexture();
 		bool checkCollision(int new_z, int new_x);
 		std::string _texture;
 	protected:
-        void getBonus();
+		void getBonus();
 		void moveLeft();
 		void moveRight();
 		void moveTop();
@@ -74,6 +78,7 @@ namespace bbm {
 		int _power;
 		int _bombCount;
 		bool _passWall;
+		TeamColor _team;
 
 	};
 }

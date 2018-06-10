@@ -8,14 +8,16 @@
 #include "IPlayer.hpp"
 #include "Match.hpp"
 
-bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum) :
+bbm::IPlayer::IPlayer(Match &match, float z, float x, Entities playerNum, 
+		TeamColor team) :
 	IEntity(match, x, z, true),
 	_move(0),
 	_timePoint(std::chrono::steady_clock::now()),
 	_speed(0),
 	_power(1),
 	_bombCount(1),
-	_passWall(false)
+	_passWall(false),
+	_team(team)
 {
 	_idEntity = playerNum;
 	_match.getMap().addEntity(this);
@@ -265,6 +267,11 @@ bbm::PlayerType bbm::IPlayer::getType() const
 	return _type;
 }
 
+bbm::TeamColor bbm::IPlayer::getTeam()
+{
+	return _team;
+}
+
 bool bbm::IPlayer::checkCollision(int new_z, int new_x)
 {
 	int entities = _match.getMap().getEntitiesFromPos(new_z, new_x);
@@ -299,22 +306,44 @@ std::string bbm::IPlayer::entitiesToInt()
 	}
 }
 
+std::string bbm::IPlayer::teamToStr()
+{
+	switch(this->getTeam()) {
+	case TEAM_BLUE:
+		return "TEAM_BLUE";
+	case TEAM_GREEN:
+		return "TEAM_GREEN";
+	case TEAM_PURPLE:
+		return "TEAM_PURPLE";
+	case TEAM_RED:
+		return "TEAM_RED";
+	default:
+		return "TEAM_RED";
+	}
+}
+
 void bbm::IPlayer::getTexture()
 {
-	if (_idEntity == bbm::Entities::PLAYER_1)
-		_texture = "assets/model3D/player/PLAYER_1.jpg";
-	else if (_idEntity == bbm::Entities::PLAYER_2)
-		_texture = "assets/model3D/player/PLAYER_2.jpg";
-	else if (_idEntity == bbm::Entities::PLAYER_3)
-		_texture = "assets/model3D/player/PLAYER_3.jpg";
-	else if (_idEntity == bbm::Entities::PLAYER_4)
-		_texture = "assets/model3D/player/PLAYER_4.jpg";
+	switch (_team) {
+	case TeamColor::TEAM_BLUE:
+		_texture = "assets/model3D/player/blue.jpg";
+		break;
+	case TeamColor::TEAM_RED:
+		_texture = "assets/model3D/player/red.jpg";
+		break;
+	case TeamColor::TEAM_GREEN:
+		_texture = "assets/model3D/player/green.jpg";
+		break;
+	case TeamColor::TEAM_PURPLE:
+		_texture = "assets/model3D/player/purple.jpg";
+		break;
+	}
 }
 
 std::ostream& operator<< (std::ostream& stream, bbm::IPlayer *player)
 {
 	stream << player->entitiesToInt() << ":" << player->typeToStr() << ":";
-	stream << player->getPosX() << ":" << player->getPosZ() << std::endl;
+	stream << player->getPosX() << ":" << player->getPosZ() << ":" << player->teamToStr() << std::endl;
 	stream << "SPEED:" << std::to_string(player->getSpeed()) << std::endl;
 	stream << "POWER:" << std::to_string(player->getPower()) << std::endl;
 	stream << "BOMB_COUNT:" << std::to_string(player->getBombCount()) << std::endl;

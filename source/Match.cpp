@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Match.hpp"
 #include "Game.hpp"
+#include "Definer.hpp"
 #include "MapGenerator.hpp"
 #include "Player.hpp"
 #include "Ia.hpp"
@@ -60,21 +61,21 @@ void bbm::Match::init(std::vector<bbm::AttrEntity> attrs,
 	std::cout << "begin init" << std::endl;
 	_map.loadMap(MapGenerator::generate("./assets/maps/map1"));
 	if (attrs[0] == bbm::ATTR_PLAYER)
-		addPlayer(new Player(*this, 1.5, 1.5, PLAYER_1));
+		addPlayer(new Player(*this, 1.5, 1.5, PLAYER_1, teams[0]));
 	else if (attrs[0] == bbm::ATTR_AI)
-		addPlayer(new Ia(*this, 1.5, 1.5, PLAYER_1));
+		addPlayer(new Ia(*this, 1.5, 1.5, PLAYER_1, teams[0]));
 	if (attrs[1] == bbm::ATTR_PLAYER)
-		addPlayer(new Player(*this, 11.5, 13.5, PLAYER_2));
+		addPlayer(new Player(*this, 11.5, 13.5, PLAYER_2, teams[1]));
 	else if (attrs[1] == bbm::ATTR_AI)
-		addPlayer(new Ia(*this, 11.5, 13.5, PLAYER_2));
+		addPlayer(new Ia(*this, 11.5, 13.5, PLAYER_2, teams[1]));
 	if (attrs[2] == bbm::ATTR_PLAYER)
-		addPlayer(new Player(*this, 1.5, 13.5, PLAYER_3));
+		addPlayer(new Player(*this, 1.5, 13.5, PLAYER_3, teams[2]));
 	else if (attrs[2] == bbm::ATTR_AI)
-		addPlayer(new Ia(*this, 1.5, 13.5, PLAYER_3));
+		addPlayer(new Ia(*this, 1.5, 13.5, PLAYER_3, teams[2]));
 	if (attrs[3] == bbm::ATTR_PLAYER)
-		addPlayer(new Player(*this, 11.5, 1.5, PLAYER_4));
+		addPlayer(new Player(*this, 11.5, 1.5, PLAYER_4, teams[3]));
 	else if (attrs[3] == bbm::ATTR_AI)
-		addPlayer(new Ia(*this, 11.5, 1.5, PLAYER_4));
+		addPlayer(new Ia(*this, 11.5, 1.5, PLAYER_4, teams[3]));
 	std::cout << _map << std::endl;
 	std::cout << "height: " << _map.getHeight() << std::endl;
 	std::cout << "width: " << _map.getWidth() << std::endl;
@@ -187,13 +188,103 @@ void bbm::Match::drawStarter()
 	_counting = false;
 }
 
+bool bbm::Match::isFinished()
+{
+	TeamColor team;
+
+	if (!_players.size())
+		return true;
+	team = _players[0]->getTeam();
+	for (int i = 1; i < _players.size(); ++i)
+		if (team != _players[i]->getTeam())
+			return false;
+	return true;
+}
+
+bbm::TeamColor bbm::Match::getWinner()
+{
+	return (!_players.size()) ? TeamColor::TEAM_NONE : 
+		_players[0]->getTeam();
+}
+
+irr::video::ITexture *bbm::Match::getWinnerColor(TeamColor color)
+{
+	irr::video::ITexture	*ret;
+
+	switch (color) {
+		case TEAM_NONE :
+			ret = _game.getGraphic().getDriver()->
+				getTexture("./assets/gameplay/draw.png");
+			break;
+		case TEAM_RED :
+			ret = _game.getGraphic().getDriver()->
+				getTexture("./assets/gameplay/red_win.png");
+			break;
+		case TEAM_BLUE :
+			ret = _game.getGraphic().getDriver()->
+				getTexture("./assets/gameplay/blue_win.png");
+			break;
+		case TEAM_GREEN :
+			ret = _game.getGraphic().getDriver()->
+				getTexture("./assets/gameplay/green_win.png");
+			break;
+		case TEAM_PURPLE :
+			ret = _game.getGraphic().getDriver()->
+				getTexture("./assets/gameplay/purple_win.png");
+			break;
+	}
+	return ret;
+}
+
+void bbm::Match::drawWinnerRec(const irr::core::dimension2du& screenSize,
+	irr::video::ITexture *img)
+{
+	_graphic.getDriver()->beginScene(true, true,
+	irr::video::SColor(255, 100, 101, 140));
+	_graphic.getScene()->drawAll();
+	_graphic.getDriver()->draw2DRectangle(
+	irr::video::SColor(110, 150, 150, 150),
+	irr::core::rect<irr::s32>(0, 0, screenSize.Width,
+	screenSize.Height));
+	_graphic.getDriver()->draw2DImage(img,
+	irr::core::rect<irr::s32>(screenSize.Width / 5 * 2,
+	screenSize.Height / 5 * 2, screenSize.Width / 5 * 3,
+	screenSize.Height / 5 * 3),
+	irr::core::rect<irr::s32>(0, 0, img->
+	getSize().Width, img->getSize().Height), 0, 0, true);
+	_graphic.getGuienv()->drawAll();
+	_graphic.getDriver()->endScene();
+}
+
+void bbm::Match::drawWinner()
+{
+	const irr::core::dimension2du& screenSize = _graphic.
+		getDriver()->getScreenSize();
+	auto winner = getWinner();
+	auto color = getWinnerColor(winner);
+	auto cTime = std::chrono::steady_clock::now();
+	auto nTime = std::chrono::steady_clock::now();
+	auto diff = std::chrono::duration_cast<std::chrono::seconds>
+	(nTime - cTime);
+
+	// print_skybase();
+	_graphic.getDriver()->enableMaterial2D();
+	while (diff.count() < 3) {
+		nTime = std::chrono::steady_clock::now();
+		diff = std::chrono::duration_cast<std::chrono::seconds>
+		(nTime - cTime);
+		drawWinnerRec(screenSize, color);
+	}
+	_graphic.getDriver()->enableMaterial2D(false);
+}
+
 bool bbm::Match::run()
 {
 	drawStarter();
 	activate();
 
 	print_skybase();
-	while(_graphic.getDevice()->run() && isActive()) {
+	while(_graphic.getDevice()->run() && isActive() && !isFinished()) {
 		_graphic.setWindowCaption(_camera->getPosition(), L"Match loop");
 		_graphic.getDriver()->beginScene(true, true, irr::video::SColor(255, 100, 101, 140));
 		// auto lala = _camera->getTarget();
@@ -201,6 +292,10 @@ bool bbm::Match::run()
 		_graphic.getScene()->drawAll();
 		_graphic.getDriver()->endScene();
 		update();
+	}
+	if (isFinished()) {
+		// print Winner
+		drawWinner();
 	}
 	_map.clear();
 	_players.clear();
@@ -293,26 +388,37 @@ void bbm::Match::save()
 bbm::IPlayer *bbm::Match::createPlayer(std::string line)
 {
 	size_t pos = 0;
-	std::string type;
-	std::string x;
-	std::string z;
-	std::string number;
 	std::string delimiter = ":";
 	std::string::size_type sz;
 
 	pos = line.find(delimiter);
-	number = line.substr(0, pos);
+	std::string number = line.substr(0, pos);
 	line.erase(0, pos + delimiter.length());
 	pos = line.find(delimiter);
-	type = line.substr(0, pos);
+	std::string type = line.substr(0, pos);
 	line.erase(0, pos + delimiter.length());
 	pos = line.find(delimiter);
-	x = line.substr(0, pos);
+	std::string x = line.substr(0, pos);
 	line.erase(0, pos + delimiter.length());
-	z = line;
+	pos = line.find(delimiter);
+	std::string z = line.substr(0, pos);
+	std::string color = line;
 	if (type.compare("IA") == 0)
-		return (new Ia(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)]));
-	return (new Player(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)]));
+		return (new Ia(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)], strToTeamColor(color)));
+	return (new Player(*this, stoi(z, &sz), stoi(x, &sz), entities[stoi(number, &sz)], strToTeamColor(color)));
+}
+
+bbm::TeamColor bbm::Match::strToTeamColor(std::string str)
+{
+	if (str.compare("TEAM_RED") == 0)
+		return TEAM_RED;
+	if (str.compare("TEAM_GREEN") == 0)
+		return TEAM_GREEN;
+	if (str.compare("TEAM_PURPLE") == 0)
+		return TEAM_PURPLE;
+	if (str.compare("TEAM_BLUE") == 0)
+		return TEAM_BLUE;
+	return TEAM_RED;
 }
 
 void bbm::Match::handleLine(std::string line, int i, bbm::IPlayer **player)

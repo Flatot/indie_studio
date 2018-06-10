@@ -66,7 +66,8 @@ namespace bbm {
 		TEAM_BLUE,
 		TEAM_RED,
 		TEAM_GREEN,
-		TEAM_PURPLE
+		TEAM_PURPLE,
+		TEAM_NONE
 	};
 
 	struct pkeys {
